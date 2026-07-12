@@ -2,18 +2,40 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
 <title>NexTrack — Entertainment Hub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.3.1/umd/react.production.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.3.1/umd/react-dom.production.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.5/babel.min.js"></script>
 <style>
-*{box-sizing:border-box;margin:0;padding:0;}
-body{background:#07101F;color:#E2E8F0;font-family:'Segoe UI','SF Pro Display',system-ui,sans-serif;}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+html,body{height:100%;}
+body{background:#000;color:#D9D3C4;font-family:'Barlow',system-ui,sans-serif;}
+#root{height:100%;}
 ::-webkit-scrollbar{width:5px;height:5px;}
-::-webkit-scrollbar-track{background:#0C1829;}
-::-webkit-scrollbar-thumb{background:#1C3054;border-radius:3px;}
-::-webkit-scrollbar-thumb:hover{background:#2A4880;}
+::-webkit-scrollbar-track{background:#120F0B;}
+::-webkit-scrollbar-thumb{background:#332C1F;border-radius:2px;}
+::-webkit-scrollbar-thumb:hover{background:#4A4030;}
+.nx-shell{
+  width:100%;max-width:480px;height:100vh;height:100dvh;margin:0 auto;
+  background:
+    repeating-linear-gradient(180deg, rgba(232,137,31,0.022) 0px, rgba(232,137,31,0.022) 1px, transparent 1px, transparent 3px),
+    #0A0908;
+  display:flex;flex-direction:column;position:relative;overflow:hidden;
+  font-family:'Rajdhani',system-ui,sans-serif;
+}
+@media (min-width:521px){
+  body{display:flex;justify-content:center;background:#000;}
+  .nx-shell{border-left:1px solid #332C1F;border-right:1px solid #332C1F;box-shadow:0 0 90px rgba(0,0,0,0.7);}
+}
+button{font-family:inherit;}
+@keyframes nxspin{to{transform:rotate(360deg)}}
+.nx-spin{animation:nxspin 1s linear infinite;transform-origin:50% 50%;transform-box:fill-box;}
+@keyframes nxpulse{0%{opacity:.35;transform:scale(0.86)}50%{opacity:1;transform:scale(1)}100%{opacity:.35;transform:scale(0.86)}}
+.nx-pulse{animation:nxpulse 1.6s ease-in-out infinite;transform-origin:50% 50%;transform-box:fill-box;}
 </style>
 </head>
 <body>
@@ -21,16 +43,16 @@ body{background:#07101F;color:#E2E8F0;font-family:'Segoe UI','SF Pro Display',sy
 <script type="text/babel">
 const { useState, useMemo, useEffect, useRef } = React;
 
-// ─── TOKENS ─────────────────────────────────────────────────────────────────
+// ─── TOKENS (paleta inspirada em Death Stranding) ────────────────────────────
 const T = {
-  bg:'#07101F', surface:'#0C1829', card:'#0F1E33', raised:'#162640',
-  border:'#1C3054', borderHi:'#2A4880',
-  blue:'#60A5FA', blueD:'#1D4ED8',
-  orange:'#FB923C', orangeD:'#C2410C',
-  green:'#34D399', greenD:'#047857',
-  pink:'#F472B6', pinkD:'#BE185D',
-  gold:'#FBBF24', cyan:'#22D3EE', red:'#F87171',
-  txt:'#E2E8F0', sub:'#8BA3C0', muted:'#3D5470',
+  bg:'#0A0908', surface:'#120F0B', card:'#1A160F', raised:'#241F16',
+  border:'#332C1F', borderHi:'#4A4030',
+  blue:'#E8891F', blueD:'#A8620F',     // chiral amber — marca / jogos
+  orange:'#D46A2C', orangeD:'#9C4A1C', // status "jogando/assistindo"
+  green:'#8C9A5E', greenD:'#5F6B3C',   // musgo — concluído / sucesso
+  pink:'#8B93B0', pinkD:'#5F6684',     // névoa — anime
+  gold:'#D4A94A', cyan:'#6FC7C2', red:'#B0523A', // strand teal — séries / rust — perigo
+  txt:'#D9D3C4', sub:'#8C8474', muted:'#5A5142',
 };
 
 // ─── API ────────────────────────────────────────────────────────────────────
@@ -140,10 +162,10 @@ const STREAM = {
   Crunchyroll:[{rank:1,title:'Solo Leveling S2',type:'Anime',score:8.9},{rank:2,title:'Dungeon Meshi',type:'Anime',score:9.1},{rank:3,title:'Blue Lock S2',type:'Anime',score:8.7},{rank:4,title:'Dragon Ball Daima',type:'Anime',score:8.2},{rank:5,title:'One Piece',type:'Anime',score:8.9}],
 };
 const TRENDING = [
-  {title:'GTA VI',genre:'Open World',date:'Out 2025',hype:'🔥 Máxima'},
-  {title:'Elden Ring: Nightreign',genre:'Action RPG',date:'Jun 2025',hype:'🔥 Alta'},
-  {title:'Monster Hunter Wilds',genre:'Action RPG',date:'Fev 2025',hype:'⭐ Alta'},
-  {title:'Metroid Prime 4',genre:'Action Adv.',date:'2025',hype:'⭐ Alta'},
+  {title:'GTA VI',genre:'Open World',date:'Out 2025',hype:'Máxima'},
+  {title:'Elden Ring: Nightreign',genre:'Action RPG',date:'Jun 2025',hype:'Alta'},
+  {title:'Monster Hunter Wilds',genre:'Action RPG',date:'Fev 2025',hype:'Alta'},
+  {title:'Metroid Prime 4',genre:'Action Adv.',date:'2025',hype:'Alta'},
 ];
 const DEALS = [
   {title:'Red Dead Redemption 2',orig:99.90,sale:19.90,disc:80,store:'Steam'},
@@ -152,38 +174,91 @@ const DEALS = [
   {title:'Persona 5 Royal',orig:129.90,sale:38.90,disc:70,store:'Steam'},
 ];
 
-// ─── MICRO COMPONENTS ────────────────────────────────────────────────────────
+// ─── ÍCONES (glifos técnicos autorais, no espírito da HUD/menus do jogo) ─────
+const ICO = {
+  series:  <><rect x="3" y="5" width="18" height="13" rx="1"/><line x1="7" y1="9" x2="17" y2="9"/><line x1="7" y1="13" x2="14" y2="13"/></>,
+  games:   <><rect x="4" y="8" width="16" height="8" rx="4"/><line x1="8" y1="10.5" x2="8" y2="13.5"/><line x1="6.5" y1="12" x2="9.5" y2="12"/><circle cx="15.5" cy="11" r="0.9" fill="currentColor" stroke="none"/><circle cx="17.5" cy="13" r="0.9" fill="currentColor" stroke="none"/></>,
+  explore: <><circle cx="10" cy="10" r="6"/><line x1="14.5" y1="14.5" x2="20" y2="20"/></>,
+  profile: <><circle cx="12" cy="8" r="3.2"/><path d="M5,20 C5,15.4 8.1,13 12,13 C15.9,13 19,15.4 19,20"/></>,
+  soon:    <><rect x="4" y="5" width="16" height="15" rx="1"/><line x1="4" y1="9" x2="20" y2="9"/><line x1="8" y1="3" x2="8" y2="6"/><line x1="16" y1="3" x2="16" y2="6"/></>,
+  beacon:  <><polygon points="12,4 17.5,16 6.5,16"/><line x1="12" y1="8" x2="12" y2="12.5"/><circle cx="12" cy="14.6" r="0.6" fill="currentColor" stroke="none"/></>,
+  award:   <><polygon points="12,3 18,6.6 18,13.4 12,17 6,13.4 6,6.6"/><circle cx="12" cy="10.5" r="1.6" fill="currentColor" stroke="none"/></>,
+  play:    <polygon points="8,5 19,12 8,19"/>,
+  clock:   <><circle cx="12" cy="12" r="8"/><line x1="12" y1="12" x2="12" y2="7.3"/><line x1="12" y1="12" x2="15.5" y2="13.3"/></>,
+  rank:    <polygon points="12,4 18,12 12,20 6,12"/>,
+  trend:   <><polyline points="4,17 9.5,11 13,14.5 19,7.5"/><polyline points="19,11.5 19,7.5 15,7.5"/></>,
+  tag:     <><rect x="7" y="7" width="10" height="10" rx="1.5" transform="rotate(45 12 12)"/><circle cx="9.3" cy="9.3" r="0.9" fill="currentColor" stroke="none"/></>,
+  scan:    <><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="7.5" strokeDasharray="3 3"/><line x1="12" y1="1.5" x2="12" y2="4"/><line x1="12" y1="20" x2="12" y2="22.5"/><line x1="1.5" y1="12" x2="4" y2="12"/><line x1="20" y1="12" x2="22.5" y2="12"/></>,
+  check:   <polyline points="5,13 10,18 19,7"/>,
+  close:   <><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></>,
+  warning: <><polygon points="12,3.5 21.5,20 2.5,20"/><line x1="12" y1="9" x2="12" y2="14"/><circle cx="12" cy="17" r="0.7" fill="currentColor" stroke="none"/></>,
+  plus:    <><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></>,
+  node:    <><polygon points="12,3 19,7.3 19,16.7 12,21 5,16.7 5,7.3"/><line x1="8.5" y1="15.5" x2="15.5" y2="8.5"/><circle cx="8.5" cy="15.5" r="1.3" fill="currentColor" stroke="none"/><circle cx="15.5" cy="8.5" r="1.3" fill="currentColor" stroke="none"/></>,
+};
+
+function Icon({name,size=18,color='currentColor',strokeWidth=1.6,className='',style:ext={}}) {
+  const glyph = ICO[name];
+  if(!glyph) return null;
+  return <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round" className={className} style={{display:'block',flexShrink:0,...ext}}>{glyph}</svg>;
+}
+
+function Spinner({size=14,color=T.blue}) {
+  return <svg className="nx-spin" width={size} height={size} viewBox="0 0 24 24" style={{display:'inline-block',verticalAlign:'middle',flexShrink:0}}>
+    <circle cx="12" cy="12" r="9" fill="none" stroke={color} strokeWidth="2" strokeDasharray="14 42" strokeLinecap="round" opacity="0.9"/>
+    <circle cx="12" cy="12" r="9" fill="none" stroke={color} strokeWidth="2" opacity="0.12"/>
+  </svg>;
+}
+
+function HexFrame({children,color=T.blue,size=34,bg=true}) {
+  return <div style={{position:'relative',width:size,height:size,flexShrink:0}}>
+    <svg width={size} height={size} viewBox="0 0 24 24" style={{position:'absolute',inset:0}}>
+      <polygon points="12,2 20.5,7 20.5,17 12,22 3.5,17 3.5,7" fill={bg?`${color}14`:'none'} stroke={color} strokeWidth="1.2"/>
+    </svg>
+    <div style={{position:'absolute',inset:0,display:'flex',alignItems:'center',justifyContent:'center'}}>{children}</div>
+  </div>;
+}
+
+function HexBadge({n,color=T.blue,size=32}) {
+  return <HexFrame color={color} size={size}><span style={{fontFamily:"'Rajdhani',sans-serif",fontWeight:700,fontSize:size*0.42,color}}>{n}</span></HexFrame>;
+}
+
+function Rank({value,size=11,color=T.gold}) {
+  return <span style={{display:'inline-flex',alignItems:'center',gap:3}}><Icon name="rank" size={size} color={color} strokeWidth={1.8}/><span>{value}</span></span>;
+}
+
+// ─── MICRO COMPONENTES ────────────────────────────────────────────────────────
 function Cover({title,w=100,h=140}) {
   const init = title.split(' ').filter(Boolean).slice(0,2).map(w=>w[0]?.toUpperCase()).join('')||'?';
-  const palettes=[['#1e3a5f','#60A5FA'],['#064e3b','#34D399'],['#7c2d12','#FB923C'],['#500724','#F472B6'],['#1e1b4b','#818CF8'],['#0c4a6e','#22D3EE']];
-  const [bg,ac]=palettes[title.length%palettes.length];
-  return <div style={{width:w,height:h,borderRadius:8,flexShrink:0,background:`linear-gradient(135deg,${bg},${bg}99)`,border:`1px solid ${ac}55`,display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',color:ac,fontSize:w>80?26:18,fontWeight:800,userSelect:'none',letterSpacing:'-1px'}}>
+  const accents=[T.blue,T.cyan,T.orange,T.pink,T.green,T.gold];
+  const ac=accents[title.length%accents.length];
+  return <div style={{width:w,height:h,borderRadius:2,flexShrink:0,background:`linear-gradient(135deg,${T.card},${T.raised})`,border:`1px solid ${ac}44`,display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',color:ac,fontSize:w>80?24:16,fontWeight:700,fontFamily:"'Rajdhani',sans-serif",userSelect:'none',letterSpacing:'0.5px',position:'relative'}}>
+    <div style={{position:'absolute',top:6,left:6,right:6,bottom:6,border:`1px solid ${ac}22`,pointerEvents:'none'}}/>
     {init}
-    <div style={{fontSize:w>80?9:7,color:`${ac}99`,marginTop:4,textAlign:'center',padding:'0 6px',fontWeight:400,maxWidth:'90%',overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap'}}>{title.substring(0,14)}{title.length>14?'…':''}</div>
+    <div style={{fontSize:w>80?8:6.5,color:`${ac}99`,marginTop:4,textAlign:'center',padding:'0 6px',fontWeight:500,maxWidth:'90%',overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap',textTransform:'uppercase',letterSpacing:'0.5px'}}>{title.substring(0,14)}{title.length>14?'…':''}</div>
   </div>;
 }
 
 function CoverImg({url,title,w=100,h=140}) {
   const [err,setErr]=useState(false);
   if (!url||err) return <Cover title={title} w={w} h={h}/>;
-  return <img src={url} alt={title} style={{width:w,height:h,borderRadius:8,objectFit:'cover',flexShrink:0,display:'block'}} onError={()=>setErr(true)}/>;
+  return <img src={url} alt={title} style={{width:w,height:h,borderRadius:2,objectFit:'cover',flexShrink:0,display:'block'}} onError={()=>setErr(true)}/>;
 }
 
 function SearchDropdown({results,onSelect,loading,color=T.blue}) {
   if (!loading && !results.length) return null;
-  return <div style={{position:'absolute',top:'calc(100% + 4px)',left:0,right:0,background:T.surface,border:`1px solid ${T.border}`,borderRadius:8,zIndex:200,maxHeight:240,overflowY:'auto',boxShadow:'0 8px 24px rgba(0,0,0,0.5)'}}>
-    {loading && <div style={{padding:'12px 14px',color:T.sub,fontSize:12,textAlign:'center'}}>🔍 Buscando...</div>}
+  return <div style={{position:'absolute',top:'calc(100% + 4px)',left:0,right:0,background:T.surface,border:`1px solid ${T.border}`,borderRadius:2,zIndex:200,maxHeight:240,overflowY:'auto',boxShadow:'0 8px 24px rgba(0,0,0,0.6)'}}>
+    {loading && <div style={{padding:'12px 14px',color:T.sub,fontSize:12,textAlign:'center',display:'flex',alignItems:'center',justifyContent:'center',gap:8}}><Spinner size={13} color={color}/> Buscando...</div>}
     {!loading && results.map((r,i)=>(
       <div key={r.id||i} onClick={()=>onSelect(r)}
         style={{padding:'8px 12px',cursor:'pointer',borderBottom:i<results.length-1?`1px solid ${T.border}`:'none',display:'flex',gap:10,alignItems:'center',transition:'background 0.1s'}}
         onMouseEnter={e=>e.currentTarget.style.background=T.raised}
         onMouseLeave={e=>e.currentTarget.style.background='transparent'}>
-        {(r.coverUrl||r.posterUrl)&&<img src={r.coverUrl||r.posterUrl} alt="" width={28} height={38} style={{borderRadius:4,objectFit:'cover',flexShrink:0}} onError={e=>e.target.style.display='none'}/>}
+        {(r.coverUrl||r.posterUrl)&&<img src={r.coverUrl||r.posterUrl} alt="" width={28} height={38} style={{borderRadius:2,objectFit:'cover',flexShrink:0}} onError={e=>e.target.style.display='none'}/>}
         <div style={{flex:1,minWidth:0}}>
-          <div style={{fontSize:12,color:T.txt,fontWeight:600,overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap'}}>{r.name}</div>
-          <div style={{fontSize:11,color:T.sub,marginTop:1}}>{r.year}{r.genre?' · '+r.genre:''}{r.developer?' · '+r.developer:''}</div>
+          <div style={{fontSize:12,color:T.txt,fontWeight:600,overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap',fontFamily:"'Barlow',sans-serif"}}>{r.name}</div>
+          <div style={{fontSize:11,color:T.sub,marginTop:1,fontFamily:"'Barlow',sans-serif"}}>{r.year}{r.genre?' · '+r.genre:''}{r.developer?' · '+r.developer:''}</div>
         </div>
-        {r.voteAverage&&<div style={{fontSize:11,color:T.gold,flexShrink:0}}>⭐ {r.voteAverage.toFixed(1)}</div>}
+        {r.voteAverage&&<Rank value={r.voteAverage.toFixed(1)} color={T.gold}/>}
       </div>
     ))}
   </div>;
@@ -191,53 +266,48 @@ function SearchDropdown({results,onSelect,loading,color=T.blue}) {
 
 function Stars({value,onChange,size=13,readonly=false}) {
   const [hov,setHov]=useState(0);
-  return <div style={{display:'flex',alignItems:'center',gap:1}}>
-    {[1,2,3,4,5,6,7,8,9,10].map(s=>(
-      <span key={s} onClick={()=>!readonly&&onChange&&onChange(s)} onMouseEnter={()=>!readonly&&setHov(s)} onMouseLeave={()=>!readonly&&setHov(0)}
-        style={{fontSize:size,cursor:readonly?'default':'pointer',color:s<=(hov||(value||0))?T.gold:T.border,transition:'color 0.1s',lineHeight:1}}>★</span>
-    ))}
-    {value&&<span style={{fontSize:size-2,color:T.sub,marginLeft:5}}>{value}/10</span>}
+  return <div style={{display:'flex',alignItems:'center',gap:2}}>
+    {[1,2,3,4,5,6,7,8,9,10].map(s=>{
+      const active = s<=(hov||(value||0));
+      return <svg key={s} width={size} height={size} viewBox="0 0 24 24"
+        onClick={()=>!readonly&&onChange&&onChange(s)} onMouseEnter={()=>!readonly&&setHov(s)} onMouseLeave={()=>!readonly&&setHov(0)}
+        style={{cursor:readonly?'default':'pointer',transition:'all 0.1s',flexShrink:0}}>
+        <polygon points="12,4 18,12 12,20 6,12" fill={active?T.gold:'none'} stroke={active?T.gold:T.border} strokeWidth="1.6"/>
+      </svg>;
+    })}
+    {value&&<span style={{fontSize:size-1,color:T.sub,marginLeft:6,fontFamily:"'Rajdhani',sans-serif",fontWeight:700}}>{value}/10</span>}
   </div>;
 }
 
-function Bar({v,t,color=T.blue,h=5}) {
+function Bar({v,t,color=T.blue,h=4}) {
   const p=t>0?Math.min(v/t*100,100):0;
-  return <div style={{height:h,background:T.raised,borderRadius:h,overflow:'hidden'}}>
-    <div style={{height:'100%',width:`${p}%`,background:`linear-gradient(90deg,${color},${color}cc)`,borderRadius:h,boxShadow:`0 0 6px ${color}66`,transition:'width 0.5s ease'}}/>
+  return <div style={{height:h,background:T.raised,overflow:'hidden'}}>
+    <div style={{height:'100%',width:`${p}%`,background:color,boxShadow:`0 0 6px ${color}66`,transition:'width 0.5s ease'}}/>
   </div>;
 }
 
 function Badge({label,color}) {
-  return <span style={{padding:'2px 9px',borderRadius:20,fontSize:11,fontWeight:600,color,background:`${color}18`,border:`1px solid ${color}33`,whiteSpace:'nowrap'}}>{label}</span>;
+  return <span style={{padding:'2px 8px',borderRadius:2,fontSize:10,fontWeight:700,letterSpacing:'0.5px',textTransform:'uppercase',fontFamily:"'Rajdhani',sans-serif",color,background:`${color}16`,border:`1px solid ${color}40`,whiteSpace:'nowrap'}}>{label}</span>;
 }
 
 function Btn({onClick,children,variant='primary',small=false,style:ext={}}) {
   const v={
-    primary:{background:`linear-gradient(135deg,${T.blueD},${T.blue})`,color:'#fff',border:'none',boxShadow:`0 0 12px ${T.blue}44`},
+    primary:{background:`linear-gradient(135deg,${T.blueD},${T.blue})`,color:'#0A0908',border:'none',boxShadow:`0 0 14px ${T.blue}33`},
     ghost:{background:T.raised,color:T.sub,border:`1px solid ${T.border}`},
-    danger:{background:T.red,color:'#fff',border:'none'},
+    danger:{background:T.red,color:'#F5EFE2',border:'none'},
     outline:{background:'transparent',color:T.sub,border:`1px solid ${T.border}`},
   };
-  return <button onClick={onClick} style={{padding:small?'5px 12px':'8px 18px',borderRadius:6,fontSize:small?12:13,fontWeight:600,cursor:'pointer',transition:'opacity 0.15s',outline:'none',...v[variant],...ext}}>{children}</button>;
-}
-
-function SectionTitle({title,sub,right}) {
-  return <div style={{display:'flex',alignItems:'flex-end',justifyContent:'space-between',marginBottom:24}}>
-    <div>
-      <h2 style={{margin:0,fontSize:20,fontWeight:800,color:T.txt,letterSpacing:'-0.5px'}}>{title}</h2>
-      {sub&&<p style={{margin:'4px 0 0',fontSize:13,color:T.sub}}>{sub}</p>}
-    </div>
-    {right}
-  </div>;
+  return <button onClick={onClick} style={{padding:small?'6px 13px':'10px 20px',borderRadius:2,fontSize:small?11:12,fontWeight:700,letterSpacing:'0.6px',textTransform:'uppercase',fontFamily:"'Rajdhani',sans-serif",cursor:'pointer',transition:'opacity 0.15s',outline:'none',...v[variant],...ext}}>{children}</button>;
 }
 
 function Modal({open,onClose,title,children}) {
   if(!open) return null;
-  return <div style={{position:'fixed',inset:0,background:'rgba(0,0,0,0.75)',display:'flex',alignItems:'center',justifyContent:'center',zIndex:1000,padding:16,backdropFilter:'blur(4px)'}} onClick={e=>{if(e.target===e.currentTarget)onClose();}}>
-    <div style={{background:T.surface,border:`1px solid ${T.border}`,borderRadius:14,padding:26,width:'100%',maxWidth:500,maxHeight:'88vh',overflowY:'auto',position:'relative'}}>
+  return <div style={{position:'fixed',inset:0,background:'rgba(5,4,3,0.82)',display:'flex',alignItems:'center',justifyContent:'center',zIndex:1000,padding:16,backdropFilter:'blur(3px)'}} onClick={e=>{if(e.target===e.currentTarget)onClose();}}>
+    <div style={{background:T.surface,border:`1px solid ${T.border}`,borderRadius:3,padding:24,width:'100%',maxWidth:440,maxHeight:'88vh',overflowY:'auto',position:'relative'}}>
+      <div style={{position:'absolute',top:0,left:0,right:0,height:2,background:`linear-gradient(90deg,${T.blue},transparent)`}}/>
       <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:20}}>
-        <h3 style={{margin:0,fontSize:17,fontWeight:700,color:T.txt}}>{title}</h3>
-        <button onClick={onClose} style={{background:'transparent',border:'none',color:T.sub,fontSize:18,cursor:'pointer',lineHeight:1,padding:'2px 6px'}}>✕</button>
+        <h3 style={{margin:0,fontSize:16,fontWeight:700,color:T.txt,fontFamily:"'Rajdhani',sans-serif",textTransform:'uppercase',letterSpacing:'0.5px'}}>{title}</h3>
+        <button onClick={onClose} style={{background:'transparent',border:'none',color:T.sub,cursor:'pointer',padding:4,display:'flex'}}><Icon name="close" size={16}/></button>
       </div>
       {children}
     </div>
@@ -245,224 +315,88 @@ function Modal({open,onClose,title,children}) {
 }
 
 function Inp(props) {
-  return <input {...props} style={{width:'100%',background:T.raised,border:`1px solid ${T.border}`,borderRadius:6,padding:'8px 12px',color:T.txt,fontSize:13,outline:'none',boxSizing:'border-box',...(props.style||{})}}/>;
+  return <input {...props} style={{width:'100%',background:T.raised,border:`1px solid ${T.border}`,borderRadius:2,padding:'8px 12px',color:T.txt,fontSize:13,fontFamily:"'Barlow',sans-serif",outline:'none',boxSizing:'border-box',...(props.style||{})}}/>;
 }
 function Sel({children,...props}) {
-  return <select {...props} style={{width:'100%',background:T.raised,border:`1px solid ${T.border}`,borderRadius:6,padding:'8px 12px',color:T.txt,fontSize:13,outline:'none',boxSizing:'border-box',...(props.style||{})}}>{children}</select>;
+  return <select {...props} style={{width:'100%',background:T.raised,border:`1px solid ${T.border}`,borderRadius:2,padding:'8px 12px',color:T.txt,fontSize:13,fontFamily:"'Barlow',sans-serif",outline:'none',boxSizing:'border-box',...(props.style||{})}}>{children}</select>;
 }
 function Field({label,children}) {
   return <div style={{marginBottom:14}}>
-    <div style={{fontSize:11,fontWeight:600,color:T.sub,marginBottom:5,textTransform:'uppercase',letterSpacing:'0.5px'}}>{label}</div>
+    <div style={{fontSize:10,fontWeight:700,color:T.sub,marginBottom:5,textTransform:'uppercase',letterSpacing:'0.8px',fontFamily:"'Rajdhani',sans-serif"}}>{label}</div>
     {children}
   </div>;
 }
 
-// ─── DASHBOARD ───────────────────────────────────────────────────────────────
-function Dashboard({games,media,setSection}) {
-  const c={
-    done:games.filter(g=>g.status==='completed').length,
-    play:games.filter(g=>g.status==='playing').length,
-    hours:games.reduce((a,g)=>a+g.hours,0),
-    watch:media.filter(m=>m.status==='watching').length,
-  };
-  const watching=media.filter(m=>m.status==='watching');
-  const topGames=[...games].filter(g=>g.score).sort((a,b)=>(b.score||0)-(a.score||0)).slice(0,4);
-  return <div style={{padding:'28px 30px',maxWidth:1100}}>
-    <div style={{marginBottom:28}}>
-      <h1 style={{margin:0,fontSize:26,fontWeight:900,color:T.txt,letterSpacing:'-0.5px'}}>Painel Principal <span style={{color:T.blue,fontSize:18}}>◈</span></h1>
-      <p style={{margin:'5px 0 0',color:T.sub,fontSize:13}}>Visão geral do seu entretenimento</p>
+// ─── COMPONENTES DE NAVEGAÇÃO (estrutura estilo TV Time) ─────────────────────
+function TopBar({right}) {
+  return <div style={{position:'sticky',top:0,zIndex:30,background:T.bg,padding:'calc(14px + env(safe-area-inset-top,0px)) 16px 10px',display:'flex',alignItems:'center',justifyContent:'space-between',borderBottom:`1px solid ${T.border}55`}}>
+    <div style={{display:'flex',alignItems:'center',gap:8}}>
+      <Icon name="node" size={22} color={T.blue} strokeWidth={1.3}/>
+      <span style={{fontWeight:700,fontSize:14,letterSpacing:'1.5px',color:T.txt,fontFamily:"'Rajdhani',sans-serif",textTransform:'uppercase'}}>NexTrack</span>
     </div>
-    <div style={{display:'grid',gridTemplateColumns:'repeat(4,1fr)',gap:14,marginBottom:28}}>
-      {[{l:'Jogos Zerados',v:c.done,i:'🏆',co:T.green,s:`de ${games.length} no total`},{l:'Jogando Agora',v:c.play,i:'🎮',co:T.orange,s:'em andamento'},{l:'Horas Jogadas',v:`${c.hours}h`,i:'⏱',co:T.blue,s:'tempo total'},{l:'Assistindo',v:c.watch,i:'▶',co:T.pink,s:'séries e animes'}].map(({l,v,i,co,s})=>(
-        <div key={l} style={{background:T.card,border:`1px solid ${T.border}`,borderRadius:10,padding:'16px 18px',position:'relative',overflow:'hidden'}}>
-          <div style={{position:'absolute',top:0,left:0,right:0,height:2,background:`linear-gradient(90deg,${co},${co}44)`}}/>
-          <div style={{fontSize:22,marginBottom:8}}>{i}</div>
-          <div style={{fontSize:26,fontWeight:900,color:co,letterSpacing:'-1px'}}>{v}</div>
-          <div style={{fontSize:13,color:T.txt,fontWeight:600,marginTop:2}}>{l}</div>
-          <div style={{fontSize:11,color:T.muted,marginTop:3}}>{s}</div>
-        </div>
-      ))}
-    </div>
-    <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:20}}>
-      <div style={{background:T.card,border:`1px solid ${T.border}`,borderRadius:10,padding:20}}>
-        <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:16}}>
-          <span style={{fontSize:14,fontWeight:700,color:T.txt}}>🏆 Melhores Avaliados</span>
-          <button onClick={()=>setSection('games')} style={{background:'none',border:'none',color:T.blue,fontSize:12,cursor:'pointer'}}>Ver todos →</button>
-        </div>
-        {topGames.map(g=>(
-          <div key={g.id} style={{display:'flex',gap:10,alignItems:'center',paddingBottom:12,marginBottom:12,borderBottom:`1px solid ${T.border}`}}>
-            <CoverImg url={g.coverUrl} title={g.title} w={42} h={56}/>
-            <div style={{flex:1,minWidth:0}}>
-              <div style={{fontSize:13,fontWeight:600,color:T.txt,whiteSpace:'nowrap',overflow:'hidden',textOverflow:'ellipsis'}}>{g.title}</div>
-              <div style={{fontSize:11,color:T.sub,marginTop:3}}>{g.platform} · {g.hours}h</div>
-            </div>
-            <div style={{fontSize:18,fontWeight:900,color:T.gold}}>{g.score}<span style={{fontSize:11}}>/10</span></div>
-          </div>
-        ))}
-      </div>
-      <div style={{background:T.card,border:`1px solid ${T.border}`,borderRadius:10,padding:20}}>
-        <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:16}}>
-          <span style={{fontSize:14,fontWeight:700,color:T.txt}}>▶ Assistindo Agora</span>
-          <button onClick={()=>setSection('anime')} style={{background:'none',border:'none',color:T.pink,fontSize:12,cursor:'pointer'}}>Ver todos →</button>
-        </div>
-        {watching.map(m=>{
-          const pct=m.totalEps>0?Math.round(m.watchedEps/m.totalEps*100):0;
-          const avgScore=m.epRatings.length?(m.epRatings.reduce((a,r)=>a+r.rating,0)/m.epRatings.length).toFixed(1):null;
-          return <div key={m.id} style={{paddingBottom:12,marginBottom:12,borderBottom:`1px solid ${T.border}`}}>
-            <div style={{display:'flex',justifyContent:'space-between',marginBottom:6}}>
-              <div>
-                <div style={{fontSize:13,fontWeight:600,color:T.txt}}>{m.title}</div>
-                <div style={{fontSize:11,color:T.sub,marginTop:2}}>{m.watchedEps}/{m.totalEps} eps{avgScore?` · ⭐ ${avgScore}`:''}</div>
-              </div>
-              <Badge label={`${pct}%`} color={m.type==='anime'?T.pink:T.cyan}/>
-            </div>
-            <Bar v={m.watchedEps} t={m.totalEps} color={m.type==='anime'?T.pink:T.cyan}/>
-          </div>;
-        })}
-      </div>
-    </div>
+    {right}
   </div>;
 }
 
-// ─── GAMES ───────────────────────────────────────────────────────────────────
-function GamesSection({games,setGames,igdbToken}) {
-  const [filter,setFilter]=useState('all');
-  const [sel,setSel]=useState(null);
-  const [showAdd,setShowAdd]=useState(false);
-  const [form,setForm]=useState({title:'',status:'owned',platform:'PC',genre:'',year:new Date().getFullYear(),notes:'',developer:''});
-  const [pendingCover,setPendingCover]=useState(null);
-  const [srch,setSrch]=useState('');
-  const [srchRes,setSrchRes]=useState([]);
-  const [srchLoading,setSrchLoading]=useState(false);
-  const timer=useRef(null);
-
-  const handleSearch=v=>{
-    setSrch(v);
-    clearTimeout(timer.current);
-    if(v.length<2){setSrchRes([]);return;}
-    setSrchLoading(true);
-    timer.current=setTimeout(async()=>{
-      const r=await searchIGDB(v,igdbToken);
-      setSrchRes(r);
-      setSrchLoading(false);
-    },500);
-  };
-
-  const selectGame=g=>{
-    setForm({title:g.name,year:g.year,developer:g.developer,platform:g.platform||'PC',genre:g.genre,status:'owned',notes:''});
-    setPendingCover(g.coverUrl);
-    setSrch('');setSrchRes([]);
-  };
-
-  const filtered=filter==='all'?games:games.filter(g=>g.status===filter);
-  const tabs=[{id:'all',l:`Todos (${games.length})`},{id:'playing',l:`Jogando (${games.filter(g=>g.status==='playing').length})`},{id:'completed',l:`Zerados (${games.filter(g=>g.status==='completed').length})`},{id:'owned',l:`Na Estante (${games.filter(g=>g.status==='owned').length})`}];
-  const stColor=(s)=>s==='completed'?T.green:s==='playing'?T.orange:T.blue;
-  const stLabel=(s)=>s==='completed'?'Zerado':s==='playing'?'Jogando':'Na Estante';
-
-  return <div style={{padding:'28px 30px',maxWidth:1100}}>
-    <SectionTitle title="Biblioteca de Jogos" sub="Gerencie e acompanhe todos os seus jogos"
-      right={<Btn onClick={()=>{setShowAdd(true);setSrch('');setSrchRes([]);setPendingCover(null);}}>+ Adicionar Jogo</Btn>}/>
-    <div style={{display:'flex',gap:3,marginBottom:22,background:T.card,padding:4,borderRadius:8,border:`1px solid ${T.border}`,width:'fit-content'}}>
-      {tabs.map(({id,l})=>(
-        <button key={id} onClick={()=>setFilter(id)} style={{padding:'6px 14px',borderRadius:6,border:'none',cursor:'pointer',fontSize:12,fontWeight:filter===id?700:400,background:filter===id?T.blue:'transparent',color:filter===id?'#fff':T.sub,transition:'all 0.15s'}}>{l}</button>
-      ))}
-    </div>
-    <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fill,minmax(175px,1fr))',gap:14}}>
-      {filtered.map(g=>(
-        <div key={g.id} onClick={()=>setSel(g)} style={{background:T.card,border:`1px solid ${T.border}`,borderRadius:10,overflow:'hidden',cursor:'pointer',transition:'all 0.15s'}}
-          onMouseEnter={e=>{e.currentTarget.style.borderColor=stColor(g.status);e.currentTarget.style.transform='translateY(-2px)';}}
-          onMouseLeave={e=>{e.currentTarget.style.borderColor=T.border;e.currentTarget.style.transform='translateY(0)';}}>
-          <div style={{padding:'14px 14px 0',display:'flex',justifyContent:'center'}}>
-            <CoverImg url={g.coverUrl} title={g.title} w={110} h={148}/>
-          </div>
-          <div style={{padding:'10px 12px 13px'}}>
-            <div style={{fontSize:12,fontWeight:700,color:T.txt,marginBottom:6,lineHeight:1.3,display:'-webkit-box',WebkitLineClamp:2,WebkitBoxOrient:'vertical',overflow:'hidden'}}>{g.title}</div>
-            <div style={{display:'flex',justifyContent:'space-between',alignItems:'center'}}>
-              <Badge label={stLabel(g.status)} color={stColor(g.status)}/>
-              {g.score&&<span style={{fontSize:13,fontWeight:800,color:T.gold}}>{g.score}/10</span>}
-            </div>
-            {g.hours>0&&<div style={{fontSize:10,color:T.muted,marginTop:5}}>⏱ {g.hours}h</div>}
-          </div>
-        </div>
-      ))}
-    </div>
-
-    <Modal open={!!sel} onClose={()=>setSel(null)} title={sel?.title||''}>
-      {sel&&<>
-        <div style={{display:'flex',gap:14,marginBottom:18}}>
-          <CoverImg url={sel.coverUrl} title={sel.title} w={90} h={122}/>
-          <div style={{flex:1}}>
-            <div style={{fontSize:11,color:T.sub,marginBottom:6}}>{sel.genre} · {sel.year} · {sel.platform}</div>
-            {sel.developer&&<div style={{fontSize:11,color:T.sub,marginBottom:12}}>{sel.developer}</div>}
-            <div style={{marginBottom:12}}>
-              <div style={{fontSize:11,color:T.muted,marginBottom:6,textTransform:'uppercase',letterSpacing:'0.5px'}}>Status</div>
-              <div style={{display:'flex',gap:6,flexWrap:'wrap'}}>
-                {['owned','playing','completed'].map(s=>(
-                  <button key={s} onClick={()=>{setGames(p=>p.map(g=>g.id===sel.id?{...g,status:s}:g));setSel({...sel,status:s});}}
-                    style={{padding:'4px 10px',borderRadius:5,fontSize:11,fontWeight:600,border:'none',cursor:'pointer',background:sel.status===s?stColor(s):T.raised,color:sel.status===s?'#fff':T.sub}}>{stLabel(s)}</button>
-                ))}
-              </div>
-            </div>
-            {sel.hours>0&&<div style={{fontSize:12,color:T.sub}}>⏱ {sel.hours} horas jogadas</div>}
-          </div>
-        </div>
-        <div style={{marginBottom:16}}>
-          <div style={{fontSize:11,color:T.muted,textTransform:'uppercase',letterSpacing:'0.5px',marginBottom:8}}>Avaliação</div>
-          <Stars value={sel.score} onChange={v=>{setGames(p=>p.map(g=>g.id===sel.id?{...g,score:v}:g));setSel({...sel,score:v});}} size={18}/>
-        </div>
-        {sel.notes&&<div style={{background:T.raised,border:`1px solid ${T.border}`,borderRadius:8,padding:12,marginBottom:16}}>
-          <div style={{fontSize:10,color:T.muted,textTransform:'uppercase',marginBottom:4}}>NOTAS</div>
-          <div style={{fontSize:13,color:T.txt}}>{sel.notes}</div>
-        </div>}
-        <div style={{display:'flex',justifyContent:'flex-end'}}>
-          <Btn variant="danger" small onClick={()=>{setGames(p=>p.filter(g=>g.id!==sel.id));setSel(null);}}>Remover</Btn>
-        </div>
-      </>}
-    </Modal>
-
-    <Modal open={showAdd} onClose={()=>setShowAdd(false)} title="Adicionar Jogo">
-      <Field label={igdbToken?"Buscar no IGDB":"Título"}>
-        <div style={{position:'relative'}}>
-          <Inp value={igdbToken?srch:form.title}
-            onChange={e=>igdbToken?handleSearch(e.target.value):setForm({...form,title:e.target.value})}
-            placeholder={igdbToken?"Digite para buscar no IGDB...":"Nome do jogo"}/>
-          {igdbToken&&<SearchDropdown results={srchRes} onSelect={selectGame} loading={srchLoading}/>}
-        </div>
-      </Field>
-      {igdbToken&&form.title&&<div style={{background:T.raised,border:`1px solid ${T.green}44`,borderRadius:8,padding:'10px 12px',marginBottom:14,display:'flex',gap:10,alignItems:'center'}}>
-        <CoverImg url={pendingCover} title={form.title} w={36} h={48}/>
-        <div>
-          <div style={{fontSize:13,fontWeight:700,color:T.txt}}>{form.title}</div>
-          <div style={{fontSize:11,color:T.sub}}>{form.developer} · {form.year} · {form.platform}</div>
-        </div>
-      </div>}
-      {!igdbToken&&<Field label="Título"><Inp value={form.title} onChange={e=>setForm({...form,title:e.target.value})} placeholder="Nome do jogo"/></Field>}
-      <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:12}}>
-        <Field label="Status"><Sel value={form.status} onChange={e=>setForm({...form,status:e.target.value})}><option value="owned">Na Estante</option><option value="playing">Jogando</option><option value="completed">Zerado</option></Sel></Field>
-        <Field label="Plataforma"><Sel value={form.platform} onChange={e=>setForm({...form,platform:e.target.value})}>{['PC','PS5','PS4','Xbox Series X','Switch','Mobile'].map(p=><option key={p}>{p}</option>)}</Sel></Field>
-      </div>
-      <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:12}}>
-        <Field label="Gênero"><Inp value={form.genre} onChange={e=>setForm({...form,genre:e.target.value})} placeholder="RPG, Action..."/></Field>
-        <Field label="Ano"><Inp type="number" value={form.year} onChange={e=>setForm({...form,year:+e.target.value})}/></Field>
-      </div>
-      <Field label="Notas"><textarea value={form.notes} onChange={e=>setForm({...form,notes:e.target.value})} placeholder="Suas impressões..." style={{width:'100%',background:T.raised,border:`1px solid ${T.border}`,borderRadius:6,padding:'8px 12px',color:T.txt,fontSize:13,outline:'none',boxSizing:'border-box',resize:'vertical',minHeight:70,fontFamily:'inherit'}}/></Field>
-      <div style={{display:'flex',gap:10,justifyContent:'flex-end'}}>
-        <Btn variant="outline" onClick={()=>setShowAdd(false)}>Cancelar</Btn>
-        <Btn onClick={()=>{
-          const t=igdbToken?srch||form.title:form.title;
-          if(!t.trim()&&!form.title.trim())return;
-          setGames(p=>[{id:Date.now(),...form,title:form.title||srch,coverUrl:pendingCover,score:null,hours:0},...p]);
-          setForm({title:'',status:'owned',platform:'PC',genre:'',year:new Date().getFullYear(),notes:'',developer:''});
-          setSrch('');setSrchRes([]);setPendingCover(null);
-          setShowAdd(false);
-        }}>Adicionar</Btn>
-      </div>
-    </Modal>
+function SegmentedTabs({tabs,active,onChange,color=T.blue}) {
+  return <div style={{display:'flex',borderBottom:`1px solid ${T.border}`,position:'sticky',top:52,zIndex:29,background:T.bg}}>
+    {tabs.map(t=>{
+      const isActive=active===t.id;
+      return <button key={t.id} onClick={()=>onChange(t.id)} style={{flex:1,padding:'13px 0 12px',background:'transparent',border:'none',cursor:'pointer',fontSize:12,fontWeight:700,fontFamily:"'Rajdhani',sans-serif",letterSpacing:'1px',color:isActive?T.txt:T.muted,textTransform:'uppercase',position:'relative'}}>
+        {t.label}
+        {isActive&&<span style={{position:'absolute',bottom:-1,left:14,right:14,height:2,background:color,boxShadow:`0 0 8px ${color}`}}/>}
+      </button>;
+    })}
   </div>;
 }
 
-// ─── ANIME & SERIES ──────────────────────────────────────────────────────────
-function AnimeSection({media,setMedia}) {
+function FilterChips({options,active,onChange,color=T.blue}) {
+  return <div style={{display:'flex',gap:6,overflowX:'auto',padding:'12px 16px'}}>
+    {options.map(o=>{
+      const isActive=active===o.id;
+      return <button key={o.id} onClick={()=>onChange(o.id)} style={{flexShrink:0,padding:'6px 12px',borderRadius:2,fontSize:10.5,fontWeight:700,fontFamily:"'Rajdhani',sans-serif",textTransform:'uppercase',letterSpacing:'0.5px',border:`1px solid ${isActive?color:T.border}`,background:isActive?`${color}1c`:'transparent',color:isActive?color:T.sub,cursor:'pointer',whiteSpace:'nowrap'}}>{o.label}</button>;
+    })}
+  </div>;
+}
+
+function EmptyState({icon,title,subtitle,ctaLabel,onCta,color=T.blue}) {
+  return <div style={{display:'flex',flexDirection:'column',alignItems:'center',textAlign:'center',padding:'54px 30px 36px'}}>
+    <div style={{position:'relative',width:120,height:120,marginBottom:26,display:'flex',alignItems:'center',justifyContent:'center'}}>
+      {[46,34,22].map((r,i)=><div key={i} style={{position:'absolute',width:r*2,height:r*2,borderRadius:'50%',border:`1px solid ${color}${i===2?'55':i===1?'32':'1c'}`}}/>)}
+      <div style={{width:56,height:56,borderRadius:'50%',background:`${color}12`,border:`1px solid ${color}66`,display:'flex',alignItems:'center',justifyContent:'center',boxShadow:`0 0 24px ${color}22`}}>
+        <Icon name={icon} size={26} color={color} strokeWidth={1.4}/>
+      </div>
+    </div>
+    <div style={{fontFamily:"'Rajdhani',sans-serif",fontSize:19,fontWeight:700,color:T.txt,marginBottom:8,textTransform:'uppercase',letterSpacing:'0.5px'}}>{title}</div>
+    <div style={{fontFamily:"'Barlow',sans-serif",fontSize:13,color:T.sub,marginBottom:24,maxWidth:260,lineHeight:1.55}}>{subtitle}</div>
+    {ctaLabel&&<Btn onClick={onCta} style={{padding:'11px 28px'}}>{ctaLabel}</Btn>}
+  </div>;
+}
+
+function BottomNav({active,setActive,alert}) {
+  const items=[
+    {id:'series',icon:'series',label:'Séries'},
+    {id:'games',icon:'games',label:'Jogos'},
+    {id:'explore',icon:'explore',label:'Explorar'},
+    {id:'profile',icon:'profile',label:'Perfil'},
+  ];
+  return <div style={{display:'flex',borderTop:`1px solid ${T.border}`,background:T.surface,flexShrink:0,paddingBottom:'env(safe-area-inset-bottom,0px)'}}>
+    {items.map(it=>{
+      const isActive=active===it.id;
+      return <button key={it.id} onClick={()=>setActive(it.id)} style={{flex:1,display:'flex',flexDirection:'column',alignItems:'center',gap:4,padding:'10px 4px 8px',background:'transparent',border:'none',cursor:'pointer',position:'relative'}}>
+        <div style={{width:30,height:30,borderRadius:'50%',display:'flex',alignItems:'center',justifyContent:'center',border:isActive?`1px solid ${T.blue}66`:'1px solid transparent',background:isActive?`${T.blue}14`:'transparent',transition:'all .15s'}}>
+          <Icon name={it.icon} size={16} color={isActive?T.blue:T.muted}/>
+        </div>
+        {it.id==='games'&&alert&&<span style={{position:'absolute',top:5,right:'29%',width:6,height:6,borderRadius:'50%',background:T.red,boxShadow:`0 0 6px ${T.red}`}}/>}
+        <span style={{fontSize:9.5,fontWeight:700,fontFamily:"'Rajdhani',sans-serif",letterSpacing:'0.4px',textTransform:'uppercase',color:isActive?T.blue:T.muted}}>{it.label}</span>
+      </button>;
+    })}
+  </div>;
+}
+
+// ─── SÉRIES (séries, animação e animes) ──────────────────────────────────────
+function SeriesScreen({media,setMedia}) {
+  const [seg,setSeg]=useState('list');
   const [filter,setFilter]=useState('all');
   const [sel,setSel]=useState(null);
   const [showAdd,setShowAdd]=useState(false);
@@ -505,51 +439,49 @@ function AnimeSection({media,setMedia}) {
     setSrchLoading(false);
   };
 
-  const filtered=filter==='all'?media:filter==='anime'?media.filter(m=>m.type==='anime'):filter==='series'?media.filter(m=>m.type==='series'):media.filter(m=>m.status===filter);
-  const tabs=[{id:'all',l:'Todos'},{id:'watching',l:'Assistindo'},{id:'completed',l:'Concluídos'},{id:'anime',l:'Anime'},{id:'series',l:'Séries'}];
+  const resetForm=()=>{
+    setForm({title:'',titleJP:'',type:'anime',status:'watching',totalEps:12,watchedEps:0,studio:'',year:new Date().getFullYear(),genres:'',streaming:''});
+    setSrch('');setSrchRes([]);setPendingCover(null);
+  };
+
+  const mainList=media.filter(m=>m.status!=='planned');
+  const soonList=media.filter(m=>m.status==='planned');
+  const chipOpts=[{id:'all',label:'Todos'},{id:'watching',label:'Assistindo'},{id:'completed',label:'Concluído'},{id:'anime',label:'Anime'},{id:'series',label:'Série'}];
+  const listFiltered = filter==='all'?mainList:filter==='anime'?mainList.filter(m=>m.type==='anime'):filter==='series'?mainList.filter(m=>m.type==='series'):mainList.filter(m=>m.status===filter);
+  const shown = seg==='list'?listFiltered:soonList;
+
   const sc=(m)=>m.epRatings.length?(m.epRatings.reduce((a,r)=>a+r.rating,0)/m.epRatings.length).toFixed(1):null;
   const sColor=(m)=>m.type==='anime'?T.pink:T.cyan;
   const stColor={watching:T.orange,completed:T.green,planned:T.blue,dropped:T.red};
   const stLabel={watching:'Assistindo',completed:'Concluído',planned:'Planejado',dropped:'Abandonado'};
 
-  return <div style={{padding:'28px 30px',maxWidth:1100}}>
-    <SectionTitle title="Anime & Séries" sub="Episódios, avaliações e progresso" right={<Btn onClick={()=>{setShowAdd(true);setSrch('');setSrchRes([]);setPendingCover(null);}}>+ Adicionar</Btn>}/>
-    <div style={{display:'flex',gap:3,marginBottom:22,background:T.card,padding:4,borderRadius:8,border:`1px solid ${T.border}`,width:'fit-content'}}>
-      {tabs.map(({id,l})=>(
-        <button key={id} onClick={()=>setFilter(id)} style={{padding:'6px 14px',borderRadius:6,border:'none',cursor:'pointer',fontSize:12,fontWeight:filter===id?700:400,background:filter===id?T.pink:'transparent',color:filter===id?'#fff':T.sub,transition:'all 0.15s'}}>{l}</button>
-      ))}
-    </div>
-    <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fill,minmax(270px,1fr))',gap:14}}>
-      {filtered.map(m=>{
-        const score=sc(m);const remaining=m.totalEps-m.watchedEps;
-        return <div key={m.id} onClick={()=>setSel(m)} style={{background:T.card,border:`1px solid ${T.border}`,borderRadius:10,padding:16,cursor:'pointer',transition:'all 0.15s'}}
-          onMouseEnter={e=>e.currentTarget.style.borderColor=sColor(m)}
-          onMouseLeave={e=>e.currentTarget.style.borderColor=T.border}>
-          <div style={{display:'flex',gap:12,marginBottom:12}}>
-            <CoverImg url={m.coverUrl} title={m.title} w={56} h={76}/>
-            <div style={{flex:1,minWidth:0}}>
-              <div style={{fontSize:13,fontWeight:700,color:T.txt,marginBottom:2,overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap'}}>{m.title}</div>
-              {m.titleJP&&<div style={{fontSize:10,color:T.muted,marginBottom:5}}>{m.titleJP}</div>}
-              <div style={{display:'flex',gap:5,flexWrap:'wrap',marginBottom:5}}>
-                <Badge label={stLabel[m.status]} color={stColor[m.status]}/>
-                <Badge label={m.type==='anime'?'Anime':'Série'} color={sColor(m)}/>
+  return <div>
+    <TopBar right={<button onClick={()=>{setShowAdd(true);resetForm();}} style={{width:32,height:32,borderRadius:2,border:`1px solid ${T.border}`,background:T.card,color:T.pink,cursor:'pointer',display:'flex',alignItems:'center',justifyContent:'center'}}><Icon name="plus" size={15} color={T.pink}/></button>}/>
+    <SegmentedTabs tabs={[{id:'list',label:'Minha Lista'},{id:'soon',label:'Em Breve'}]} active={seg} onChange={setSeg} color={T.pink}/>
+    {seg==='list'&&<FilterChips options={chipOpts} active={filter} onChange={setFilter} color={T.pink}/>}
+    <div style={{paddingBottom:24,paddingTop:seg==='soon'?4:0}}>
+      {shown.length===0
+        ? <EmptyState icon={seg==='list'?'series':'soon'} color={T.pink}
+            title={seg==='list'?'Sua lista está vazia!':'Nada por vir ainda'}
+            subtitle={seg==='list'?'Adicione animes e séries que você está assistindo ou já assistiu.':'Marque um título como "Planejado" para ele aparecer aqui.'}
+            ctaLabel="Buscar Título" onCta={()=>{setShowAdd(true);resetForm();}}/>
+        : shown.map(m=>{
+            const score=sc(m);
+            return <div key={m.id} onClick={()=>setSel(m)} style={{display:'flex',gap:12,alignItems:'center',padding:'11px 16px',borderBottom:`1px solid ${T.border}`,cursor:'pointer'}}>
+              <CoverImg url={m.coverUrl} title={m.title} w={50} h={68}/>
+              <div style={{flex:1,minWidth:0}}>
+                <div style={{fontSize:13,fontWeight:700,color:T.txt,whiteSpace:'nowrap',overflow:'hidden',textOverflow:'ellipsis',fontFamily:"'Barlow',sans-serif"}}>{m.title}</div>
+                <div style={{fontSize:11,color:T.sub,marginTop:2,fontFamily:"'Barlow',sans-serif"}}>{m.watchedEps}/{m.totalEps} eps · {m.studio||m.year}</div>
+                <div style={{display:'flex',gap:5,marginTop:6,alignItems:'center',flexWrap:'wrap'}}>
+                  <Badge label={stLabel[m.status]} color={stColor[m.status]}/>
+                  <Badge label={m.type==='anime'?'Anime':'Série'} color={sColor(m)}/>
+                  {score&&<span style={{fontSize:11,color:T.gold,fontWeight:700,marginLeft:2}}><Rank value={score} color={T.gold} size={10}/></span>}
+                </div>
+                {seg==='list'&&<div style={{marginTop:7}}><Bar v={m.watchedEps} t={m.totalEps} color={sColor(m)}/></div>}
               </div>
-              {score&&<div style={{fontSize:13,fontWeight:700,color:T.gold}}>⭐ {score}/10</div>}
-            </div>
-          </div>
-          <div style={{marginBottom:6}}>
-            <div style={{display:'flex',justifyContent:'space-between',fontSize:10,color:T.sub,marginBottom:4}}>
-              <span>{m.watchedEps}/{m.totalEps} episódios</span>
-              <span style={{color:sColor(m)}}>{m.totalEps>0?Math.round(m.watchedEps/m.totalEps*100):0}%</span>
-            </div>
-            <Bar v={m.watchedEps} t={m.totalEps} color={sColor(m)}/>
-          </div>
-          {m.status==='watching'&&remaining>0&&<div style={{fontSize:11,color:T.muted,marginTop:6}}>📺 {remaining} ep{remaining>1?'s':''} restante{remaining>1?'s':''}</div>}
-          {m.streaming.length>0&&<div style={{display:'flex',gap:5,marginTop:8,flexWrap:'wrap'}}>
-            {m.streaming.map(s=><span key={s} style={{fontSize:10,padding:'2px 6px',borderRadius:4,background:T.raised,color:T.sub,border:`1px solid ${T.border}`}}>{s}</span>)}
-          </div>}
-        </div>;
-      })}
+            </div>;
+          })
+      }
     </div>
 
     <Modal open={!!sel} onClose={()=>setSel(null)} title={sel?.title||''}>
@@ -557,22 +489,31 @@ function AnimeSection({media,setMedia}) {
         <div style={{display:'flex',gap:12,marginBottom:14}}>
           <CoverImg url={sel.coverUrl} title={sel.title} w={72} h={100}/>
           <div style={{flex:1}}>
-            {sel.titleJP&&<div style={{fontSize:11,color:T.sub,marginBottom:3}}>{sel.titleJP}</div>}
-            <div style={{fontSize:11,color:T.sub,marginBottom:8}}>{sel.studio} · {sel.year}</div>
+            {sel.titleJP&&<div style={{fontSize:11,color:T.sub,marginBottom:3,fontFamily:"'Barlow',sans-serif"}}>{sel.titleJP}</div>}
+            <div style={{fontSize:11,color:T.sub,marginBottom:8,fontFamily:"'Barlow',sans-serif"}}>{sel.studio} · {sel.year}</div>
             <div style={{display:'flex',gap:5,flexWrap:'wrap',marginBottom:8}}>
               {sel.genres.map(g=><Badge key={g} label={g} color={sColor(sel)}/>)}
             </div>
-            {sc(sel)&&<div style={{fontSize:20,fontWeight:900,color:T.gold}}>⭐ {sc(sel)}/10</div>}
+            {sc(sel)&&<div style={{fontSize:20,fontWeight:900,color:T.gold,fontFamily:"'Rajdhani',sans-serif"}}><Rank value={`${sc(sel)}/10`} size={17} color={T.gold}/></div>}
           </div>
         </div>
         <div style={{marginBottom:14}}>
-          <div style={{display:'flex',justifyContent:'space-between',fontSize:11,color:T.sub,marginBottom:4}}>
+          <div style={{fontSize:11,color:T.muted,textTransform:'uppercase',letterSpacing:'0.5px',marginBottom:8,fontWeight:600,fontFamily:"'Rajdhani',sans-serif"}}>Status</div>
+          <div style={{display:'flex',gap:6,flexWrap:'wrap'}}>
+            {['watching','completed','planned','dropped'].map(s=>(
+              <button key={s} onClick={()=>{setMedia(p=>p.map(m=>m.id===sel.id?{...m,status:s}:m));setSel({...sel,status:s});}}
+                style={{padding:'5px 11px',borderRadius:2,fontSize:11,fontWeight:700,fontFamily:"'Rajdhani',sans-serif",textTransform:'uppercase',letterSpacing:'0.4px',border:'none',cursor:'pointer',background:sel.status===s?stColor[s]:T.raised,color:sel.status===s?'#0A0908':T.sub}}>{stLabel[s]}</button>
+            ))}
+          </div>
+        </div>
+        <div style={{marginBottom:14}}>
+          <div style={{display:'flex',justifyContent:'space-between',fontSize:11,color:T.sub,marginBottom:4,fontFamily:"'Barlow',sans-serif"}}>
             <span>Progresso: {sel.watchedEps}/{sel.totalEps} eps</span>
             <span>{sel.totalEps>0?Math.round(sel.watchedEps/sel.totalEps*100):0}%</span>
           </div>
-          <Bar v={sel.watchedEps} t={sel.totalEps} color={sColor(sel)} h={8}/>
+          <Bar v={sel.watchedEps} t={sel.totalEps} color={sColor(sel)} h={6}/>
           {sel.totalEps>sel.watchedEps&&<div style={{display:'flex',alignItems:'center',gap:8,marginTop:10}}>
-            <span style={{fontSize:12,color:T.sub}}>Atualizar:</span>
+            <span style={{fontSize:12,color:T.sub,fontFamily:"'Barlow',sans-serif"}}>Atualizar:</span>
             <Inp type="number" value={sel.watchedEps} style={{width:70}} onChange={e=>{
               const v=Math.min(sel.totalEps,Math.max(0,+e.target.value));
               setMedia(p=>p.map(m=>m.id===sel.id?{...m,watchedEps:v}:m));
@@ -581,24 +522,27 @@ function AnimeSection({media,setMedia}) {
             <span style={{fontSize:12,color:T.muted}}>/ {sel.totalEps}</span>
           </div>}
         </div>
-        <div>
-          <div style={{fontSize:11,color:T.muted,textTransform:'uppercase',letterSpacing:'0.5px',marginBottom:10,fontWeight:600}}>Avaliação por Episódio</div>
-          <div style={{maxHeight:260,overflowY:'auto',paddingRight:4}}>
+        <div style={{marginBottom:16}}>
+          <div style={{fontSize:11,color:T.muted,textTransform:'uppercase',letterSpacing:'0.5px',marginBottom:10,fontWeight:600,fontFamily:"'Rajdhani',sans-serif"}}>Avaliação por Episódio</div>
+          <div style={{maxHeight:220,overflowY:'auto',paddingRight:4}}>
             {Array.from({length:Math.min(sel.totalEps,sel.watchedEps+5)},(_,i)=>i+1).map(ep=>{
               const r=sel.epRatings.find(x=>x.ep===ep);
               const watched=ep<=sel.watchedEps;
               return <div key={ep} style={{display:'flex',alignItems:'center',gap:12,padding:'7px 0',borderBottom:`1px solid ${T.border}`,opacity:watched?1:0.35}}>
-                <span style={{fontSize:11,color:T.muted,width:36,flexShrink:0,textAlign:'right'}}>Ep {ep}</span>
+                <span style={{fontSize:11,color:T.muted,width:36,flexShrink:0,textAlign:'right',fontFamily:"'Rajdhani',sans-serif"}}>Ep {ep}</span>
                 {watched
                   ?<Stars value={r?.rating||null} size={11} onChange={rating=>{
                     setMedia(p=>p.map(m=>{if(m.id!==sel.id)return m;const rs=[...m.epRatings];const i=rs.findIndex(x=>x.ep===ep);if(i>=0)rs[i]={ep,rating};else rs.push({ep,rating});return{...m,epRatings:rs};}));
                     setSel(prev=>prev?{...prev,epRatings:[...(prev.epRatings||[]).filter(x=>x.ep!==ep),{ep,rating}]}:prev);
                   }}/>
-                  :<span style={{fontSize:11,color:T.muted}}>Não assistido</span>
+                  :<span style={{fontSize:11,color:T.muted,fontFamily:"'Barlow',sans-serif"}}>Não assistido</span>
                 }
               </div>;
             })}
           </div>
+        </div>
+        <div style={{display:'flex',justifyContent:'flex-end'}}>
+          <Btn variant="danger" small onClick={()=>{setMedia(p=>p.filter(m=>m.id!==sel.id));setSel(null);}}>Remover</Btn>
         </div>
       </>}
     </Modal>
@@ -610,12 +554,12 @@ function AnimeSection({media,setMedia}) {
           <SearchDropdown results={srchRes} onSelect={selectMedia} loading={srchLoading} color={T.pink}/>
         </div>
       </Field>
-      {form.title&&<div style={{background:T.raised,border:`1px solid ${T.pink}44`,borderRadius:8,padding:'10px 12px',marginBottom:14,display:'flex',gap:10,alignItems:'center'}}>
+      {form.title&&<div style={{background:T.raised,border:`1px solid ${T.pink}44`,borderRadius:2,padding:'10px 12px',marginBottom:14,display:'flex',gap:10,alignItems:'center'}}>
         <CoverImg url={pendingCover} title={form.title} w={36} h={54}/>
         <div>
-          <div style={{fontSize:13,fontWeight:700,color:T.txt}}>{form.title}</div>
-          <div style={{fontSize:11,color:T.sub}}>{form.titleJP&&`${form.titleJP} · `}{form.studio} · {form.totalEps} eps · {form.year}</div>
-          {form.streaming&&<div style={{fontSize:11,color:T.cyan,marginTop:2}}>{form.streaming}</div>}
+          <div style={{fontSize:13,fontWeight:700,color:T.txt,fontFamily:"'Barlow',sans-serif"}}>{form.title}</div>
+          <div style={{fontSize:11,color:T.sub,fontFamily:"'Barlow',sans-serif"}}>{form.titleJP&&`${form.titleJP} · `}{form.studio} · {form.totalEps} eps · {form.year}</div>
+          {form.streaming&&<div style={{fontSize:11,color:T.cyan,marginTop:2,fontFamily:"'Barlow',sans-serif"}}>{form.streaming}</div>}
         </div>
       </div>}
       {!form.title&&<Field label="Título Manual"><Inp value={form.title} onChange={e=>setForm({...form,title:e.target.value})} placeholder="Nome do anime ou série"/></Field>}
@@ -633,147 +577,228 @@ function AnimeSection({media,setMedia}) {
           if(!form.title.trim())return;
           const n={id:Date.now(),title:form.title,coverUrl:pendingCover,titleJP:form.titleJP||null,type:form.type,status:form.status,totalEps:form.totalEps,watchedEps:form.watchedEps,genres:form.genres.split(',').map(s=>s.trim()).filter(Boolean),studio:form.studio,year:form.year,streaming:form.streaming.split(',').map(s=>s.trim()).filter(Boolean),epRatings:[]};
           setMedia(p=>[n,...p]);
-          setShowAdd(false);setSrch('');setSrchRes([]);setPendingCover(null);
-          setForm({title:'',titleJP:'',type:'anime',status:'watching',totalEps:12,watchedEps:0,studio:'',year:new Date().getFullYear(),genres:'',streaming:''});
+          setShowAdd(false);resetForm();
         }}>Adicionar</Btn>
       </div>
     </Modal>
   </div>;
 }
 
-// ─── WISHLIST ────────────────────────────────────────────────────────────────
-function WishlistSection({wish,setWish}) {
+// ─── JOGOS ────────────────────────────────────────────────────────────────────
+function GamesScreen({games,setGames,wish,setWish,igdbToken}) {
+  const [seg,setSeg]=useState('list');
+  const [filter,setFilter]=useState('all');
+  const [sel,setSel]=useState(null);
   const [showAdd,setShowAdd]=useState(false);
-  const [form,setForm]=useState({title:'',currentPrice:'',origPrice:'',store:'Steam',targetPrice:'',platform:'PC'});
+  const [form,setForm]=useState({title:'',status:'owned',platform:'PC',genre:'',year:new Date().getFullYear(),notes:'',developer:''});
+  const [pendingCover,setPendingCover]=useState(null);
+  const [srch,setSrch]=useState('');
+  const [srchRes,setSrchRes]=useState([]);
+  const [srchLoading,setSrchLoading]=useState(false);
+  const timer=useRef(null);
+
+  const [showAddWish,setShowAddWish]=useState(false);
+  const [wform,setWform]=useState({title:'',currentPrice:'',origPrice:'',store:'Steam',targetPrice:'',platform:'PC'});
+
+  const handleSearch=v=>{
+    setSrch(v);
+    clearTimeout(timer.current);
+    if(v.length<2){setSrchRes([]);return;}
+    setSrchLoading(true);
+    timer.current=setTimeout(async()=>{
+      const r=await searchIGDB(v,igdbToken);
+      setSrchRes(r);
+      setSrchLoading(false);
+    },500);
+  };
+
+  const selectGame=g=>{
+    setForm({title:g.name,year:g.year,developer:g.developer,platform:g.platform||'PC',genre:g.genre,status:'owned',notes:''});
+    setPendingCover(g.coverUrl);
+    setSrch('');setSrchRes([]);
+  };
+
+  const resetForm=()=>{
+    setForm({title:'',status:'owned',platform:'PC',genre:'',year:new Date().getFullYear(),notes:'',developer:''});
+    setSrch('');setSrchRes([]);setPendingCover(null);
+  };
+
+  const chipOpts=[{id:'all',label:'Todos'},{id:'playing',label:'Jogando'},{id:'completed',label:'Zerados'},{id:'owned',label:'Na Estante'}];
+  const listFiltered = filter==='all'?games:games.filter(g=>g.status===filter);
+  const stColor=(s)=>s==='completed'?T.green:s==='playing'?T.orange:T.blue;
+  const stLabel=(s)=>s==='completed'?'Zerado':s==='playing'?'Jogando':'Na Estante';
   const alerts=wish.filter(w=>w.currentPrice<=w.targetPrice).length;
-  return <div style={{padding:'28px 30px',maxWidth:1100}}>
-    <SectionTitle title="Lista de Desejos" sub="Monitorando preços na Steam e Nuuvem"
-      right={<div style={{display:'flex',alignItems:'center',gap:10}}>
-        {alerts>0&&<div style={{padding:'5px 12px',borderRadius:6,background:`${T.green}18`,border:`1px solid ${T.green}44`,fontSize:12,color:T.green,fontWeight:600}}>🔔 {alerts} meta{alerts>1?'s':''} atingida{alerts>1?'s':''}!</div>}
-        <Btn onClick={()=>setShowAdd(true)}>+ Adicionar</Btn>
-      </div>}/>
-    <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fill,minmax(290px,1fr))',gap:16}}>
-      {wish.map(item=>{
-        const hit=item.currentPrice<=item.targetPrice;
-        const storeColor=item.store==='Steam'?T.blue:T.orange;
-        return <div key={item.id} style={{background:T.card,border:`1px solid ${hit?T.green:T.border}`,borderRadius:10,padding:20,boxShadow:hit?`0 0 18px ${T.green}22`:'none'}}>
-          <div style={{display:'flex',gap:12,marginBottom:16}}>
-            <Cover title={item.title} w={60} h={82}/>
-            <div style={{flex:1,minWidth:0}}>
-              <div style={{fontSize:13,fontWeight:700,color:T.txt,lineHeight:1.3,marginBottom:7}}>{item.title}</div>
-              <div style={{display:'flex',gap:5,flexWrap:'wrap'}}>
-                <Badge label={item.store} color={storeColor}/>
-                <Badge label={item.platform} color={T.sub}/>
-                {item.discount>0&&<Badge label={`-${item.discount}%`} color={T.green}/>}
+
+  return <div>
+    <TopBar right={
+      seg==='list'
+      ?<button onClick={()=>{setShowAdd(true);resetForm();}} style={{width:32,height:32,borderRadius:2,border:`1px solid ${T.border}`,background:T.card,cursor:'pointer',display:'flex',alignItems:'center',justifyContent:'center'}}><Icon name="plus" size={15} color={T.blue}/></button>
+      :<button onClick={()=>setShowAddWish(true)} style={{width:32,height:32,borderRadius:2,border:`1px solid ${T.border}`,background:T.card,cursor:'pointer',display:'flex',alignItems:'center',justifyContent:'center'}}><Icon name="plus" size={15} color={T.blue}/></button>
+    }/>
+    <SegmentedTabs tabs={[{id:'list',label:'Minha Lista'},{id:'soon',label:'Em Breve'}]} active={seg} onChange={setSeg} color={T.blue}/>
+    {seg==='list'&&<FilterChips options={chipOpts} active={filter} onChange={setFilter} color={T.blue}/>}
+
+    {seg==='list'
+      ? <div style={{paddingBottom:24}}>
+          {listFiltered.length===0
+            ? <EmptyState icon="games" color={T.blue} title="Sua lista está vazia!" subtitle="Adicione jogos que você possui, está jogando ou já zerou." ctaLabel="Buscar Jogo" onCta={()=>{setShowAdd(true);resetForm();}}/>
+            : listFiltered.map(g=>(
+              <div key={g.id} onClick={()=>setSel(g)} style={{display:'flex',gap:12,alignItems:'center',padding:'11px 16px',borderBottom:`1px solid ${T.border}`,cursor:'pointer'}}>
+                <CoverImg url={g.coverUrl} title={g.title} w={50} h={68}/>
+                <div style={{flex:1,minWidth:0}}>
+                  <div style={{fontSize:13,fontWeight:700,color:T.txt,whiteSpace:'nowrap',overflow:'hidden',textOverflow:'ellipsis',fontFamily:"'Barlow',sans-serif"}}>{g.title}</div>
+                  <div style={{fontSize:11,color:T.sub,marginTop:2,fontFamily:"'Barlow',sans-serif"}}>{g.platform} · {g.genre||g.year}</div>
+                  <div style={{display:'flex',gap:6,marginTop:6,alignItems:'center',flexWrap:'wrap'}}>
+                    <Badge label={stLabel(g.status)} color={stColor(g.status)}/>
+                    {g.hours>0&&<span style={{fontSize:11,color:T.muted,display:'inline-flex',alignItems:'center',gap:3,fontFamily:"'Barlow',sans-serif"}}><Icon name="clock" size={11} color={T.muted}/>{g.hours}h</span>}
+                  </div>
+                </div>
+                {g.score&&<div style={{fontSize:16,fontWeight:900,color:T.gold,flexShrink:0,fontFamily:"'Rajdhani',sans-serif"}}><Rank value={`${g.score}/10`} size={13} color={T.gold}/></div>}
+              </div>
+            ))
+          }
+        </div>
+      : <div style={{padding:'14px 16px 24px'}}>
+          {alerts>0&&<div style={{padding:'9px 14px',borderRadius:2,background:`${T.green}18`,border:`1px solid ${T.green}44`,fontSize:12,color:T.green,fontWeight:600,marginBottom:14,display:'flex',alignItems:'center',gap:8,fontFamily:"'Barlow',sans-serif"}}><Icon name="beacon" size={14} color={T.green}/>{alerts} meta{alerts>1?'s':''} de preço atingida{alerts>1?'s':''}!</div>}
+          {wish.length===0
+            ? <EmptyState icon="soon" color={T.blue} title="Nada por vir ainda" subtitle="Adicione jogos que você quer comprar e acompanhe o preço." ctaLabel="Adicionar à Lista" onCta={()=>setShowAddWish(true)}/>
+            : <div style={{display:'flex',flexDirection:'column',gap:14}}>
+                {wish.map(item=>{
+                  const hit=item.currentPrice<=item.targetPrice;
+                  const storeColor=item.store==='Steam'?T.blue:T.orange;
+                  return <div key={item.id} style={{background:T.card,border:`1px solid ${hit?T.green:T.border}`,borderRadius:3,padding:16,boxShadow:hit?`0 0 18px ${T.green}22`:'none'}}>
+                    <div style={{display:'flex',gap:12,marginBottom:14}}>
+                      <Cover title={item.title} w={54} h={74}/>
+                      <div style={{flex:1,minWidth:0}}>
+                        <div style={{fontSize:13,fontWeight:700,color:T.txt,lineHeight:1.3,marginBottom:7,fontFamily:"'Barlow',sans-serif"}}>{item.title}</div>
+                        <div style={{display:'flex',gap:5,flexWrap:'wrap'}}>
+                          <Badge label={item.store} color={storeColor}/>
+                          <Badge label={item.platform} color={T.sub}/>
+                          {item.discount>0&&<Badge label={`-${item.discount}%`} color={T.green}/>}
+                        </div>
+                      </div>
+                    </div>
+                    <div style={{background:T.raised,padding:11,marginBottom:11}}>
+                      <div style={{display:'flex',justifyContent:'space-between',marginBottom:3}}>
+                        <span style={{fontSize:11,color:T.sub,fontFamily:"'Barlow',sans-serif"}}>Preço atual</span>
+                        {item.discount>0&&<span style={{fontSize:11,color:T.muted,textDecoration:'line-through',fontFamily:"'Barlow',sans-serif"}}>R$ {item.origPrice.toFixed(2)}</span>}
+                      </div>
+                      <div style={{fontSize:22,fontWeight:900,color:hit?T.green:T.txt,letterSpacing:'-0.5px',fontFamily:"'Rajdhani',sans-serif"}}>R$ {item.currentPrice.toFixed(2)}</div>
+                    </div>
+                    <div style={{marginBottom:10}}>
+                      <div style={{display:'flex',justifyContent:'space-between',marginBottom:4,fontSize:11,color:T.sub,fontFamily:"'Barlow',sans-serif"}}>
+                        <span>Meta: R$ {item.targetPrice.toFixed(2)}</span>
+                        {hit?<span style={{color:T.green,fontWeight:600,display:'inline-flex',alignItems:'center',gap:4}}><Icon name="check" size={11} color={T.green}/>Atingida!</span>:<span style={{color:T.muted}}>Falta R$ {(item.currentPrice-item.targetPrice).toFixed(2)}</span>}
+                      </div>
+                      <Bar v={hit?1:Math.max(0,item.origPrice-item.currentPrice)} t={Math.max(1,item.origPrice-item.targetPrice)} color={hit?T.green:T.orange}/>
+                    </div>
+                    <div style={{display:'flex',justifyContent:'flex-end'}}>
+                      <Btn variant="ghost" small onClick={()=>setWish(p=>p.filter(w=>w.id!==item.id))}>Remover</Btn>
+                    </div>
+                  </div>;
+                })}
+              </div>
+          }
+        </div>
+    }
+
+    <Modal open={!!sel} onClose={()=>setSel(null)} title={sel?.title||''}>
+      {sel&&<>
+        <div style={{display:'flex',gap:14,marginBottom:18}}>
+          <CoverImg url={sel.coverUrl} title={sel.title} w={90} h={122}/>
+          <div style={{flex:1}}>
+            <div style={{fontSize:11,color:T.sub,marginBottom:6,fontFamily:"'Barlow',sans-serif"}}>{sel.genre} · {sel.year} · {sel.platform}</div>
+            {sel.developer&&<div style={{fontSize:11,color:T.sub,marginBottom:12,fontFamily:"'Barlow',sans-serif"}}>{sel.developer}</div>}
+            <div style={{marginBottom:12}}>
+              <div style={{fontSize:11,color:T.muted,marginBottom:6,textTransform:'uppercase',letterSpacing:'0.5px',fontFamily:"'Rajdhani',sans-serif"}}>Status</div>
+              <div style={{display:'flex',gap:6,flexWrap:'wrap'}}>
+                {['owned','playing','completed'].map(s=>(
+                  <button key={s} onClick={()=>{setGames(p=>p.map(g=>g.id===sel.id?{...g,status:s}:g));setSel({...sel,status:s});}}
+                    style={{padding:'4px 10px',borderRadius:2,fontSize:11,fontWeight:700,fontFamily:"'Rajdhani',sans-serif",textTransform:'uppercase',border:'none',cursor:'pointer',background:sel.status===s?stColor(s):T.raised,color:sel.status===s?'#0A0908':T.sub}}>{stLabel(s)}</button>
+                ))}
               </div>
             </div>
+            {sel.hours>0&&<div style={{fontSize:12,color:T.sub,display:'inline-flex',alignItems:'center',gap:5,fontFamily:"'Barlow',sans-serif"}}><Icon name="clock" size={13} color={T.sub}/>{sel.hours} horas jogadas</div>}
           </div>
-          <div style={{background:T.raised,borderRadius:8,padding:12,marginBottom:12}}>
-            <div style={{display:'flex',justifyContent:'space-between',marginBottom:3}}>
-              <span style={{fontSize:11,color:T.sub}}>Preço atual</span>
-              {item.discount>0&&<span style={{fontSize:11,color:T.muted,textDecoration:'line-through'}}>R$ {item.origPrice.toFixed(2)}</span>}
-            </div>
-            <div style={{fontSize:24,fontWeight:900,color:hit?T.green:T.txt,letterSpacing:'-0.5px'}}>R$ {item.currentPrice.toFixed(2)}</div>
-          </div>
-          <div style={{marginBottom:10}}>
-            <div style={{display:'flex',justifyContent:'space-between',marginBottom:4,fontSize:11,color:T.sub}}>
-              <span>Meta: R$ {item.targetPrice.toFixed(2)}</span>
-              {hit?<span style={{color:T.green,fontWeight:600}}>✓ Atingida!</span>:<span style={{color:T.muted}}>Falta R$ {(item.currentPrice-item.targetPrice).toFixed(2)}</span>}
-            </div>
-            <Bar v={hit?1:Math.max(0,item.origPrice-item.currentPrice)} t={Math.max(1,item.origPrice-item.targetPrice)} color={hit?T.green:T.orange}/>
-          </div>
-          <div style={{display:'flex',justifyContent:'flex-end'}}>
-            <Btn variant="ghost" small onClick={()=>setWish(p=>p.filter(w=>w.id!==item.id))}>Remover</Btn>
-          </div>
-        </div>;
-      })}
-    </div>
-    <Modal open={showAdd} onClose={()=>setShowAdd(false)} title="Adicionar à Lista de Desejos">
-      <Field label="Título *"><Inp value={form.title} onChange={e=>setForm({...form,title:e.target.value})} placeholder="Nome do jogo"/></Field>
+        </div>
+        <div style={{marginBottom:16}}>
+          <div style={{fontSize:11,color:T.muted,textTransform:'uppercase',letterSpacing:'0.5px',marginBottom:8,fontFamily:"'Rajdhani',sans-serif"}}>Avaliação</div>
+          <Stars value={sel.score} onChange={v=>{setGames(p=>p.map(g=>g.id===sel.id?{...g,score:v}:g));setSel({...sel,score:v});}} size={18}/>
+        </div>
+        {sel.notes&&<div style={{background:T.raised,border:`1px solid ${T.border}`,borderRadius:2,padding:12,marginBottom:16}}>
+          <div style={{fontSize:10,color:T.muted,textTransform:'uppercase',marginBottom:4,fontFamily:"'Rajdhani',sans-serif",letterSpacing:'0.5px'}}>Notas</div>
+          <div style={{fontSize:13,color:T.txt,fontFamily:"'Barlow',sans-serif"}}>{sel.notes}</div>
+        </div>}
+        <div style={{display:'flex',justifyContent:'flex-end'}}>
+          <Btn variant="danger" small onClick={()=>{setGames(p=>p.filter(g=>g.id!==sel.id));setSel(null);}}>Remover</Btn>
+        </div>
+      </>}
+    </Modal>
+
+    <Modal open={showAdd} onClose={()=>setShowAdd(false)} title="Adicionar Jogo">
+      <Field label={igdbToken?"Buscar no IGDB":"Título"}>
+        <div style={{position:'relative'}}>
+          <Inp value={igdbToken?srch:form.title}
+            onChange={e=>igdbToken?handleSearch(e.target.value):setForm({...form,title:e.target.value})}
+            placeholder={igdbToken?"Digite para buscar no IGDB...":"Nome do jogo"}/>
+          {igdbToken&&<SearchDropdown results={srchRes} onSelect={selectGame} loading={srchLoading}/>}
+        </div>
+      </Field>
+      {igdbToken&&form.title&&<div style={{background:T.raised,border:`1px solid ${T.green}44`,borderRadius:2,padding:'10px 12px',marginBottom:14,display:'flex',gap:10,alignItems:'center'}}>
+        <CoverImg url={pendingCover} title={form.title} w={36} h={48}/>
+        <div>
+          <div style={{fontSize:13,fontWeight:700,color:T.txt,fontFamily:"'Barlow',sans-serif"}}>{form.title}</div>
+          <div style={{fontSize:11,color:T.sub,fontFamily:"'Barlow',sans-serif"}}>{form.developer} · {form.year} · {form.platform}</div>
+        </div>
+      </div>}
+      {!igdbToken&&<Field label="Título"><Inp value={form.title} onChange={e=>setForm({...form,title:e.target.value})} placeholder="Nome do jogo"/></Field>}
       <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:12}}>
-        <Field label="Preço Atual (R$)"><Inp type="number" value={form.currentPrice} onChange={e=>setForm({...form,currentPrice:e.target.value})} placeholder="0.00"/></Field>
-        <Field label="Preço Original (R$)"><Inp type="number" value={form.origPrice} onChange={e=>setForm({...form,origPrice:e.target.value})} placeholder="0.00"/></Field>
+        <Field label="Status"><Sel value={form.status} onChange={e=>setForm({...form,status:e.target.value})}><option value="owned">Na Estante</option><option value="playing">Jogando</option><option value="completed">Zerado</option></Sel></Field>
+        <Field label="Plataforma"><Sel value={form.platform} onChange={e=>setForm({...form,platform:e.target.value})}>{['PC','PS5','PS4','Xbox Series X','Switch','Mobile'].map(p=><option key={p}>{p}</option>)}</Sel></Field>
       </div>
       <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:12}}>
-        <Field label="Loja"><Sel value={form.store} onChange={e=>setForm({...form,store:e.target.value})}><option>Steam</option><option>Nuuvem</option><option>Epic Games</option><option>GOG</option></Sel></Field>
-        <Field label="Meta de Preço (R$)"><Inp type="number" value={form.targetPrice} onChange={e=>setForm({...form,targetPrice:e.target.value})} placeholder="0.00"/></Field>
+        <Field label="Gênero"><Inp value={form.genre} onChange={e=>setForm({...form,genre:e.target.value})} placeholder="RPG, Action..."/></Field>
+        <Field label="Ano"><Inp type="number" value={form.year} onChange={e=>setForm({...form,year:+e.target.value})}/></Field>
       </div>
-      <div style={{display:'flex',gap:10,justifyContent:'flex-end',marginTop:4}}>
+      <Field label="Notas"><textarea value={form.notes} onChange={e=>setForm({...form,notes:e.target.value})} placeholder="Suas impressões..." style={{width:'100%',background:T.raised,border:`1px solid ${T.border}`,borderRadius:2,padding:'8px 12px',color:T.txt,fontSize:13,fontFamily:"'Barlow',sans-serif",outline:'none',boxSizing:'border-box',resize:'vertical',minHeight:70}}/></Field>
+      <div style={{display:'flex',gap:10,justifyContent:'flex-end'}}>
         <Btn variant="outline" onClick={()=>setShowAdd(false)}>Cancelar</Btn>
         <Btn onClick={()=>{
-          if(!form.title.trim())return;
-          const cur=parseFloat(form.currentPrice)||0;const orig=parseFloat(form.origPrice)||cur;const tgt=parseFloat(form.targetPrice)||0;const disc=orig>0?Math.round((1-cur/orig)*100):0;
-          setWish(p=>[{id:Date.now(),title:form.title,currentPrice:cur,origPrice:orig,discount:disc,store:form.store,targetPrice:tgt,platform:form.platform},...p]);
-          setShowAdd(false);setForm({title:'',currentPrice:'',origPrice:'',store:'Steam',targetPrice:'',platform:'PC'});
+          const t=igdbToken?srch||form.title:form.title;
+          if(!t.trim()&&!form.title.trim())return;
+          setGames(p=>[{id:Date.now(),...form,title:form.title||srch,coverUrl:pendingCover,score:null,hours:0},...p]);
+          resetForm();
+          setShowAdd(false);
+        }}>Adicionar</Btn>
+      </div>
+    </Modal>
+
+    <Modal open={showAddWish} onClose={()=>setShowAddWish(false)} title="Adicionar à Lista de Desejos">
+      <Field label="Título *"><Inp value={wform.title} onChange={e=>setWform({...wform,title:e.target.value})} placeholder="Nome do jogo"/></Field>
+      <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:12}}>
+        <Field label="Preço Atual (R$)"><Inp type="number" value={wform.currentPrice} onChange={e=>setWform({...wform,currentPrice:e.target.value})} placeholder="0.00"/></Field>
+        <Field label="Preço Original (R$)"><Inp type="number" value={wform.origPrice} onChange={e=>setWform({...wform,origPrice:e.target.value})} placeholder="0.00"/></Field>
+      </div>
+      <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:12}}>
+        <Field label="Loja"><Sel value={wform.store} onChange={e=>setWform({...wform,store:e.target.value})}><option>Steam</option><option>Nuuvem</option><option>Epic Games</option><option>GOG</option></Sel></Field>
+        <Field label="Meta de Preço (R$)"><Inp type="number" value={wform.targetPrice} onChange={e=>setWform({...wform,targetPrice:e.target.value})} placeholder="0.00"/></Field>
+      </div>
+      <div style={{display:'flex',gap:10,justifyContent:'flex-end',marginTop:4}}>
+        <Btn variant="outline" onClick={()=>setShowAddWish(false)}>Cancelar</Btn>
+        <Btn onClick={()=>{
+          if(!wform.title.trim())return;
+          const cur=parseFloat(wform.currentPrice)||0;const orig=parseFloat(wform.origPrice)||cur;const tgt=parseFloat(wform.targetPrice)||0;const disc=orig>0?Math.round((1-cur/orig)*100):0;
+          setWish(p=>[{id:Date.now(),title:wform.title,currentPrice:cur,origPrice:orig,discount:disc,store:wform.store,targetPrice:tgt,platform:wform.platform},...p]);
+          setShowAddWish(false);setWform({title:'',currentPrice:'',origPrice:'',store:'Steam',targetPrice:'',platform:'PC'});
         }}>Adicionar</Btn>
       </div>
     </Modal>
   </div>;
 }
 
-// ─── DISCOVER ────────────────────────────────────────────────────────────────
-function DiscoverSection() {
+// ─── EXPLORAR ──────────────────────────────────────────────────────────────────
+function ExploreScreen({games,media}) {
   const [srv,setSrv]=useState('Netflix');
-  return <div style={{padding:'28px 30px',maxWidth:1100}}>
-    <SectionTitle title="Descobrir" sub="Tendências, lançamentos e promoções"/>
-    <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:20,marginBottom:24}}>
-      <div style={{background:T.card,border:`1px solid ${T.border}`,borderRadius:10,padding:20}}>
-        <h3 style={{margin:'0 0 14px',fontSize:15,fontWeight:700,color:T.txt}}>📺 Top 5 Streaming</h3>
-        <div style={{display:'flex',gap:5,flexWrap:'wrap',marginBottom:16}}>
-          {Object.keys(STREAM).map(s=>(
-            <button key={s} onClick={()=>setSrv(s)} style={{padding:'4px 11px',borderRadius:20,fontSize:11,border:`1px solid ${srv===s?T.cyan:T.border}`,background:srv===s?`${T.cyan}18`:'transparent',color:srv===s?T.cyan:T.sub,cursor:'pointer',fontWeight:srv===s?600:400,transition:'all 0.15s'}}>{s}</button>
-          ))}
-        </div>
-        {(STREAM[srv]||[]).map((item,i)=>(
-          <div key={i} style={{display:'flex',alignItems:'center',gap:12,padding:'9px 0',borderBottom:i<(STREAM[srv].length-1)?`1px solid ${T.border}`:'none'}}>
-            <div style={{width:26,height:26,borderRadius:5,flexShrink:0,background:i===0?`linear-gradient(135deg,${T.gold},${T.orange})`:T.raised,display:'flex',alignItems:'center',justifyContent:'center',fontSize:11,fontWeight:800,color:i===0?'#000':T.sub}}>{i+1}</div>
-            <div style={{flex:1}}>
-              <div style={{fontSize:13,fontWeight:600,color:T.txt}}>{item.title}</div>
-              <div style={{fontSize:11,color:T.sub}}>{item.type}</div>
-            </div>
-            <div style={{fontSize:12,color:T.gold,fontWeight:700}}>⭐ {item.score}</div>
-          </div>
-        ))}
-      </div>
-      <div style={{background:T.card,border:`1px solid ${T.border}`,borderRadius:10,padding:20}}>
-        <h3 style={{margin:'0 0 16px',fontSize:15,fontWeight:700,color:T.txt}}>🔥 Jogos em Alta</h3>
-        {TRENDING.map((g,i)=>(
-          <div key={i} style={{display:'flex',alignItems:'center',gap:12,padding:'12px 0',borderBottom:i<TRENDING.length-1?`1px solid ${T.border}`:'none'}}>
-            <div style={{width:40,height:52,flexShrink:0,background:`linear-gradient(135deg,${T.raised},${T.border})`,borderRadius:6,display:'flex',alignItems:'center',justifyContent:'center',fontSize:18}}>
-              {i===0?'🥇':i===1?'🥈':'🥉'}
-            </div>
-            <div style={{flex:1}}>
-              <div style={{fontSize:13,fontWeight:700,color:T.txt}}>{g.title}</div>
-              <div style={{display:'flex',gap:5,marginTop:4}}><Badge label={g.genre} color={T.blue}/><Badge label={g.date} color={T.muted}/></div>
-            </div>
-            <div style={{fontSize:12,color:T.orange,fontWeight:600,textAlign:'right'}}>{g.hype}</div>
-          </div>
-        ))}
-      </div>
-    </div>
-    <div style={{background:T.card,border:`1px solid ${T.border}`,borderRadius:10,padding:20}}>
-      <h3 style={{margin:'0 0 16px',fontSize:15,fontWeight:700,color:T.txt}}>🏷 Melhores Promoções</h3>
-      <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fill,minmax(230px,1fr))',gap:12}}>
-        {DEALS.map((d,i)=>(
-          <div key={i} style={{background:T.raised,border:`1px solid ${T.border}`,borderRadius:8,padding:16}}>
-            <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-start',marginBottom:8}}>
-              <div style={{fontSize:12,fontWeight:600,color:T.txt,flex:1,paddingRight:8,lineHeight:1.3}}>{d.title}</div>
-              <Badge label={`-${d.disc}%`} color={T.green}/>
-            </div>
-            <div style={{display:'flex',alignItems:'baseline',gap:8,marginBottom:4}}>
-              <span style={{fontSize:20,fontWeight:900,color:T.green}}>R$ {d.sale.toFixed(2)}</span>
-              <span style={{fontSize:11,color:T.muted,textDecoration:'line-through'}}>R$ {d.orig.toFixed(2)}</span>
-            </div>
-            <div style={{fontSize:11,color:T.sub}}>{d.store}</div>
-          </div>
-        ))}
-      </div>
-    </div>
-  </div>;
-}
-
-// ─── AI ──────────────────────────────────────────────────────────────────────
-function AISection({games,media}) {
   const [res,setRes]=useState('');
   const [loading,setLoading]=useState(false);
   const done=games.filter(g=>g.status==='completed');
@@ -792,54 +817,155 @@ function AISection({games,media}) {
     setLoading(false);
   };
 
-  return <div style={{padding:'28px 30px',maxWidth:800}}>
-    <SectionTitle title="Recomendações com IA" sub="Personalizadas com base no seu histórico"/>
-    <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:14,marginBottom:26}}>
-      {[{t:'Jogos Zerados',items:done,color:T.green},{t:'Jogando Agora',items:play,color:T.orange},{t:'Animes Concluídos',items:doneM,color:T.pink},{t:'Assistindo Agora',items:watchM,color:T.cyan}].map(({t,items,color})=>(
-        <div key={t} style={{background:T.card,border:`1px solid ${T.border}`,borderRadius:8,padding:14}}>
-          <div style={{fontSize:11,color:T.sub,fontWeight:600,marginBottom:8,textTransform:'uppercase',letterSpacing:'0.5px'}}>{t}</div>
-          {items.slice(0,3).map(i=>(
-            <div key={i.id} style={{fontSize:12,color:T.txt,marginBottom:4,display:'flex',alignItems:'center',gap:6}}>
-              <span style={{width:5,height:5,borderRadius:'50%',background:color,flexShrink:0,display:'inline-block'}}/>
-              {i.title}
+  const SectionHead=({icon,children})=><h3 style={{margin:'0 0 14px',fontSize:13,fontWeight:700,color:T.txt,fontFamily:"'Rajdhani',sans-serif",textTransform:'uppercase',letterSpacing:'1px',display:'flex',alignItems:'center',gap:8}}><Icon name={icon} size={15} color={T.blue}/>{children}</h3>;
+
+  return <div>
+    <TopBar/>
+    <div style={{padding:'14px 16px 40px'}}>
+      <div style={{background:T.card,border:`1px solid ${T.border}`,borderRadius:3,padding:18,marginBottom:16}}>
+        <SectionHead icon="series">Top 5 Streaming</SectionHead>
+        <div style={{display:'flex',gap:5,flexWrap:'wrap',marginBottom:14}}>
+          {Object.keys(STREAM).map(s=>(
+            <button key={s} onClick={()=>setSrv(s)} style={{padding:'4px 11px',borderRadius:2,fontSize:10.5,fontFamily:"'Rajdhani',sans-serif",textTransform:'uppercase',letterSpacing:'0.4px',border:`1px solid ${srv===s?T.cyan:T.border}`,background:srv===s?`${T.cyan}18`:'transparent',color:srv===s?T.cyan:T.sub,cursor:'pointer',fontWeight:srv===s?700:500}}>{s}</button>
+          ))}
+        </div>
+        {(STREAM[srv]||[]).map((item,i)=>(
+          <div key={i} style={{display:'flex',alignItems:'center',gap:12,padding:'9px 0',borderBottom:i<(STREAM[srv].length-1)?`1px solid ${T.border}`:'none'}}>
+            <HexBadge n={i+1} color={i===0?T.gold:T.muted} size={26}/>
+            <div style={{flex:1,minWidth:0}}>
+              <div style={{fontSize:12,fontWeight:600,color:T.txt,overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap',fontFamily:"'Barlow',sans-serif"}}>{item.title}</div>
+              <div style={{fontSize:10,color:T.sub,fontFamily:"'Barlow',sans-serif"}}>{item.type}</div>
+            </div>
+            <Rank value={item.score} color={T.gold} size={11}/>
+          </div>
+        ))}
+      </div>
+
+      <div style={{background:T.card,border:`1px solid ${T.border}`,borderRadius:3,padding:18,marginBottom:16}}>
+        <SectionHead icon="trend">Jogos em Alta</SectionHead>
+        {TRENDING.map((g,i)=>(
+          <div key={i} style={{display:'flex',alignItems:'center',gap:12,padding:'10px 0',borderBottom:i<TRENDING.length-1?`1px solid ${T.border}`:'none'}}>
+            <HexBadge n={i+1} color={T.orange} size={30}/>
+            <div style={{flex:1,minWidth:0}}>
+              <div style={{fontSize:12,fontWeight:700,color:T.txt,overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap',fontFamily:"'Barlow',sans-serif"}}>{g.title}</div>
+              <div style={{display:'flex',gap:5,marginTop:4,flexWrap:'wrap'}}><Badge label={g.genre} color={T.blue}/><Badge label={g.date} color={T.muted}/></div>
+            </div>
+            <div style={{fontSize:10.5,color:T.orange,fontWeight:700,textAlign:'right',flexShrink:0,fontFamily:"'Rajdhani',sans-serif",textTransform:'uppercase'}}>{g.hype}</div>
+          </div>
+        ))}
+      </div>
+
+      <div style={{background:T.card,border:`1px solid ${T.border}`,borderRadius:3,padding:18,marginBottom:16}}>
+        <SectionHead icon="tag">Melhores Promoções</SectionHead>
+        <div style={{display:'flex',flexDirection:'column',gap:10}}>
+          {DEALS.map((d,i)=>(
+            <div key={i} style={{background:T.raised,border:`1px solid ${T.border}`,padding:14}}>
+              <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-start',marginBottom:7}}>
+                <div style={{fontSize:12,fontWeight:600,color:T.txt,flex:1,paddingRight:8,lineHeight:1.3,fontFamily:"'Barlow',sans-serif"}}>{d.title}</div>
+                <Badge label={`-${d.disc}%`} color={T.green}/>
+              </div>
+              <div style={{display:'flex',alignItems:'baseline',gap:8,marginBottom:3}}>
+                <span style={{fontSize:18,fontWeight:900,color:T.green,fontFamily:"'Rajdhani',sans-serif"}}>R$ {d.sale.toFixed(2)}</span>
+                <span style={{fontSize:11,color:T.muted,textDecoration:'line-through',fontFamily:"'Barlow',sans-serif"}}>R$ {d.orig.toFixed(2)}</span>
+              </div>
+              <div style={{fontSize:11,color:T.sub,fontFamily:"'Barlow',sans-serif"}}>{d.store}</div>
             </div>
           ))}
-          {items.length>3&&<div style={{fontSize:11,color:T.muted,marginTop:4}}>+{items.length-3} mais</div>}
-          {items.length===0&&<div style={{fontSize:12,color:T.muted,fontStyle:'italic'}}>Nenhum ainda</div>}
         </div>
-      ))}
-    </div>
-    <div style={{textAlign:'center',marginBottom:24}}>
-      <Btn onClick={getAI} style={{padding:'11px 32px',fontSize:15}}>{loading?'⟳ Analisando...':'✦ Gerar Recomendações Personalizadas'}</Btn>
-      <p style={{fontSize:12,color:T.muted,marginTop:8}}>A IA analisa seus jogos e animes favoritos para sugerir o que você vai curtir</p>
-    </div>
-    {loading&&<div style={{background:T.card,border:`1px solid ${T.border}`,borderRadius:10,padding:32,textAlign:'center'}}>
-      <div style={{fontSize:36,marginBottom:12}}>🤖</div>
-      <div style={{color:T.sub}}>Analisando seu perfil de entretenimento...</div>
-    </div>}
-    {res&&!loading&&<div style={{background:T.card,border:`1px solid ${T.blue}55`,borderRadius:10,padding:24,boxShadow:`0 0 24px ${T.blue}18`}}>
-      <div style={{display:'flex',gap:10,alignItems:'center',marginBottom:16}}>
-        <div style={{width:30,height:30,borderRadius:7,background:`linear-gradient(135deg,${T.blueD},${T.blue})`,display:'flex',alignItems:'center',justifyContent:'center',fontSize:14,flexShrink:0}}>✦</div>
-        <div style={{fontSize:13,fontWeight:700,color:T.txt}}>Recomendações Personalizadas para Você</div>
       </div>
-      <div style={{fontSize:14,color:T.txt,lineHeight:1.75,whiteSpace:'pre-wrap'}}>{res}</div>
-    </div>}
+
+      <div style={{background:T.card,border:`1px solid ${T.blue}44`,borderRadius:3,padding:20,textAlign:'center'}}>
+        <div style={{display:'flex',justifyContent:'center',marginBottom:10}}>
+          <Icon name="scan" size={28} color={T.blue} strokeWidth={1.3} className={loading?'nx-pulse':''}/>
+        </div>
+        <div style={{fontSize:13,fontWeight:700,color:T.txt,marginBottom:6,fontFamily:"'Rajdhani',sans-serif",textTransform:'uppercase',letterSpacing:'1px'}}>Recomendações com IA</div>
+        <p style={{fontSize:12,color:T.sub,marginBottom:14,lineHeight:1.5,fontFamily:"'Barlow',sans-serif"}}>A IA analisa seus jogos e animes favoritos para sugerir o que você vai curtir.</p>
+        <Btn onClick={getAI} style={{padding:'10px 26px'}}>{loading?<span style={{display:'inline-flex',alignItems:'center',gap:7}}><Spinner size={12} color="#0A0908"/>Analisando</span>:'Gerar Recomendações'}</Btn>
+        {loading&&<div style={{marginTop:16,color:T.sub,fontSize:12,fontFamily:"'Barlow',sans-serif"}}>Escaneando seu perfil de entretenimento...</div>}
+        {res&&!loading&&<div style={{marginTop:16,textAlign:'left',fontSize:13,color:T.txt,lineHeight:1.7,whiteSpace:'pre-wrap',background:T.raised,padding:14,fontFamily:"'Barlow',sans-serif"}}>{res}</div>}
+      </div>
+    </div>
   </div>;
 }
 
-// ─── NAV + APP ───────────────────────────────────────────────────────────────
-const NAV=[
-  {id:'dashboard',icon:'⊞',label:'Dashboard'},
-  {id:'games',icon:'🎮',label:'Jogos'},
-  {id:'anime',icon:'▶',label:'Anime & Séries'},
-  {id:'wishlist',icon:'♡',label:'Lista de Desejos'},
-  {id:'discover',icon:'◈',label:'Descobrir'},
-  {id:'ai',icon:'✦',label:'Recomendações IA'},
-];
+// ─── PERFIL ────────────────────────────────────────────────────────────────────
+function ProfileScreen({games,media,wish,igdbToken,apiStatus}) {
+  const c={
+    done:games.filter(g=>g.status==='completed').length,
+    play:games.filter(g=>g.status==='playing').length,
+    hours:games.reduce((a,g)=>a+g.hours,0),
+    watch:media.filter(m=>m.status==='watching').length,
+  };
+  const topGames=[...games].filter(g=>g.score).sort((a,b)=>(b.score||0)-(a.score||0)).slice(0,4);
+  const watching=media.filter(m=>m.status==='watching');
 
+  return <div>
+    <TopBar/>
+    <div style={{padding:'6px 16px 40px'}}>
+      <div style={{display:'flex',alignItems:'center',gap:14,padding:'14px 4px 22px'}}>
+        <HexFrame color={T.blue} size={58}><Icon name="profile" size={24} color={T.blue} strokeWidth={1.5}/></HexFrame>
+        <div>
+          <div style={{fontSize:17,fontWeight:700,color:T.txt,fontFamily:"'Rajdhani',sans-serif",textTransform:'uppercase',letterSpacing:'0.5px'}}>Meu Perfil</div>
+          <div style={{fontSize:12,color:T.sub,marginTop:2,fontFamily:"'Barlow',sans-serif"}}>{games.length} jogos · {media.length} séries/animes</div>
+        </div>
+      </div>
+
+      <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:10,marginBottom:20}}>
+        {[{l:'Jogos Zerados',v:c.done,icon:'award',co:T.green},{l:'Jogando Agora',v:c.play,icon:'games',co:T.orange},{l:'Horas Jogadas',v:`${c.hours}h`,icon:'clock',co:T.blue},{l:'Assistindo',v:c.watch,icon:'play',co:T.pink}].map(({l,v,icon,co})=>(
+          <div key={l} style={{background:T.card,border:`1px solid ${T.border}`,borderRadius:3,padding:'14px 14px',position:'relative',overflow:'hidden'}}>
+            <div style={{position:'absolute',top:0,left:0,right:0,height:2,background:co}}/>
+            <Icon name={icon} size={17} color={co} strokeWidth={1.6} style={{marginBottom:8}}/>
+            <div style={{fontSize:21,fontWeight:900,color:co,letterSpacing:'-1px',fontFamily:"'Rajdhani',sans-serif"}}>{v}</div>
+            <div style={{fontSize:11,color:T.txt,fontWeight:600,marginTop:2,fontFamily:"'Barlow',sans-serif"}}>{l}</div>
+          </div>
+        ))}
+      </div>
+
+      <div style={{background:T.card,border:`1px solid ${T.border}`,borderRadius:3,padding:16,marginBottom:14}}>
+        <div style={{fontSize:13,fontWeight:700,color:T.txt,marginBottom:12,fontFamily:"'Rajdhani',sans-serif",textTransform:'uppercase',letterSpacing:'0.8px',display:'flex',alignItems:'center',gap:7}}><Icon name="award" size={14} color={T.blue}/>Melhores Avaliados</div>
+        {topGames.length===0&&<div style={{fontSize:12,color:T.muted,fontStyle:'italic',fontFamily:"'Barlow',sans-serif"}}>Nenhum jogo avaliado ainda</div>}
+        {topGames.map(g=>(
+          <div key={g.id} style={{display:'flex',gap:10,alignItems:'center',paddingBottom:11,marginBottom:11,borderBottom:`1px solid ${T.border}`}}>
+            <CoverImg url={g.coverUrl} title={g.title} w={38} h={50}/>
+            <div style={{flex:1,minWidth:0}}>
+              <div style={{fontSize:12,fontWeight:600,color:T.txt,whiteSpace:'nowrap',overflow:'hidden',textOverflow:'ellipsis',fontFamily:"'Barlow',sans-serif"}}>{g.title}</div>
+              <div style={{fontSize:10,color:T.sub,marginTop:2,fontFamily:"'Barlow',sans-serif"}}>{g.platform} · {g.hours}h</div>
+            </div>
+            <Rank value={`${g.score}/10`} color={T.gold} size={13}/>
+          </div>
+        ))}
+      </div>
+
+      <div style={{background:T.card,border:`1px solid ${T.border}`,borderRadius:3,padding:16,marginBottom:14}}>
+        <div style={{fontSize:13,fontWeight:700,color:T.txt,marginBottom:12,fontFamily:"'Rajdhani',sans-serif",textTransform:'uppercase',letterSpacing:'0.8px',display:'flex',alignItems:'center',gap:7}}><Icon name="play" size={13} color={T.pink}/>Assistindo Agora</div>
+        {watching.length===0&&<div style={{fontSize:12,color:T.muted,fontStyle:'italic',fontFamily:"'Barlow',sans-serif"}}>Nada em andamento</div>}
+        {watching.map(m=>{
+          const pct=m.totalEps>0?Math.round(m.watchedEps/m.totalEps*100):0;
+          return <div key={m.id} style={{paddingBottom:11,marginBottom:11,borderBottom:`1px solid ${T.border}`}}>
+            <div style={{display:'flex',justifyContent:'space-between',marginBottom:6}}>
+              <div style={{fontSize:12,fontWeight:600,color:T.txt,fontFamily:"'Barlow',sans-serif"}}>{m.title}</div>
+              <Badge label={`${pct}%`} color={m.type==='anime'?T.pink:T.cyan}/>
+            </div>
+            <Bar v={m.watchedEps} t={m.totalEps} color={m.type==='anime'?T.pink:T.cyan}/>
+          </div>;
+        })}
+      </div>
+
+      <div style={{padding:'10px 14px',borderRadius:2,background:igdbToken?`${T.green}15`:`${T.orange}15`,border:`1px solid ${igdbToken?T.green:T.orange}33`,fontSize:11,color:igdbToken?T.green:T.orange,textAlign:'center',display:'flex',alignItems:'center',justifyContent:'center',gap:8,fontFamily:"'Barlow',sans-serif"}}>
+        {apiStatus==='loading'
+          ? <><Spinner size={12} color={T.orange}/>Conectando APIs...</>
+          : igdbToken
+            ? <><Icon name="check" size={13} color={T.green}/>IGDB + TMDB ativos</>
+            : <><Icon name="warning" size={13} color={T.orange}/>TMDB ativo · IGDB off</>
+        }
+      </div>
+    </div>
+  </div>;
+}
+
+// ─── APP ─────────────────────────────────────────────────────────────────────
 function App() {
-  const [section,setSection]=useState('dashboard');
-  const [collapsed,setCollapsed]=useState(false);
+  const [tab,setTab]=useState('series');
   const [games,setGames]=useState(G0);
   const [media,setMedia]=useState(M0);
   const [wish,setWish]=useState(W0);
@@ -853,55 +979,16 @@ function App() {
     });
   },[]);
 
-  const stats=useMemo(()=>({
-    done:games.filter(g=>g.status==='completed').length,
-    play:games.filter(g=>g.status==='playing').length,
-    hours:games.reduce((a,g)=>a+g.hours,0),
-  }),[games]);
+  const alertCount = wish.filter(w=>w.currentPrice<=w.targetPrice).length;
 
-  const W=collapsed?62:216;
-  return <div style={{display:'flex',minHeight:'100vh',background:T.bg,color:T.txt,fontFamily:"'Segoe UI','SF Pro Display',system-ui,sans-serif",fontSize:14}}>
-    <aside style={{width:W,background:T.surface,borderRight:`1px solid ${T.border}`,display:'flex',flexDirection:'column',flexShrink:0,transition:'width 0.25s ease',position:'sticky',top:0,height:'100vh',overflow:'hidden'}}>
-      <div style={{padding:'16px 12px',borderBottom:`1px solid ${T.border}`,cursor:'pointer'}} onClick={()=>setCollapsed(!collapsed)}>
-        <div style={{display:'flex',alignItems:'center',gap:10}}>
-          <div style={{width:34,height:34,borderRadius:8,flexShrink:0,background:`linear-gradient(135deg,${T.blueD},${T.blue})`,display:'flex',alignItems:'center',justifyContent:'center',fontSize:15,fontWeight:900,color:'#fff',boxShadow:`0 0 12px ${T.blue}44`}}>N</div>
-          {!collapsed&&<div>
-            <div style={{fontWeight:800,fontSize:14,letterSpacing:'-0.3px',color:T.txt}}>NexTrack</div>
-            <div style={{fontSize:10,color:T.muted}}>Entertainment Hub</div>
-          </div>}
-        </div>
-      </div>
-      <nav style={{padding:'10px 8px',flex:1}}>
-        {NAV.map(({id,icon,label})=>{
-          const active=section===id;
-          return <button key={id} onClick={()=>setSection(id)} title={collapsed?label:undefined}
-            style={{display:'flex',alignItems:'center',gap:10,width:'100%',padding:'9px 10px',borderRadius:7,border:'none',marginBottom:2,cursor:'pointer',fontSize:12,textAlign:'left',whiteSpace:'nowrap',overflow:'hidden',fontWeight:active?700:400,background:active?`${T.blue}1A`:'transparent',color:active?T.blue:T.sub,borderLeft:active?`2px solid ${T.blue}`:'2px solid transparent',transition:'all 0.15s'}}>
-            <span style={{fontSize:14,flexShrink:0,width:18,textAlign:'center'}}>{icon}</span>
-            {!collapsed&&<span>{label}</span>}
-          </button>;
-        })}
-      </nav>
-      {!collapsed&&<div style={{padding:'12px 14px',borderTop:`1px solid ${T.border}`}}>
-        <div style={{fontSize:10,color:T.muted,textTransform:'uppercase',letterSpacing:'0.5px',marginBottom:8}}>Resumo</div>
-        {[['Jogos',games.length,T.blue],['Zerados',stats.done,T.green],['Horas',`${stats.hours}h`,T.orange]].map(([l,v,c])=>(
-          <div key={String(l)} style={{display:'flex',justifyContent:'space-between',fontSize:12,marginBottom:4}}>
-            <span style={{color:T.muted}}>{l}</span>
-            <span style={{color:String(c),fontWeight:700}}>{v}</span>
-          </div>
-        ))}
-        <div style={{marginTop:10,padding:'5px 8px',borderRadius:5,background:igdbToken?`${T.green}15`:`${T.orange}15`,border:`1px solid ${igdbToken?T.green:T.orange}33`,fontSize:10,color:igdbToken?T.green:T.orange,textAlign:'center'}}>
-          {apiStatus==='loading'?'⟳ Conectando APIs...':igdbToken?'✓ IGDB + TMDB ativos':'⚠ TMDB ativo · IGDB off'}
-        </div>
-      </div>}
-    </aside>
-    <main style={{flex:1,overflow:'auto',minWidth:0}}>
-      {section==='dashboard'&&<Dashboard games={games} media={media} setSection={setSection}/>}
-      {section==='games'&&<GamesSection games={games} setGames={setGames} igdbToken={igdbToken}/>}
-      {section==='anime'&&<AnimeSection media={media} setMedia={setMedia}/>}
-      {section==='wishlist'&&<WishlistSection wish={wish} setWish={setWish}/>}
-      {section==='discover'&&<DiscoverSection/>}
-      {section==='ai'&&<AISection games={games} media={media}/>}
-    </main>
+  return <div className="nx-shell">
+    <div style={{flex:1,overflowY:'auto',WebkitOverflowScrolling:'touch'}}>
+      {tab==='series' && <SeriesScreen media={media} setMedia={setMedia}/>}
+      {tab==='games' && <GamesScreen games={games} setGames={setGames} wish={wish} setWish={setWish} igdbToken={igdbToken}/>}
+      {tab==='explore' && <ExploreScreen games={games} media={media}/>}
+      {tab==='profile' && <ProfileScreen games={games} media={media} wish={wish} igdbToken={igdbToken} apiStatus={apiStatus}/>}
+    </div>
+    <BottomNav active={tab} setActive={setTab} alert={alertCount>0}/>
   </div>;
 }
 
