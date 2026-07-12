@@ -16,20 +16,20 @@ html,body{height:100%;}
 body{background:#000;color:#D9D3C4;font-family:'Barlow',system-ui,sans-serif;}
 #root{height:100%;}
 ::-webkit-scrollbar{width:5px;height:5px;}
-::-webkit-scrollbar-track{background:#120F0B;}
-::-webkit-scrollbar-thumb{background:#332C1F;border-radius:2px;}
-::-webkit-scrollbar-thumb:hover{background:#4A4030;}
+::-webkit-scrollbar-track{background:#0F141C;}
+::-webkit-scrollbar-thumb{background:#2A3646;border-radius:2px;}
+::-webkit-scrollbar-thumb:hover{background:#3E4F63;}
 .nx-shell{
   width:100%;max-width:480px;height:100vh;height:100dvh;margin:0 auto;
   background:
-    repeating-linear-gradient(180deg, rgba(232,137,31,0.022) 0px, rgba(232,137,31,0.022) 1px, transparent 1px, transparent 3px),
-    #0A0908;
+    repeating-linear-gradient(180deg, rgba(111,224,236,0.02) 0px, rgba(111,224,236,0.02) 1px, transparent 1px, transparent 3px),
+    #0A0D12;
   display:flex;flex-direction:column;position:relative;overflow:hidden;
   font-family:'Rajdhani',system-ui,sans-serif;
 }
 @media (min-width:521px){
   body{display:flex;justify-content:center;background:#000;}
-  .nx-shell{border-left:1px solid #332C1F;border-right:1px solid #332C1F;box-shadow:0 0 90px rgba(0,0,0,0.7);}
+  .nx-shell{border-left:1px solid #2A3646;border-right:1px solid #2A3646;box-shadow:0 0 90px rgba(0,0,0,0.7);}
 }
 button{font-family:inherit;}
 @keyframes nxspin{to{transform:rotate(360deg)}}
@@ -45,14 +45,14 @@ const { useState, useMemo, useEffect, useRef } = React;
 
 // ─── TOKENS (paleta inspirada em Death Stranding) ────────────────────────────
 const T = {
-  bg:'#0A0908', surface:'#120F0B', card:'#1A160F', raised:'#241F16',
-  border:'#332C1F', borderHi:'#4A4030',
-  blue:'#E8891F', blueD:'#A8620F',     // chiral amber — marca / jogos
-  orange:'#D46A2C', orangeD:'#9C4A1C', // status "jogando/assistindo"
-  green:'#8C9A5E', greenD:'#5F6B3C',   // musgo — concluído / sucesso
-  pink:'#8B93B0', pinkD:'#5F6684',     // névoa — anime
-  gold:'#D4A94A', cyan:'#6FC7C2', red:'#B0523A', // strand teal — séries / rust — perigo
-  txt:'#D9D3C4', sub:'#8C8474', muted:'#5A5142',
+  bg:'#0A0D12', surface:'#0F141C', card:'#151C27', raised:'#1E2733',
+  border:'#2A3646', borderHi:'#3E4F63',
+  blue:'#3FA7CF', blueD:'#1D5A78',     // sinal ciano — marca / jogos / rede quiral
+  orange:'#D97B3D', orangeD:'#9C551F', // status "jogando/assistindo" (hidratação)
+  green:'#7E9A6E', greenD:'#526B44',   // musgo — concluído / sucesso
+  pink:'#8478B0', pinkD:'#5C5284',     // violeta — anime
+  gold:'#D4A94A', cyan:'#6FE0EC', red:'#B0523A', // ciano de rede — séries / rust — perigo
+  txt:'#E4EAF0', sub:'#8A96A5', muted:'#4C5867',
 };
 
 // ─── API ────────────────────────────────────────────────────────────────────
@@ -140,12 +140,136 @@ const G0 = [
 ];
 
 const M0 = [
-  {id:1,title:'Attack on Titan',coverUrl:null,titleJP:'Shingeki no Kyojin',type:'anime',status:'completed',totalEps:94,watchedEps:94,genres:['Action','Drama'],studio:'MAPPA',year:2013,streaming:['Crunchyroll'],epRatings:seed(94)},
-  {id:2,title:'Demon Slayer',coverUrl:null,titleJP:'Kimetsu no Yaiba',type:'anime',status:'watching',totalEps:55,watchedEps:38,genres:['Action','Fantasy'],studio:'ufotable',year:2019,streaming:['Crunchyroll','Netflix'],epRatings:seed(38)},
-  {id:3,title:'Jujutsu Kaisen',coverUrl:null,titleJP:'Jujutsu Kaisen',type:'anime',status:'watching',totalEps:47,watchedEps:37,genres:['Action','Sobrenatural'],studio:'MAPPA',year:2020,streaming:['Crunchyroll'],epRatings:seed(37)},
-  {id:4,title:'Breaking Bad',coverUrl:null,titleJP:null,type:'series',status:'completed',totalEps:62,watchedEps:62,genres:['Drama','Crime'],studio:'AMC',year:2008,streaming:['Netflix'],epRatings:seed(62)},
-  {id:5,title:'Vinland Saga',coverUrl:null,titleJP:'Vinland Saga',type:'anime',status:'watching',totalEps:48,watchedEps:24,genres:['Ação','Histórico'],studio:'MAPPA',year:2019,streaming:['Prime Video'],epRatings:seed(24)},
+{id:1,title:'The Sopranos',coverUrl:null,titleJP:null,type:'series',status:'watching',totalEps:86,watchedEps:19,genres:[],studio:'',year:'',streaming:['HBO Max','Claro tv+'],epRatings:[{ep:1,rating:9},{ep:2,rating:9},{ep:3,rating:9},{ep:4,rating:9},{ep:5,rating:9},{ep:6,rating:9},{ep:7,rating:9},{ep:8,rating:9},{ep:9,rating:9},{ep:10,rating:8},{ep:11,rating:8},{ep:12,rating:8},{ep:13,rating:8},{ep:14,rating:8},{ep:15,rating:8},{ep:16,rating:8},{ep:17,rating:8},{ep:18,rating:8},{ep:19,rating:8},{ep:20,rating:8},{ep:21,rating:8},{ep:22,rating:8},{ep:23,rating:8},{ep:24,rating:8},{ep:25,rating:8},{ep:26,rating:8}]},
+{id:2,title:'Black Mirror',coverUrl:null,titleJP:null,type:'series',status:'watching',totalEps:33,watchedEps:22,genres:[],studio:'',year:'',streaming:['Netflix'],epRatings:[{ep:1,rating:8},{ep:2,rating:8},{ep:3,rating:8},{ep:4,rating:8},{ep:5,rating:8},{ep:6,rating:8},{ep:7,rating:8},{ep:8,rating:8},{ep:9,rating:8},{ep:10,rating:8},{ep:11,rating:8},{ep:12,rating:8},{ep:13,rating:8},{ep:14,rating:8},{ep:15,rating:8},{ep:16,rating:8},{ep:17,rating:8},{ep:18,rating:8},{ep:19,rating:8},{ep:20,rating:7},{ep:21,rating:7},{ep:22,rating:7}]},
+{id:3,title:'Fargo',coverUrl:null,titleJP:null,type:'series',status:'watching',totalEps:40,watchedEps:30,genres:[],studio:'',year:'',streaming:['Netflix','Prime Video'],epRatings:[{ep:1,rating:9},{ep:2,rating:9},{ep:3,rating:9},{ep:4,rating:9},{ep:5,rating:9},{ep:6,rating:9},{ep:7,rating:9},{ep:8,rating:9},{ep:9,rating:9},{ep:10,rating:9},{ep:11,rating:9},{ep:12,rating:9},{ep:13,rating:9},{ep:14,rating:9},{ep:15,rating:9},{ep:16,rating:9},{ep:17,rating:9},{ep:18,rating:9},{ep:19,rating:9},{ep:20,rating:9},{ep:21,rating:9},{ep:22,rating:8},{ep:23,rating:8},{ep:24,rating:8},{ep:25,rating:8},{ep:26,rating:8},{ep:27,rating:8},{ep:28,rating:8},{ep:29,rating:8},{ep:30,rating:8}]},
+{id:4,title:'The Mandalorian',coverUrl:null,titleJP:null,type:'series',status:'watching',totalEps:25,watchedEps:16,genres:[],studio:'',year:'',streaming:['Disney+'],epRatings:[{ep:1,rating:9},{ep:2,rating:9},{ep:3,rating:9},{ep:4,rating:9},{ep:5,rating:9},{ep:6,rating:9},{ep:7,rating:9},{ep:8,rating:9},{ep:9,rating:8},{ep:10,rating:8},{ep:11,rating:8},{ep:12,rating:8},{ep:13,rating:8},{ep:14,rating:8},{ep:15,rating:8},{ep:16,rating:8}]},
+{id:5,title:'Bom Dia, Verônica',coverUrl:null,titleJP:null,type:'series',status:'watching',totalEps:17,watchedEps:8,genres:[],studio:'',year:'',streaming:['Netflix'],epRatings:[{ep:1,rating:9},{ep:2,rating:9},{ep:3,rating:9},{ep:4,rating:9},{ep:5,rating:8},{ep:6,rating:8},{ep:7,rating:8},{ep:8,rating:8}]},
+{id:6,title:'Dexter',coverUrl:null,titleJP:null,type:'series',status:'watching',totalEps:106,watchedEps:96,genres:[],studio:'',year:'',streaming:['Netflix','Pluto TV'],epRatings:[{ep:1,rating:9},{ep:2,rating:9},{ep:3,rating:9},{ep:4,rating:9},{ep:5,rating:9},{ep:6,rating:9},{ep:7,rating:9},{ep:8,rating:9},{ep:9,rating:9},{ep:10,rating:9},{ep:11,rating:9},{ep:12,rating:9},{ep:13,rating:9},{ep:14,rating:9},{ep:15,rating:9},{ep:16,rating:9},{ep:17,rating:9},{ep:18,rating:9},{ep:19,rating:9},{ep:20,rating:9},{ep:21,rating:9},{ep:22,rating:9},{ep:23,rating:9},{ep:24,rating:9},{ep:25,rating:9},{ep:26,rating:9},{ep:27,rating:9},{ep:28,rating:9},{ep:29,rating:9},{ep:30,rating:9},{ep:31,rating:9},{ep:32,rating:9},{ep:33,rating:9},{ep:34,rating:8},{ep:35,rating:8},{ep:36,rating:8},{ep:37,rating:8},{ep:38,rating:8},{ep:39,rating:8},{ep:40,rating:8},{ep:41,rating:8},{ep:42,rating:8},{ep:43,rating:8},{ep:44,rating:8},{ep:45,rating:8},{ep:46,rating:8},{ep:47,rating:8},{ep:48,rating:8},{ep:49,rating:8},{ep:50,rating:8},{ep:51,rating:8},{ep:52,rating:8},{ep:53,rating:8},{ep:54,rating:8},{ep:55,rating:8},{ep:56,rating:8},{ep:57,rating:8},{ep:58,rating:8},{ep:59,rating:8},{ep:60,rating:8},{ep:61,rating:8},{ep:62,rating:8},{ep:63,rating:8},{ep:64,rating:8},{ep:65,rating:8},{ep:66,rating:8},{ep:67,rating:8},{ep:68,rating:8},{ep:69,rating:8},{ep:70,rating:8},{ep:71,rating:8},{ep:72,rating:8},{ep:73,rating:8},{ep:74,rating:8},{ep:75,rating:8},{ep:76,rating:8},{ep:77,rating:8},{ep:78,rating:8},{ep:79,rating:8},{ep:80,rating:8},{ep:81,rating:8},{ep:82,rating:8},{ep:83,rating:8},{ep:84,rating:8},{ep:85,rating:8},{ep:86,rating:8},{ep:87,rating:8},{ep:88,rating:8},{ep:89,rating:8},{ep:90,rating:8},{ep:91,rating:8},{ep:92,rating:8},{ep:93,rating:8},{ep:94,rating:8},{ep:95,rating:8},{ep:96,rating:8}]},
+{id:7,title:'Digimon Adventure: (2020)',coverUrl:null,titleJP:null,type:'anime',status:'watching',totalEps:67,watchedEps:63,genres:[],studio:'',year:'',streaming:['Crunchyroll'],epRatings:[{ep:1,rating:8},{ep:2,rating:8},{ep:3,rating:8},{ep:4,rating:8},{ep:5,rating:8},{ep:6,rating:8},{ep:7,rating:8},{ep:8,rating:8},{ep:9,rating:8},{ep:10,rating:7},{ep:11,rating:7},{ep:12,rating:7},{ep:13,rating:7},{ep:14,rating:7},{ep:15,rating:7},{ep:16,rating:7},{ep:17,rating:7},{ep:18,rating:7},{ep:19,rating:7},{ep:20,rating:7}]},
+{id:8,title:'Feud',coverUrl:null,titleJP:null,type:'series',status:'watching',totalEps:16,watchedEps:8,genres:[],studio:'',year:'',streaming:['Disney+'],epRatings:[{ep:1,rating:9},{ep:2,rating:9},{ep:3,rating:9},{ep:4,rating:9},{ep:5,rating:8},{ep:6,rating:8},{ep:7,rating:8},{ep:8,rating:8}]},
+{id:9,title:'House of Cards (2013)',coverUrl:null,titleJP:null,type:'series',status:'watching',totalEps:73,watchedEps:65,genres:[],studio:'',year:'',streaming:['Netflix'],epRatings:[{ep:1,rating:9},{ep:2,rating:9},{ep:3,rating:9},{ep:4,rating:9},{ep:5,rating:9},{ep:6,rating:9},{ep:7,rating:9},{ep:8,rating:9},{ep:9,rating:9},{ep:10,rating:9},{ep:11,rating:9},{ep:12,rating:9},{ep:13,rating:9},{ep:14,rating:9},{ep:15,rating:9},{ep:16,rating:9},{ep:17,rating:9},{ep:18,rating:9},{ep:19,rating:9},{ep:20,rating:9},{ep:21,rating:9},{ep:22,rating:9},{ep:23,rating:9},{ep:24,rating:9},{ep:25,rating:9},{ep:26,rating:9},{ep:27,rating:9},{ep:28,rating:9},{ep:29,rating:9},{ep:30,rating:9},{ep:31,rating:9},{ep:32,rating:9},{ep:33,rating:9},{ep:34,rating:9},{ep:35,rating:9},{ep:36,rating:9},{ep:37,rating:9},{ep:38,rating:9},{ep:39,rating:9},{ep:40,rating:9},{ep:41,rating:9},{ep:42,rating:8},{ep:43,rating:8},{ep:44,rating:8},{ep:45,rating:8},{ep:46,rating:8},{ep:47,rating:8},{ep:48,rating:8},{ep:49,rating:8},{ep:50,rating:8},{ep:51,rating:8},{ep:52,rating:8},{ep:53,rating:8},{ep:54,rating:8},{ep:55,rating:8},{ep:56,rating:8},{ep:57,rating:8},{ep:58,rating:8},{ep:59,rating:8},{ep:60,rating:8},{ep:61,rating:8},{ep:62,rating:8},{ep:63,rating:8},{ep:64,rating:8},{ep:65,rating:8}]},
+{id:10,title:'Loki',coverUrl:null,titleJP:null,type:'series',status:'watching',totalEps:12,watchedEps:6,genres:[],studio:'',year:'',streaming:['Disney+'],epRatings:[{ep:1,rating:9},{ep:2,rating:9},{ep:3,rating:9},{ep:4,rating:8},{ep:5,rating:8},{ep:6,rating:8}]},
+{id:11,title:'Lost',coverUrl:null,titleJP:null,type:'series',status:'watching',totalEps:121,watchedEps:25,genres:[],studio:'',year:'',streaming:['Disney+'],epRatings:[{ep:1,rating:9},{ep:2,rating:9},{ep:3,rating:9},{ep:4,rating:9},{ep:5,rating:8},{ep:6,rating:8},{ep:7,rating:8},{ep:8,rating:8},{ep:9,rating:8},{ep:10,rating:8},{ep:11,rating:8},{ep:12,rating:8},{ep:13,rating:8},{ep:14,rating:8},{ep:15,rating:8},{ep:16,rating:8},{ep:17,rating:8},{ep:18,rating:8},{ep:19,rating:8},{ep:20,rating:8},{ep:21,rating:8},{ep:22,rating:8},{ep:23,rating:8},{ep:24,rating:8},{ep:25,rating:8}]},
+{id:12,title:'Misfits',coverUrl:null,titleJP:null,type:'series',status:'watching',totalEps:37,watchedEps:30,genres:[],studio:'',year:'',streaming:[],epRatings:[{ep:1,rating:9},{ep:2,rating:9},{ep:3,rating:9},{ep:4,rating:9},{ep:5,rating:9},{ep:6,rating:9},{ep:7,rating:8},{ep:8,rating:8},{ep:9,rating:8},{ep:10,rating:8},{ep:11,rating:8},{ep:12,rating:8},{ep:13,rating:8},{ep:14,rating:8},{ep:15,rating:8},{ep:16,rating:8},{ep:17,rating:8},{ep:18,rating:8},{ep:19,rating:8},{ep:20,rating:8},{ep:21,rating:8},{ep:22,rating:8},{ep:23,rating:8},{ep:24,rating:8},{ep:25,rating:8},{ep:26,rating:8},{ep:27,rating:8},{ep:28,rating:8},{ep:29,rating:8},{ep:30,rating:8}]},
+{id:13,title:'Ozark',coverUrl:null,titleJP:null,type:'series',status:'watching',totalEps:44,watchedEps:37,genres:[],studio:'',year:'',streaming:['Netflix'],epRatings:[{ep:1,rating:9},{ep:2,rating:9},{ep:3,rating:9},{ep:4,rating:9},{ep:5,rating:9},{ep:6,rating:9},{ep:7,rating:9},{ep:8,rating:9},{ep:9,rating:9},{ep:10,rating:9},{ep:11,rating:9},{ep:12,rating:9},{ep:13,rating:9},{ep:14,rating:9},{ep:15,rating:9},{ep:16,rating:9},{ep:17,rating:9},{ep:18,rating:9},{ep:19,rating:9},{ep:20,rating:9},{ep:21,rating:9},{ep:22,rating:9},{ep:23,rating:9},{ep:24,rating:9},{ep:25,rating:9},{ep:26,rating:8},{ep:27,rating:8},{ep:28,rating:8},{ep:29,rating:8},{ep:30,rating:8},{ep:31,rating:8},{ep:32,rating:8},{ep:33,rating:8},{ep:34,rating:8},{ep:35,rating:8},{ep:36,rating:8}]},
+{id:14,title:'Penny Dreadful',coverUrl:null,titleJP:null,type:'series',status:'watching',totalEps:27,watchedEps:9,genres:[],studio:'',year:'',streaming:['Mercado Play'],epRatings:[{ep:1,rating:9},{ep:2,rating:9},{ep:3,rating:9},{ep:4,rating:9},{ep:5,rating:8},{ep:6,rating:8},{ep:7,rating:8},{ep:8,rating:8},{ep:9,rating:8}]},
+{id:15,title:'Ragnarok',coverUrl:null,titleJP:null,type:'series',status:'watching',totalEps:18,watchedEps:12,genres:[],studio:'',year:'',streaming:['Netflix'],epRatings:[{ep:1,rating:8},{ep:2,rating:8},{ep:3,rating:8},{ep:4,rating:8},{ep:5,rating:8},{ep:6,rating:8},{ep:7,rating:7},{ep:8,rating:7},{ep:9,rating:7},{ep:10,rating:7},{ep:11,rating:7},{ep:12,rating:7}]},
+{id:16,title:'Six Feet Under',coverUrl:null,titleJP:null,type:'series',status:'watching',totalEps:63,watchedEps:40,genres:[],studio:'',year:'',streaming:['HBO Max','Claro tv+'],epRatings:[{ep:1,rating:9},{ep:2,rating:9},{ep:3,rating:9},{ep:4,rating:9},{ep:5,rating:9},{ep:6,rating:9},{ep:7,rating:9},{ep:8,rating:9},{ep:9,rating:9},{ep:10,rating:9},{ep:11,rating:9},{ep:12,rating:9},{ep:13,rating:9},{ep:14,rating:9},{ep:15,rating:9},{ep:16,rating:9},{ep:17,rating:9},{ep:18,rating:9},{ep:19,rating:9},{ep:20,rating:9},{ep:21,rating:9},{ep:22,rating:9},{ep:23,rating:9},{ep:24,rating:9},{ep:25,rating:9},{ep:26,rating:9},{ep:27,rating:9},{ep:28,rating:9},{ep:29,rating:9},{ep:30,rating:9},{ep:31,rating:9},{ep:32,rating:8},{ep:33,rating:8},{ep:34,rating:8},{ep:35,rating:8},{ep:36,rating:8},{ep:37,rating:8},{ep:38,rating:8},{ep:39,rating:8},{ep:40,rating:8}]},
+{id:17,title:'Skins',coverUrl:null,titleJP:null,type:'series',status:'watching',totalEps:25,watchedEps:19,genres:[],studio:'',year:'',streaming:[],epRatings:[{ep:1,rating:9},{ep:2,rating:9},{ep:3,rating:9},{ep:4,rating:9},{ep:5,rating:9},{ep:6,rating:9},{ep:7,rating:9},{ep:8,rating:9},{ep:9,rating:9},{ep:10,rating:9},{ep:11,rating:8},{ep:12,rating:8},{ep:13,rating:8},{ep:14,rating:8},{ep:15,rating:8},{ep:16,rating:8},{ep:17,rating:8},{ep:18,rating:8},{ep:19,rating:8}]},
+{id:18,title:'Stranger Things',coverUrl:null,titleJP:null,type:'series',status:'watching',totalEps:42,watchedEps:32,genres:[],studio:'',year:'',streaming:['Netflix'],epRatings:[{ep:1,rating:9},{ep:2,rating:9},{ep:3,rating:9},{ep:4,rating:9},{ep:5,rating:9},{ep:6,rating:9},{ep:7,rating:9},{ep:8,rating:9},{ep:9,rating:9},{ep:10,rating:9},{ep:11,rating:9},{ep:12,rating:9},{ep:13,rating:9},{ep:14,rating:8},{ep:15,rating:8},{ep:16,rating:8},{ep:17,rating:8},{ep:18,rating:8},{ep:19,rating:8},{ep:20,rating:8},{ep:21,rating:8},{ep:22,rating:8},{ep:23,rating:8},{ep:24,rating:8},{ep:25,rating:8},{ep:26,rating:8},{ep:27,rating:8},{ep:28,rating:8},{ep:29,rating:8},{ep:30,rating:8},{ep:31,rating:8},{ep:32,rating:8}]},
+{id:19,title:'Succession',coverUrl:null,titleJP:null,type:'series',status:'watching',totalEps:39,watchedEps:29,genres:[],studio:'',year:'',streaming:['HBO Max','Claro tv+'],epRatings:[{ep:1,rating:9},{ep:2,rating:9},{ep:3,rating:9},{ep:4,rating:9},{ep:5,rating:9},{ep:6,rating:9},{ep:7,rating:9},{ep:8,rating:9},{ep:9,rating:9},{ep:10,rating:9},{ep:11,rating:9},{ep:12,rating:9},{ep:13,rating:9},{ep:14,rating:9},{ep:15,rating:9},{ep:16,rating:9},{ep:17,rating:9},{ep:18,rating:9},{ep:19,rating:9},{ep:20,rating:9},{ep:21,rating:9},{ep:22,rating:9},{ep:23,rating:8},{ep:24,rating:8},{ep:25,rating:8},{ep:26,rating:8},{ep:27,rating:8},{ep:28,rating:8},{ep:29,rating:8}]},
+{id:20,title:'The Boys',coverUrl:null,titleJP:null,type:'series',status:'watching',totalEps:40,watchedEps:16,genres:[],studio:'',year:'',streaming:['Prime Video'],epRatings:[{ep:1,rating:9},{ep:2,rating:9},{ep:3,rating:9},{ep:4,rating:9},{ep:5,rating:9},{ep:6,rating:9},{ep:7,rating:9},{ep:8,rating:9},{ep:9,rating:8},{ep:10,rating:8},{ep:11,rating:8},{ep:12,rating:8},{ep:13,rating:8},{ep:14,rating:8},{ep:15,rating:8},{ep:16,rating:8}]},
+{id:21,title:'The Crown',coverUrl:null,titleJP:null,type:'series',status:'watching',totalEps:60,watchedEps:40,genres:[],studio:'',year:'',streaming:['Netflix'],epRatings:[{ep:1,rating:9},{ep:2,rating:9},{ep:3,rating:9},{ep:4,rating:9},{ep:5,rating:9},{ep:6,rating:9},{ep:7,rating:9},{ep:8,rating:9},{ep:9,rating:9},{ep:10,rating:9},{ep:11,rating:9},{ep:12,rating:9},{ep:13,rating:9},{ep:14,rating:9},{ep:15,rating:9},{ep:16,rating:9},{ep:17,rating:9},{ep:18,rating:8},{ep:19,rating:8},{ep:20,rating:8},{ep:21,rating:8},{ep:22,rating:8},{ep:23,rating:8},{ep:24,rating:8},{ep:25,rating:8},{ep:26,rating:8},{ep:27,rating:8},{ep:28,rating:8},{ep:29,rating:8},{ep:30,rating:8},{ep:31,rating:8},{ep:32,rating:8},{ep:33,rating:8},{ep:34,rating:8},{ep:35,rating:8},{ep:36,rating:8},{ep:37,rating:8},{ep:38,rating:8},{ep:39,rating:8},{ep:40,rating:8}]},
+{id:22,title:'The Handmaid\'s Tale',coverUrl:null,titleJP:null,type:'series',status:'watching',totalEps:66,watchedEps:46,genres:[],studio:'',year:'',streaming:['Netflix','Prime Video','Disney+'],epRatings:[{ep:1,rating:9},{ep:2,rating:9},{ep:3,rating:9},{ep:4,rating:9},{ep:5,rating:9},{ep:6,rating:9},{ep:7,rating:9},{ep:8,rating:9},{ep:9,rating:9},{ep:10,rating:9},{ep:11,rating:9},{ep:12,rating:9},{ep:13,rating:9},{ep:14,rating:9},{ep:15,rating:9},{ep:16,rating:9},{ep:17,rating:9},{ep:18,rating:9},{ep:19,rating:9},{ep:20,rating:9},{ep:21,rating:9},{ep:22,rating:9},{ep:23,rating:9},{ep:24,rating:9},{ep:25,rating:9},{ep:26,rating:8},{ep:27,rating:8},{ep:28,rating:8},{ep:29,rating:8},{ep:30,rating:8},{ep:31,rating:8},{ep:32,rating:8},{ep:33,rating:8},{ep:34,rating:8},{ep:35,rating:8},{ep:36,rating:8},{ep:37,rating:8},{ep:38,rating:8},{ep:39,rating:8},{ep:40,rating:8},{ep:41,rating:8},{ep:42,rating:8},{ep:43,rating:8},{ep:44,rating:8},{ep:45,rating:8}]},
+{id:23,title:'The Umbrella Academy',coverUrl:null,titleJP:null,type:'series',status:'watching',totalEps:36,watchedEps:20,genres:[],studio:'',year:'',streaming:['Netflix'],epRatings:[{ep:1,rating:9},{ep:2,rating:9},{ep:3,rating:9},{ep:4,rating:8},{ep:5,rating:8},{ep:6,rating:8},{ep:7,rating:8},{ep:8,rating:8},{ep:9,rating:8},{ep:10,rating:8},{ep:11,rating:8},{ep:12,rating:8},{ep:13,rating:8},{ep:14,rating:8},{ep:15,rating:8},{ep:16,rating:8},{ep:17,rating:8},{ep:18,rating:8},{ep:19,rating:8},{ep:20,rating:8}]},
+{id:24,title:'Titans',coverUrl:null,titleJP:null,type:'series',status:'watching',totalEps:49,watchedEps:37,genres:[],studio:'',year:'',streaming:['Netflix'],epRatings:[{ep:1,rating:8},{ep:2,rating:8},{ep:3,rating:8},{ep:4,rating:8},{ep:5,rating:8},{ep:6,rating:8},{ep:7,rating:8},{ep:8,rating:8},{ep:9,rating:8},{ep:10,rating:8},{ep:11,rating:8},{ep:12,rating:8},{ep:13,rating:8},{ep:14,rating:8},{ep:15,rating:8},{ep:16,rating:8},{ep:17,rating:8},{ep:18,rating:8},{ep:19,rating:8},{ep:20,rating:8},{ep:21,rating:7},{ep:22,rating:7},{ep:23,rating:7},{ep:24,rating:7},{ep:25,rating:7},{ep:26,rating:7},{ep:27,rating:7},{ep:28,rating:7},{ep:29,rating:7},{ep:30,rating:7},{ep:31,rating:7},{ep:32,rating:7},{ep:33,rating:7},{ep:34,rating:7},{ep:35,rating:7},{ep:36,rating:7},{ep:37,rating:7}]},
+{id:25,title:'Westworld',coverUrl:null,titleJP:null,type:'series',status:'watching',totalEps:36,watchedEps:28,genres:[],studio:'',year:'',streaming:[],epRatings:[{ep:1,rating:9},{ep:2,rating:9},{ep:3,rating:9},{ep:4,rating:9},{ep:5,rating:9},{ep:6,rating:9},{ep:7,rating:9},{ep:8,rating:9},{ep:9,rating:9},{ep:10,rating:9},{ep:11,rating:9},{ep:12,rating:9},{ep:13,rating:9},{ep:14,rating:9},{ep:15,rating:9},{ep:16,rating:9},{ep:17,rating:9},{ep:18,rating:9},{ep:19,rating:9},{ep:20,rating:9},{ep:21,rating:9},{ep:22,rating:8},{ep:23,rating:8},{ep:24,rating:8},{ep:25,rating:8},{ep:26,rating:8},{ep:27,rating:8},{ep:28,rating:8}]},
+{id:26,title:'666 Park Avenue',coverUrl:null,titleJP:null,type:'series',status:'completed',totalEps:13,watchedEps:13,genres:[],studio:'',year:'',streaming:[],epRatings:[{ep:1,rating:8},{ep:2,rating:8},{ep:3,rating:8},{ep:4,rating:8},{ep:5,rating:8},{ep:6,rating:8},{ep:7,rating:8},{ep:8,rating:8},{ep:9,rating:8},{ep:10,rating:8},{ep:11,rating:8},{ep:12,rating:7},{ep:13,rating:7}]},
+{id:27,title:'A Casa das Sete Mulheres',coverUrl:null,titleJP:null,type:'series',status:'completed',totalEps:52,watchedEps:52,genres:[],studio:'',year:'',streaming:['YouTube'],epRatings:[]},
+{id:28,title:'American Crime Story',coverUrl:null,titleJP:null,type:'series',status:'completed',totalEps:19,watchedEps:19,genres:[],studio:'',year:'',streaming:['Disney+'],epRatings:[{ep:1,rating:8},{ep:2,rating:8},{ep:3,rating:8},{ep:4,rating:8},{ep:5,rating:8},{ep:6,rating:8},{ep:7,rating:8},{ep:8,rating:8},{ep:9,rating:8},{ep:10,rating:8},{ep:11,rating:8},{ep:12,rating:8},{ep:13,rating:8},{ep:14,rating:8},{ep:15,rating:8},{ep:16,rating:8},{ep:17,rating:8},{ep:18,rating:8},{ep:19,rating:8}]},
+{id:29,title:'Banana',coverUrl:null,titleJP:null,type:'series',status:'completed',totalEps:8,watchedEps:8,genres:[],studio:'',year:'',streaming:[],epRatings:[{ep:1,rating:9},{ep:2,rating:9},{ep:3,rating:8},{ep:4,rating:8},{ep:5,rating:8},{ep:6,rating:8},{ep:7,rating:8},{ep:8,rating:8}]},
+{id:30,title:'Band of Brothers',coverUrl:null,titleJP:null,type:'series',status:'completed',totalEps:10,watchedEps:10,genres:[],studio:'',year:'',streaming:['HBO Max'],epRatings:[{ep:1,rating:10},{ep:2,rating:9},{ep:3,rating:9},{ep:4,rating:9},{ep:5,rating:9},{ep:6,rating:9},{ep:7,rating:9},{ep:8,rating:9},{ep:9,rating:9},{ep:10,rating:9}]},
+{id:31,title:'Breaking Bad',coverUrl:null,titleJP:null,type:'series',status:'completed',totalEps:63,watchedEps:63,genres:[],studio:'',year:'',streaming:['Netflix'],epRatings:[{ep:1,rating:10},{ep:2,rating:10},{ep:3,rating:10},{ep:4,rating:10},{ep:5,rating:10},{ep:6,rating:10},{ep:7,rating:9},{ep:8,rating:9},{ep:9,rating:9},{ep:10,rating:9},{ep:11,rating:9},{ep:12,rating:9},{ep:13,rating:9},{ep:14,rating:9},{ep:15,rating:9},{ep:16,rating:9},{ep:17,rating:9},{ep:18,rating:9},{ep:19,rating:9},{ep:20,rating:9},{ep:21,rating:9},{ep:22,rating:9},{ep:23,rating:9},{ep:24,rating:9},{ep:25,rating:9},{ep:26,rating:9},{ep:27,rating:9},{ep:28,rating:9},{ep:29,rating:9},{ep:30,rating:9},{ep:31,rating:9},{ep:32,rating:9},{ep:33,rating:9},{ep:34,rating:9},{ep:35,rating:9},{ep:36,rating:9},{ep:37,rating:9},{ep:38,rating:9},{ep:39,rating:9},{ep:40,rating:9},{ep:41,rating:9},{ep:42,rating:9},{ep:43,rating:9},{ep:44,rating:9},{ep:45,rating:9},{ep:46,rating:9},{ep:47,rating:9},{ep:48,rating:9},{ep:49,rating:9},{ep:50,rating:9},{ep:51,rating:9},{ep:52,rating:9},{ep:53,rating:9},{ep:54,rating:9},{ep:55,rating:9},{ep:56,rating:9},{ep:57,rating:9},{ep:58,rating:9},{ep:59,rating:9},{ep:60,rating:9},{ep:61,rating:9},{ep:62,rating:9},{ep:63,rating:9}]},
+{id:32,title:'Chernobyl',coverUrl:null,titleJP:null,type:'series',status:'completed',totalEps:5,watchedEps:5,genres:[],studio:'',year:'',streaming:['HBO Max'],epRatings:[{ep:1,rating:9},{ep:2,rating:9},{ep:3,rating:9},{ep:4,rating:9},{ep:5,rating:8}]},
+{id:33,title:'Chilling Adventures of Sabrina',coverUrl:null,titleJP:null,type:'series',status:'completed',totalEps:36,watchedEps:36,genres:[],studio:'',year:'',streaming:['Netflix'],epRatings:[{ep:1,rating:8},{ep:2,rating:8},{ep:3,rating:8},{ep:4,rating:8},{ep:5,rating:8},{ep:6,rating:8},{ep:7,rating:8},{ep:8,rating:8},{ep:9,rating:8},{ep:10,rating:8},{ep:11,rating:8},{ep:12,rating:8},{ep:13,rating:8},{ep:14,rating:8},{ep:15,rating:8},{ep:16,rating:8},{ep:17,rating:8},{ep:18,rating:8},{ep:19,rating:8},{ep:20,rating:8},{ep:21,rating:8},{ep:22,rating:8},{ep:23,rating:8},{ep:24,rating:8},{ep:25,rating:8},{ep:26,rating:8},{ep:27,rating:8},{ep:28,rating:8},{ep:29,rating:8},{ep:30,rating:8},{ep:31,rating:7},{ep:32,rating:7},{ep:33,rating:7},{ep:34,rating:7},{ep:35,rating:7},{ep:36,rating:7}]},
+{id:34,title:'Dark',coverUrl:null,titleJP:null,type:'series',status:'completed',totalEps:26,watchedEps:26,genres:[],studio:'',year:'',streaming:['Netflix'],epRatings:[{ep:1,rating:9},{ep:2,rating:9},{ep:3,rating:9},{ep:4,rating:9},{ep:5,rating:9},{ep:6,rating:9},{ep:7,rating:9},{ep:8,rating:9},{ep:9,rating:9},{ep:10,rating:9},{ep:11,rating:9},{ep:12,rating:9},{ep:13,rating:9},{ep:14,rating:9},{ep:15,rating:9},{ep:16,rating:9},{ep:17,rating:9},{ep:18,rating:8},{ep:19,rating:8},{ep:20,rating:8},{ep:21,rating:8},{ep:22,rating:8},{ep:23,rating:8},{ep:24,rating:8},{ep:25,rating:8},{ep:26,rating:8}]},
+{id:35,title:'Digimon Adventure tri.',coverUrl:null,titleJP:null,type:'anime',status:'completed',totalEps:26,watchedEps:26,genres:[],studio:'',year:'',streaming:['Crunchyroll'],epRatings:[{ep:1,rating:8},{ep:2,rating:8},{ep:3,rating:8},{ep:4,rating:8},{ep:5,rating:8},{ep:6,rating:8},{ep:7,rating:8},{ep:8,rating:8},{ep:9,rating:8},{ep:10,rating:8},{ep:11,rating:8},{ep:12,rating:8},{ep:13,rating:8},{ep:14,rating:8},{ep:15,rating:8},{ep:16,rating:8},{ep:17,rating:8},{ep:18,rating:8},{ep:19,rating:8},{ep:20,rating:8},{ep:21,rating:7},{ep:22,rating:7},{ep:23,rating:7},{ep:24,rating:7},{ep:25,rating:7},{ep:26,rating:7}]},
+{id:36,title:'Dragon Ball',coverUrl:null,titleJP:null,type:'anime',status:'completed',totalEps:153,watchedEps:153,genres:[],studio:'',year:'',streaming:['YouTube','Crunchyroll','Claro tv+'],epRatings:[]},
+{id:37,title:'Dragon Ball GT',coverUrl:null,titleJP:null,type:'anime',status:'completed',totalEps:64,watchedEps:64,genres:[],studio:'',year:'',streaming:['Crunchyroll'],epRatings:[]},
+{id:38,title:'Dragon Ball Super',coverUrl:null,titleJP:null,type:'anime',status:'completed',totalEps:131,watchedEps:131,genres:[],studio:'',year:'',streaming:['Crunchyroll'],epRatings:[]},
+{id:39,title:'Dragon Ball Z Kai',coverUrl:null,titleJP:null,type:'anime',status:'completed',totalEps:159,watchedEps:159,genres:[],studio:'',year:'',streaming:['YouTube','Crunchyroll','HBO Max'],epRatings:[]},
+{id:40,title:'Fringe',coverUrl:null,titleJP:null,type:'series',status:'completed',totalEps:100,watchedEps:100,genres:[],studio:'',year:'',streaming:['Prime Video'],epRatings:[{ep:1,rating:9},{ep:2,rating:9},{ep:3,rating:9},{ep:4,rating:9},{ep:5,rating:9},{ep:6,rating:9},{ep:7,rating:9},{ep:8,rating:9},{ep:9,rating:9},{ep:10,rating:9},{ep:11,rating:9},{ep:12,rating:9},{ep:13,rating:9},{ep:14,rating:9},{ep:15,rating:9},{ep:16,rating:9},{ep:17,rating:9},{ep:18,rating:9},{ep:19,rating:9},{ep:20,rating:9},{ep:21,rating:9},{ep:22,rating:9},{ep:23,rating:9},{ep:24,rating:9},{ep:25,rating:9},{ep:26,rating:9},{ep:27,rating:9},{ep:28,rating:9},{ep:29,rating:9},{ep:30,rating:9},{ep:31,rating:9},{ep:32,rating:9},{ep:33,rating:9},{ep:34,rating:9},{ep:35,rating:9},{ep:36,rating:9},{ep:37,rating:9},{ep:38,rating:9},{ep:39,rating:9},{ep:40,rating:9},{ep:41,rating:9},{ep:42,rating:9},{ep:43,rating:9},{ep:44,rating:9},{ep:45,rating:9},{ep:46,rating:9},{ep:47,rating:9},{ep:48,rating:9},{ep:49,rating:9},{ep:50,rating:9},{ep:51,rating:9},{ep:52,rating:9},{ep:53,rating:9},{ep:54,rating:9},{ep:55,rating:9},{ep:56,rating:9},{ep:57,rating:9},{ep:58,rating:9},{ep:59,rating:9},{ep:60,rating:9},{ep:61,rating:9},{ep:62,rating:9},{ep:63,rating:9},{ep:64,rating:9},{ep:65,rating:9},{ep:66,rating:9},{ep:67,rating:9},{ep:68,rating:9},{ep:69,rating:9},{ep:70,rating:9},{ep:71,rating:9},{ep:72,rating:9},{ep:73,rating:9},{ep:74,rating:9},{ep:75,rating:9},{ep:76,rating:8},{ep:77,rating:8},{ep:78,rating:8},{ep:79,rating:8},{ep:80,rating:8},{ep:81,rating:8},{ep:82,rating:8},{ep:83,rating:8},{ep:84,rating:8},{ep:85,rating:8},{ep:86,rating:8},{ep:87,rating:8},{ep:88,rating:8},{ep:89,rating:8},{ep:90,rating:8},{ep:91,rating:8},{ep:92,rating:8},{ep:93,rating:8},{ep:94,rating:8},{ep:95,rating:8},{ep:96,rating:8},{ep:97,rating:8},{ep:98,rating:8},{ep:99,rating:8},{ep:100,rating:8}]},
+{id:41,title:'Fullmetal Alchemist: Brotherhood',coverUrl:null,titleJP:null,type:'anime',status:'completed',totalEps:64,watchedEps:64,genres:[],studio:'',year:'',streaming:['Netflix','Crunchyroll'],epRatings:[{ep:1,rating:9},{ep:2,rating:9},{ep:3,rating:9},{ep:4,rating:9},{ep:5,rating:9},{ep:6,rating:9},{ep:7,rating:9},{ep:8,rating:9},{ep:9,rating:9},{ep:10,rating:9},{ep:11,rating:9},{ep:12,rating:9},{ep:13,rating:9},{ep:14,rating:9},{ep:15,rating:9},{ep:16,rating:9},{ep:17,rating:9},{ep:18,rating:9},{ep:19,rating:9},{ep:20,rating:9},{ep:21,rating:9},{ep:22,rating:9},{ep:23,rating:9},{ep:24,rating:9},{ep:25,rating:9},{ep:26,rating:9},{ep:27,rating:9},{ep:28,rating:9},{ep:29,rating:9},{ep:30,rating:9},{ep:31,rating:9},{ep:32,rating:9},{ep:33,rating:8},{ep:34,rating:8},{ep:35,rating:8},{ep:36,rating:8},{ep:37,rating:8},{ep:38,rating:8},{ep:39,rating:8},{ep:40,rating:8},{ep:41,rating:8},{ep:42,rating:8},{ep:43,rating:8},{ep:44,rating:8},{ep:45,rating:8},{ep:46,rating:8},{ep:47,rating:8},{ep:48,rating:8},{ep:49,rating:8},{ep:50,rating:8},{ep:51,rating:8},{ep:52,rating:8},{ep:53,rating:8},{ep:54,rating:8},{ep:55,rating:8},{ep:56,rating:8},{ep:57,rating:8},{ep:58,rating:8},{ep:59,rating:8},{ep:60,rating:8},{ep:61,rating:8},{ep:62,rating:8},{ep:63,rating:8},{ep:64,rating:8}]},
+{id:42,title:'Game of Thrones',coverUrl:null,titleJP:null,type:'series',status:'completed',totalEps:73,watchedEps:73,genres:[],studio:'',year:'',streaming:['HBO Max','Claro tv+'],epRatings:[{ep:1,rating:9},{ep:2,rating:9},{ep:3,rating:9},{ep:4,rating:9},{ep:5,rating:9},{ep:6,rating:9},{ep:7,rating:9},{ep:8,rating:9},{ep:9,rating:9},{ep:10,rating:9},{ep:11,rating:9},{ep:12,rating:9},{ep:13,rating:9},{ep:14,rating:9},{ep:15,rating:9},{ep:16,rating:9},{ep:17,rating:9},{ep:18,rating:9},{ep:19,rating:9},{ep:20,rating:9},{ep:21,rating:9},{ep:22,rating:9},{ep:23,rating:9},{ep:24,rating:9},{ep:25,rating:9},{ep:26,rating:9},{ep:27,rating:9},{ep:28,rating:9},{ep:29,rating:9},{ep:30,rating:9},{ep:31,rating:9},{ep:32,rating:9},{ep:33,rating:9},{ep:34,rating:9},{ep:35,rating:9},{ep:36,rating:9},{ep:37,rating:9},{ep:38,rating:9},{ep:39,rating:9},{ep:40,rating:9},{ep:41,rating:9},{ep:42,rating:9},{ep:43,rating:9},{ep:44,rating:9},{ep:45,rating:9},{ep:46,rating:9},{ep:47,rating:9},{ep:48,rating:9},{ep:49,rating:9},{ep:50,rating:9},{ep:51,rating:9},{ep:52,rating:9},{ep:53,rating:9},{ep:54,rating:9},{ep:55,rating:9},{ep:56,rating:9},{ep:57,rating:9},{ep:58,rating:9},{ep:59,rating:9},{ep:60,rating:9},{ep:61,rating:8},{ep:62,rating:8},{ep:63,rating:8},{ep:64,rating:8},{ep:65,rating:8},{ep:66,rating:8},{ep:67,rating:8},{ep:68,rating:8},{ep:69,rating:8},{ep:70,rating:8},{ep:71,rating:8},{ep:72,rating:8},{ep:73,rating:8}]},
+{id:43,title:'Guerras do Brasil',coverUrl:null,titleJP:null,type:'series',status:'completed',totalEps:5,watchedEps:5,genres:[],studio:'',year:'',streaming:['Netflix'],epRatings:[{ep:1,rating:9},{ep:2,rating:9},{ep:3,rating:8},{ep:4,rating:8},{ep:5,rating:8}]},
+{id:44,title:'Halston',coverUrl:null,titleJP:null,type:'series',status:'completed',totalEps:5,watchedEps:5,genres:[],studio:'',year:'',streaming:['Netflix'],epRatings:[{ep:1,rating:9},{ep:2,rating:9},{ep:3,rating:8},{ep:4,rating:8},{ep:5,rating:8}]},
+{id:45,title:'Hannibal',coverUrl:null,titleJP:null,type:'series',status:'completed',totalEps:39,watchedEps:39,genres:[],studio:'',year:'',streaming:[],epRatings:[{ep:1,rating:9},{ep:2,rating:9},{ep:3,rating:9},{ep:4,rating:9},{ep:5,rating:9},{ep:6,rating:9},{ep:7,rating:9},{ep:8,rating:9},{ep:9,rating:9},{ep:10,rating:9},{ep:11,rating:9},{ep:12,rating:9},{ep:13,rating:9},{ep:14,rating:9},{ep:15,rating:9},{ep:16,rating:9},{ep:17,rating:9},{ep:18,rating:9},{ep:19,rating:9},{ep:20,rating:9},{ep:21,rating:9},{ep:22,rating:9},{ep:23,rating:9},{ep:24,rating:9},{ep:25,rating:9},{ep:26,rating:9},{ep:27,rating:8},{ep:28,rating:8},{ep:29,rating:8},{ep:30,rating:8},{ep:31,rating:8},{ep:32,rating:8},{ep:33,rating:8},{ep:34,rating:8},{ep:35,rating:8},{ep:36,rating:8},{ep:37,rating:8},{ep:38,rating:8},{ep:39,rating:8}]},
+{id:46,title:'Heroes',coverUrl:null,titleJP:null,type:'series',status:'completed',totalEps:78,watchedEps:78,genres:[],studio:'',year:'',streaming:['Netflix','Prime Video'],epRatings:[]},
+{id:47,title:'Hollywood (2020)',coverUrl:null,titleJP:null,type:'series',status:'completed',totalEps:7,watchedEps:7,genres:[],studio:'',year:'',streaming:['Netflix'],epRatings:[{ep:1,rating:9},{ep:2,rating:9},{ep:3,rating:8},{ep:4,rating:8},{ep:5,rating:8},{ep:6,rating:8},{ep:7,rating:8}]},
+{id:48,title:'In The Flesh',coverUrl:null,titleJP:null,type:'series',status:'completed',totalEps:9,watchedEps:9,genres:[],studio:'',year:'',streaming:[],epRatings:[{ep:1,rating:9},{ep:2,rating:9},{ep:3,rating:8},{ep:4,rating:8},{ep:5,rating:8},{ep:6,rating:8},{ep:7,rating:8},{ep:8,rating:8},{ep:9,rating:8}]},
+{id:49,title:'Inuyasha',coverUrl:null,titleJP:null,type:'anime',status:'completed',totalEps:167,watchedEps:167,genres:[],studio:'',year:'',streaming:['Netflix','Prime Video','Pluto TV'],epRatings:[]},
+{id:50,title:'Jackie Chan Adventures',coverUrl:null,titleJP:null,type:'series',status:'completed',totalEps:95,watchedEps:95,genres:[],studio:'',year:'',streaming:[],epRatings:[]},
+{id:51,title:'Looking',coverUrl:null,titleJP:null,type:'series',status:'completed',totalEps:19,watchedEps:19,genres:[],studio:'',year:'',streaming:['HBO Max'],epRatings:[{ep:1,rating:9},{ep:2,rating:9},{ep:3,rating:9},{ep:4,rating:9},{ep:5,rating:8},{ep:6,rating:8},{ep:7,rating:8},{ep:8,rating:8},{ep:9,rating:8},{ep:10,rating:8},{ep:11,rating:8},{ep:12,rating:8},{ep:13,rating:8},{ep:14,rating:8},{ep:15,rating:8},{ep:16,rating:8},{ep:17,rating:8},{ep:18,rating:8},{ep:19,rating:8}]},
+{id:52,title:'Lovecraft Country',coverUrl:null,titleJP:null,type:'series',status:'completed',totalEps:10,watchedEps:10,genres:[],studio:'',year:'',streaming:['HBO Max'],epRatings:[{ep:1,rating:9},{ep:2,rating:9},{ep:3,rating:9},{ep:4,rating:9},{ep:5,rating:9},{ep:6,rating:8},{ep:7,rating:8},{ep:8,rating:8},{ep:9,rating:8},{ep:10,rating:8}]},
+{id:53,title:'Mare of Easttown',coverUrl:null,titleJP:null,type:'series',status:'completed',totalEps:7,watchedEps:7,genres:[],studio:'',year:'',streaming:['HBO Max'],epRatings:[{ep:1,rating:9},{ep:2,rating:9},{ep:3,rating:9},{ep:4,rating:9},{ep:5,rating:9},{ep:6,rating:8},{ep:7,rating:8}]},
+{id:54,title:'Maysa: Quando Fala o Coração',coverUrl:null,titleJP:null,type:'series',status:'completed',totalEps:10,watchedEps:10,genres:[],studio:'',year:'',streaming:[],epRatings:[]},
+{id:55,title:'Mindhunter',coverUrl:null,titleJP:null,type:'series',status:'completed',totalEps:19,watchedEps:19,genres:[],studio:'',year:'',streaming:['Netflix'],epRatings:[{ep:1,rating:9},{ep:2,rating:9},{ep:3,rating:9},{ep:4,rating:9},{ep:5,rating:9},{ep:6,rating:9},{ep:7,rating:9},{ep:8,rating:9},{ep:9,rating:9},{ep:10,rating:9},{ep:11,rating:8},{ep:12,rating:8},{ep:13,rating:8},{ep:14,rating:8},{ep:15,rating:8},{ep:16,rating:8},{ep:17,rating:8},{ep:18,rating:8},{ep:19,rating:8}]},
+{id:56,title:'Narcos',coverUrl:null,titleJP:null,type:'series',status:'completed',totalEps:30,watchedEps:30,genres:[],studio:'',year:'',streaming:['Netflix'],epRatings:[{ep:1,rating:9},{ep:2,rating:9},{ep:3,rating:9},{ep:4,rating:9},{ep:5,rating:9},{ep:6,rating:9},{ep:7,rating:9},{ep:8,rating:9},{ep:9,rating:9},{ep:10,rating:9},{ep:11,rating:9},{ep:12,rating:9},{ep:13,rating:9},{ep:14,rating:9},{ep:15,rating:9},{ep:16,rating:9},{ep:17,rating:9},{ep:18,rating:9},{ep:19,rating:9},{ep:20,rating:9},{ep:21,rating:8},{ep:22,rating:8},{ep:23,rating:8},{ep:24,rating:8},{ep:25,rating:8},{ep:26,rating:8},{ep:27,rating:8},{ep:28,rating:8},{ep:29,rating:8},{ep:30,rating:8}]},
+{id:57,title:'Naruto Shippuden',coverUrl:null,titleJP:null,type:'anime',status:'completed',totalEps:500,watchedEps:500,genres:[],studio:'',year:'',streaming:['Netflix','Crunchyroll','Pluto TV','HBO Max'],epRatings:[]},
+{id:58,title:'Neon Genesis Evangelion',coverUrl:null,titleJP:null,type:'anime',status:'completed',totalEps:26,watchedEps:26,genres:[],studio:'',year:'',streaming:['Netflix'],epRatings:[{ep:1,rating:9},{ep:2,rating:9},{ep:3,rating:9},{ep:4,rating:9},{ep:5,rating:9},{ep:6,rating:9},{ep:7,rating:9},{ep:8,rating:8},{ep:9,rating:8},{ep:10,rating:8},{ep:11,rating:8},{ep:12,rating:8},{ep:13,rating:8},{ep:14,rating:8},{ep:15,rating:8},{ep:16,rating:8},{ep:17,rating:8},{ep:18,rating:8},{ep:19,rating:8},{ep:20,rating:8},{ep:21,rating:8},{ep:22,rating:8},{ep:23,rating:8},{ep:24,rating:8},{ep:25,rating:8},{ep:26,rating:8}]},
+{id:59,title:'Olive Kitteridge',coverUrl:null,titleJP:null,type:'series',status:'completed',totalEps:4,watchedEps:4,genres:[],studio:'',year:'',streaming:['HBO Max'],epRatings:[{ep:1,rating:9},{ep:2,rating:9},{ep:3,rating:9},{ep:4,rating:9}]},
+{id:60,title:'Pose',coverUrl:null,titleJP:null,type:'series',status:'completed',totalEps:26,watchedEps:26,genres:[],studio:'',year:'',streaming:['Disney+'],epRatings:[{ep:1,rating:9},{ep:2,rating:9},{ep:3,rating:9},{ep:4,rating:9},{ep:5,rating:9},{ep:6,rating:9},{ep:7,rating:9},{ep:8,rating:9},{ep:9,rating:9},{ep:10,rating:9},{ep:11,rating:9},{ep:12,rating:9},{ep:13,rating:9},{ep:14,rating:9},{ep:15,rating:9},{ep:16,rating:9},{ep:17,rating:9},{ep:18,rating:9},{ep:19,rating:9},{ep:20,rating:9},{ep:21,rating:8},{ep:22,rating:8},{ep:23,rating:8},{ep:24,rating:8},{ep:25,rating:8},{ep:26,rating:8}]},
+{id:61,title:'Presença de Anita',coverUrl:null,titleJP:null,type:'series',status:'completed',totalEps:16,watchedEps:16,genres:[],studio:'',year:'',streaming:['YouTube'],epRatings:[]},
+{id:62,title:'Ratched',coverUrl:null,titleJP:null,type:'series',status:'completed',totalEps:8,watchedEps:8,genres:[],studio:'',year:'',streaming:['Netflix'],epRatings:[{ep:1,rating:8},{ep:2,rating:8},{ep:3,rating:8},{ep:4,rating:8},{ep:5,rating:8},{ep:6,rating:7},{ep:7,rating:7},{ep:8,rating:7}]},
+{id:63,title:'Sense8',coverUrl:null,titleJP:null,type:'series',status:'completed',totalEps:24,watchedEps:24,genres:[],studio:'',year:'',streaming:['Netflix'],epRatings:[{ep:1,rating:9},{ep:2,rating:9},{ep:3,rating:8},{ep:4,rating:8},{ep:5,rating:8},{ep:6,rating:8},{ep:7,rating:8},{ep:8,rating:8},{ep:9,rating:8},{ep:10,rating:8},{ep:11,rating:8},{ep:12,rating:8},{ep:13,rating:8},{ep:14,rating:8},{ep:15,rating:8},{ep:16,rating:8},{ep:17,rating:8},{ep:18,rating:8},{ep:19,rating:8},{ep:20,rating:8},{ep:21,rating:8},{ep:22,rating:8},{ep:23,rating:8},{ep:24,rating:8}]},
+{id:64,title:'Sharp Objects',coverUrl:null,titleJP:null,type:'series',status:'completed',totalEps:8,watchedEps:8,genres:[],studio:'',year:'',streaming:['HBO Max','Claro tv+'],epRatings:[{ep:1,rating:9},{ep:2,rating:9},{ep:3,rating:9},{ep:4,rating:9},{ep:5,rating:8},{ep:6,rating:8},{ep:7,rating:8},{ep:8,rating:8}]},
+{id:65,title:'Taboo',coverUrl:null,titleJP:null,type:'series',status:'completed',totalEps:8,watchedEps:8,genres:[],studio:'',year:'',streaming:[],epRatings:[{ep:1,rating:9},{ep:2,rating:9},{ep:3,rating:9},{ep:4,rating:9},{ep:5,rating:9},{ep:6,rating:8},{ep:7,rating:8},{ep:8,rating:8}]},
+{id:66,title:'The Haunting',coverUrl:null,titleJP:null,type:'series',status:'completed',totalEps:19,watchedEps:19,genres:[],studio:'',year:'',streaming:['Netflix'],epRatings:[{ep:1,rating:9},{ep:2,rating:9},{ep:3,rating:9},{ep:4,rating:9},{ep:5,rating:9},{ep:6,rating:9},{ep:7,rating:9},{ep:8,rating:9},{ep:9,rating:9},{ep:10,rating:9},{ep:11,rating:9},{ep:12,rating:8},{ep:13,rating:8},{ep:14,rating:8},{ep:15,rating:8},{ep:16,rating:8},{ep:17,rating:8},{ep:18,rating:8},{ep:19,rating:8}]},
+{id:67,title:'The Leftovers',coverUrl:null,titleJP:null,type:'series',status:'completed',totalEps:28,watchedEps:28,genres:[],studio:'',year:'',streaming:['HBO Max'],epRatings:[{ep:1,rating:9},{ep:2,rating:9},{ep:3,rating:9},{ep:4,rating:9},{ep:5,rating:9},{ep:6,rating:9},{ep:7,rating:9},{ep:8,rating:9},{ep:9,rating:9},{ep:10,rating:9},{ep:11,rating:9},{ep:12,rating:9},{ep:13,rating:9},{ep:14,rating:9},{ep:15,rating:9},{ep:16,rating:9},{ep:17,rating:9},{ep:18,rating:9},{ep:19,rating:9},{ep:20,rating:8},{ep:21,rating:8},{ep:22,rating:8},{ep:23,rating:8},{ep:24,rating:8},{ep:25,rating:8},{ep:26,rating:8},{ep:27,rating:8},{ep:28,rating:8}]},
+{id:68,title:'The Legend of Korra',coverUrl:null,titleJP:null,type:'series',status:'completed',totalEps:52,watchedEps:52,genres:[],studio:'',year:'',streaming:[],epRatings:[{ep:1,rating:9},{ep:2,rating:9},{ep:3,rating:9},{ep:4,rating:9},{ep:5,rating:9},{ep:6,rating:9},{ep:7,rating:9},{ep:8,rating:9},{ep:9,rating:9},{ep:10,rating:8},{ep:11,rating:8},{ep:12,rating:8},{ep:13,rating:8},{ep:14,rating:8},{ep:15,rating:8},{ep:16,rating:8},{ep:17,rating:8},{ep:18,rating:8},{ep:19,rating:8},{ep:20,rating:8},{ep:21,rating:8},{ep:22,rating:8},{ep:23,rating:8},{ep:24,rating:8},{ep:25,rating:8},{ep:26,rating:8},{ep:27,rating:8},{ep:28,rating:8},{ep:29,rating:8},{ep:30,rating:8},{ep:31,rating:8},{ep:32,rating:8},{ep:33,rating:8},{ep:34,rating:8},{ep:35,rating:8},{ep:36,rating:8},{ep:37,rating:8},{ep:38,rating:8},{ep:39,rating:8},{ep:40,rating:8},{ep:41,rating:8},{ep:42,rating:8},{ep:43,rating:8},{ep:44,rating:8},{ep:45,rating:8},{ep:46,rating:8},{ep:47,rating:8},{ep:48,rating:8},{ep:49,rating:8},{ep:50,rating:8},{ep:51,rating:8},{ep:52,rating:8}]},
+{id:69,title:'The Queen\'s Gambit',coverUrl:null,titleJP:null,type:'series',status:'completed',totalEps:7,watchedEps:7,genres:[],studio:'',year:'',streaming:['Netflix'],epRatings:[{ep:1,rating:9},{ep:2,rating:9},{ep:3,rating:9},{ep:4,rating:9},{ep:5,rating:8},{ep:6,rating:8},{ep:7,rating:8}]},
+{id:70,title:'The Secret Circle',coverUrl:null,titleJP:null,type:'series',status:'completed',totalEps:22,watchedEps:22,genres:[],studio:'',year:'',streaming:[],epRatings:[{ep:1,rating:6},{ep:2,rating:6},{ep:3,rating:6},{ep:4,rating:6},{ep:5,rating:6},{ep:6,rating:6},{ep:7,rating:6},{ep:8,rating:6},{ep:9,rating:6},{ep:10,rating:6},{ep:11,rating:6},{ep:12,rating:5},{ep:13,rating:5},{ep:14,rating:5},{ep:15,rating:5},{ep:16,rating:5},{ep:17,rating:5},{ep:18,rating:5},{ep:19,rating:5},{ep:20,rating:5},{ep:21,rating:5},{ep:22,rating:5}]},
+{id:71,title:'True Blood',coverUrl:null,titleJP:null,type:'series',status:'completed',totalEps:80,watchedEps:80,genres:[],studio:'',year:'',streaming:['Netflix','HBO Max'],epRatings:[{ep:1,rating:9},{ep:2,rating:9},{ep:3,rating:9},{ep:4,rating:9},{ep:5,rating:9},{ep:6,rating:9},{ep:7,rating:9},{ep:8,rating:9},{ep:9,rating:9},{ep:10,rating:9},{ep:11,rating:9},{ep:12,rating:9},{ep:13,rating:9},{ep:14,rating:9},{ep:15,rating:9},{ep:16,rating:9},{ep:17,rating:9},{ep:18,rating:9},{ep:19,rating:9},{ep:20,rating:9},{ep:21,rating:9},{ep:22,rating:9},{ep:23,rating:9},{ep:24,rating:9},{ep:25,rating:9},{ep:26,rating:9},{ep:27,rating:9},{ep:28,rating:9},{ep:29,rating:9},{ep:30,rating:9},{ep:31,rating:9},{ep:32,rating:9},{ep:33,rating:9},{ep:34,rating:9},{ep:35,rating:9},{ep:36,rating:9},{ep:37,rating:9},{ep:38,rating:9},{ep:39,rating:9},{ep:40,rating:9},{ep:41,rating:9},{ep:42,rating:9},{ep:43,rating:8},{ep:44,rating:8},{ep:45,rating:8},{ep:46,rating:8},{ep:47,rating:8},{ep:48,rating:8},{ep:49,rating:8},{ep:50,rating:8},{ep:51,rating:8},{ep:52,rating:8},{ep:53,rating:8},{ep:54,rating:8},{ep:55,rating:8},{ep:56,rating:8},{ep:57,rating:8},{ep:58,rating:8},{ep:59,rating:8},{ep:60,rating:8},{ep:61,rating:8},{ep:62,rating:8},{ep:63,rating:8},{ep:64,rating:8},{ep:65,rating:8},{ep:66,rating:8},{ep:67,rating:8},{ep:68,rating:8},{ep:69,rating:8},{ep:70,rating:8},{ep:71,rating:8},{ep:72,rating:8},{ep:73,rating:8},{ep:74,rating:8},{ep:75,rating:8},{ep:76,rating:8},{ep:77,rating:8},{ep:78,rating:8},{ep:79,rating:8},{ep:80,rating:8}]},
+{id:72,title:'Twin Peaks',coverUrl:null,titleJP:null,type:'series',status:'completed',totalEps:48,watchedEps:48,genres:[],studio:'',year:'',streaming:[],epRatings:[{ep:1,rating:9},{ep:2,rating:9},{ep:3,rating:9},{ep:4,rating:9},{ep:5,rating:9},{ep:6,rating:9},{ep:7,rating:9},{ep:8,rating:9},{ep:9,rating:9},{ep:10,rating:9},{ep:11,rating:9},{ep:12,rating:9},{ep:13,rating:9},{ep:14,rating:9},{ep:15,rating:9},{ep:16,rating:9},{ep:17,rating:9},{ep:18,rating:9},{ep:19,rating:9},{ep:20,rating:9},{ep:21,rating:9},{ep:22,rating:9},{ep:23,rating:9},{ep:24,rating:9},{ep:25,rating:9},{ep:26,rating:9},{ep:27,rating:9},{ep:28,rating:9},{ep:29,rating:9},{ep:30,rating:8},{ep:31,rating:8},{ep:32,rating:8},{ep:33,rating:8},{ep:34,rating:8},{ep:35,rating:8},{ep:36,rating:8},{ep:37,rating:8},{ep:38,rating:8},{ep:39,rating:8},{ep:40,rating:8},{ep:41,rating:8},{ep:42,rating:8},{ep:43,rating:8},{ep:44,rating:8},{ep:45,rating:8},{ep:46,rating:8},{ep:47,rating:8},{ep:48,rating:8}]},
+{id:73,title:'WandaVision',coverUrl:null,titleJP:null,type:'series',status:'completed',totalEps:9,watchedEps:9,genres:[],studio:'',year:'',streaming:['Disney+'],epRatings:[{ep:1,rating:9},{ep:2,rating:9},{ep:3,rating:9},{ep:4,rating:9},{ep:5,rating:9},{ep:6,rating:9},{ep:7,rating:8},{ep:8,rating:8},{ep:9,rating:8}]},
+{id:74,title:'Watchmen',coverUrl:null,titleJP:null,type:'series',status:'completed',totalEps:9,watchedEps:9,genres:[],studio:'',year:'',streaming:['HBO Max'],epRatings:[{ep:1,rating:9},{ep:2,rating:9},{ep:3,rating:9},{ep:4,rating:9},{ep:5,rating:9},{ep:6,rating:9},{ep:7,rating:9},{ep:8,rating:9},{ep:9,rating:9}]},
+{id:75,title:'When They See Us',coverUrl:null,titleJP:null,type:'series',status:'completed',totalEps:4,watchedEps:4,genres:[],studio:'',year:'',streaming:['Netflix'],epRatings:[{ep:1,rating:9},{ep:2,rating:9},{ep:3,rating:9},{ep:4,rating:9}]},
+{id:76,title:'X-Men: Evolution',coverUrl:null,titleJP:null,type:'series',status:'completed',totalEps:52,watchedEps:52,genres:[],studio:'',year:'',streaming:[],epRatings:[]},
+{id:77,title:'American Gods',coverUrl:null,titleJP:null,type:'series',status:'dropped',totalEps:26,watchedEps:3,genres:[],studio:'',year:'',streaming:['Prime Video'],epRatings:[{ep:1,rating:8},{ep:2,rating:7},{ep:3,rating:7}]},
+{id:78,title:'Chuck',coverUrl:null,titleJP:null,type:'series',status:'dropped',totalEps:91,watchedEps:1,genres:[],studio:'',year:'',streaming:['Prime Video'],epRatings:[{ep:1,rating:8}]},
+{id:79,title:'Desperate Housewives',coverUrl:null,titleJP:null,type:'series',status:'dropped',totalEps:180,watchedEps:1,genres:[],studio:'',year:'',streaming:['Disney+'],epRatings:[{ep:1,rating:9}]},
+{id:80,title:'Gossip Girl',coverUrl:null,titleJP:null,type:'series',status:'dropped',totalEps:121,watchedEps:1,genres:[],studio:'',year:'',streaming:['Netflix','Prime Video','HBO Max'],epRatings:[{ep:1,rating:7}]},
+{id:81,title:'Kyle XY',coverUrl:null,titleJP:null,type:'series',status:'dropped',totalEps:43,watchedEps:3,genres:[],studio:'',year:'',streaming:['Disney+'],epRatings:[{ep:1,rating:7},{ep:2,rating:7},{ep:3,rating:7}]},
+{id:82,title:'Mad Men',coverUrl:null,titleJP:null,type:'series',status:'dropped',totalEps:92,watchedEps:1,genres:[],studio:'',year:'',streaming:['Prime Video','Disney+','MGM+'],epRatings:[{ep:1,rating:8}]},
+{id:83,title:'Maniac',coverUrl:null,titleJP:null,type:'series',status:'dropped',totalEps:10,watchedEps:2,genres:[],studio:'',year:'',streaming:['Netflix'],epRatings:[{ep:1,rating:9},{ep:2,rating:8}]},
+{id:84,title:'Prison Break',coverUrl:null,titleJP:null,type:'series',status:'dropped',totalEps:90,watchedEps:1,genres:[],studio:'',year:'',streaming:['Disney+'],epRatings:[{ep:1,rating:8}]},
+{id:85,title:'Raising Hope',coverUrl:null,titleJP:null,type:'series',status:'dropped',totalEps:88,watchedEps:1,genres:[],studio:'',year:'',streaming:[],epRatings:[{ep:1,rating:8}]},
+{id:86,title:'Revolution',coverUrl:null,titleJP:null,type:'series',status:'dropped',totalEps:42,watchedEps:2,genres:[],studio:'',year:'',streaming:[],epRatings:[{ep:1,rating:8},{ep:2,rating:7}]},
+{id:87,title:'Sleepy Hollow',coverUrl:null,titleJP:null,type:'series',status:'dropped',totalEps:62,watchedEps:2,genres:[],studio:'',year:'',streaming:[],epRatings:[{ep:1,rating:6},{ep:2,rating:5}]},
+{id:88,title:'Teen Wolf',coverUrl:null,titleJP:null,type:'series',status:'dropped',totalEps:101,watchedEps:3,genres:[],studio:'',year:'',streaming:['Netflix','Prime Video','MGM+'],epRatings:[{ep:1,rating:7},{ep:2,rating:7},{ep:3,rating:6}]},
+{id:89,title:'Terminator: The Sarah Connor Chronicles',coverUrl:null,titleJP:null,type:'series',status:'dropped',totalEps:31,watchedEps:1,genres:[],studio:'',year:'',streaming:['Claro tv+'],epRatings:[{ep:1,rating:7}]},
+{id:90,title:'The Outsider (2020)',coverUrl:null,titleJP:null,type:'series',status:'dropped',totalEps:10,watchedEps:2,genres:[],studio:'',year:'',streaming:['HBO Max','Claro tv+'],epRatings:[{ep:1,rating:8},{ep:2,rating:7}]},
+{id:91,title:'The Path',coverUrl:null,titleJP:null,type:'series',status:'dropped',totalEps:36,watchedEps:1,genres:[],studio:'',year:'',streaming:['YouTube'],epRatings:[{ep:1,rating:7}]},
+{id:92,title:'Witches of East End',coverUrl:null,titleJP:null,type:'series',status:'dropped',totalEps:23,watchedEps:2,genres:[],studio:'',year:'',streaming:[],epRatings:[{ep:1,rating:7},{ep:2,rating:7}]},
+{id:93,title:'Zero Hour',coverUrl:null,titleJP:null,type:'series',status:'dropped',totalEps:13,watchedEps:1,genres:[],studio:'',year:'',streaming:[],epRatings:[{ep:1,rating:3}]},
+{id:94,title:'Zombieland',coverUrl:null,titleJP:null,type:'series',status:'dropped',totalEps:1,watchedEps:1,genres:[],studio:'',year:'',streaming:[],epRatings:[{ep:1,rating:4}]},
+{id:95,title:'La Casa de Papel',coverUrl:null,titleJP:null,type:'series',status:'dropped',totalEps:48,watchedEps:22,genres:[],studio:'',year:'',streaming:['Netflix'],epRatings:[{ep:1,rating:9},{ep:2,rating:9},{ep:3,rating:9},{ep:4,rating:9},{ep:5,rating:9},{ep:6,rating:8},{ep:7,rating:8},{ep:8,rating:8},{ep:9,rating:8},{ep:10,rating:8},{ep:11,rating:8},{ep:12,rating:8},{ep:13,rating:8},{ep:14,rating:8},{ep:15,rating:8},{ep:16,rating:8},{ep:17,rating:8},{ep:18,rating:8},{ep:19,rating:8},{ep:20,rating:8},{ep:21,rating:8},{ep:22,rating:8}]},
+{id:96,title:'Les Revenants',coverUrl:null,titleJP:null,type:'series',status:'dropped',totalEps:16,watchedEps:8,genres:[],studio:'',year:'',streaming:[],epRatings:[{ep:1,rating:9},{ep:2,rating:9},{ep:3,rating:9},{ep:4,rating:9},{ep:5,rating:8},{ep:6,rating:8},{ep:7,rating:8},{ep:8,rating:8}]},
+{id:97,title:'Marvel\'s Jessica Jones',coverUrl:null,titleJP:null,type:'series',status:'dropped',totalEps:39,watchedEps:8,genres:[],studio:'',year:'',streaming:['Disney+'],epRatings:[{ep:1,rating:8},{ep:2,rating:8},{ep:3,rating:8},{ep:4,rating:8},{ep:5,rating:8},{ep:6,rating:8},{ep:7,rating:7},{ep:8,rating:7}]},
+{id:98,title:'Mr. Robot',coverUrl:null,titleJP:null,type:'series',status:'dropped',totalEps:45,watchedEps:12,genres:[],studio:'',year:'',streaming:[],epRatings:[{ep:1,rating:8},{ep:2,rating:8},{ep:3,rating:8},{ep:4,rating:8},{ep:5,rating:8},{ep:6,rating:8},{ep:7,rating:8},{ep:8,rating:8},{ep:9,rating:8},{ep:10,rating:8},{ep:11,rating:8},{ep:12,rating:8}]},
+{id:99,title:'Nikita',coverUrl:null,titleJP:null,type:'series',status:'dropped',totalEps:73,watchedEps:5,genres:[],studio:'',year:'',streaming:[],epRatings:[]},
+{id:100,title:'Orange is the New Black',coverUrl:null,titleJP:null,type:'series',status:'dropped',totalEps:91,watchedEps:26,genres:[],studio:'',year:'',streaming:['Netflix'],epRatings:[{ep:1,rating:9},{ep:2,rating:9},{ep:3,rating:9},{ep:4,rating:9},{ep:5,rating:9},{ep:6,rating:9},{ep:7,rating:9},{ep:8,rating:9},{ep:9,rating:9},{ep:10,rating:9},{ep:11,rating:9},{ep:12,rating:9},{ep:13,rating:8},{ep:14,rating:8},{ep:15,rating:8},{ep:16,rating:8},{ep:17,rating:8},{ep:18,rating:8},{ep:19,rating:8},{ep:20,rating:8},{ep:21,rating:8},{ep:22,rating:8},{ep:23,rating:8},{ep:24,rating:8},{ep:25,rating:8},{ep:26,rating:8}]},
+{id:101,title:'Orphan Black',coverUrl:null,titleJP:null,type:'series',status:'dropped',totalEps:50,watchedEps:16,genres:[],studio:'',year:'',streaming:[],epRatings:[{ep:1,rating:9},{ep:2,rating:9},{ep:3,rating:9},{ep:4,rating:8},{ep:5,rating:8},{ep:6,rating:8},{ep:7,rating:8},{ep:8,rating:8},{ep:9,rating:8},{ep:10,rating:8},{ep:11,rating:8},{ep:12,rating:8},{ep:13,rating:8},{ep:14,rating:8},{ep:15,rating:8},{ep:16,rating:8}]},
+{id:102,title:'Pretty Little Liars',coverUrl:null,titleJP:null,type:'series',status:'dropped',totalEps:160,watchedEps:76,genres:[],studio:'',year:'',streaming:['Prime Video','HBO Max'],epRatings:[{ep:1,rating:8},{ep:2,rating:8},{ep:3,rating:8},{ep:4,rating:8},{ep:5,rating:8},{ep:6,rating:8},{ep:7,rating:8},{ep:8,rating:8},{ep:9,rating:8},{ep:10,rating:8},{ep:11,rating:8},{ep:12,rating:8},{ep:13,rating:8},{ep:14,rating:8},{ep:15,rating:8},{ep:16,rating:8},{ep:17,rating:8},{ep:18,rating:8},{ep:19,rating:8},{ep:20,rating:8},{ep:21,rating:8},{ep:22,rating:8},{ep:23,rating:8},{ep:24,rating:8},{ep:25,rating:8},{ep:26,rating:8},{ep:27,rating:8},{ep:28,rating:8},{ep:29,rating:8},{ep:30,rating:8},{ep:31,rating:8},{ep:32,rating:8},{ep:33,rating:8},{ep:34,rating:8},{ep:35,rating:8},{ep:36,rating:8},{ep:37,rating:8},{ep:38,rating:8},{ep:39,rating:8},{ep:40,rating:8},{ep:41,rating:8},{ep:42,rating:8},{ep:43,rating:8},{ep:44,rating:8},{ep:45,rating:8},{ep:46,rating:8},{ep:47,rating:8},{ep:48,rating:8},{ep:49,rating:8},{ep:50,rating:8},{ep:51,rating:8},{ep:52,rating:8},{ep:53,rating:8},{ep:54,rating:8},{ep:55,rating:8},{ep:56,rating:8},{ep:57,rating:8},{ep:58,rating:8},{ep:59,rating:8},{ep:60,rating:8},{ep:61,rating:8},{ep:62,rating:7},{ep:63,rating:7},{ep:64,rating:7},{ep:65,rating:7},{ep:66,rating:7},{ep:67,rating:7},{ep:68,rating:7},{ep:69,rating:7},{ep:70,rating:7},{ep:71,rating:7},{ep:72,rating:7},{ep:73,rating:7},{ep:74,rating:7},{ep:75,rating:7},{ep:76,rating:7}]},
+{id:103,title:'Revenge',coverUrl:null,titleJP:null,type:'series',status:'dropped',totalEps:89,watchedEps:57,genres:[],studio:'',year:'',streaming:['Disney+'],epRatings:[{ep:1,rating:9},{ep:2,rating:9},{ep:3,rating:9},{ep:4,rating:9},{ep:5,rating:9},{ep:6,rating:9},{ep:7,rating:8},{ep:8,rating:8},{ep:9,rating:8},{ep:10,rating:8},{ep:11,rating:8},{ep:12,rating:8},{ep:13,rating:8},{ep:14,rating:8},{ep:15,rating:8},{ep:16,rating:8},{ep:17,rating:8},{ep:18,rating:8},{ep:19,rating:8},{ep:20,rating:8},{ep:21,rating:8},{ep:22,rating:8},{ep:23,rating:8},{ep:24,rating:8},{ep:25,rating:8},{ep:26,rating:8},{ep:27,rating:8},{ep:28,rating:8},{ep:29,rating:8},{ep:30,rating:8},{ep:31,rating:8},{ep:32,rating:8},{ep:33,rating:8},{ep:34,rating:8},{ep:35,rating:8},{ep:36,rating:8},{ep:37,rating:8},{ep:38,rating:8},{ep:39,rating:8},{ep:40,rating:8},{ep:41,rating:8},{ep:42,rating:8},{ep:43,rating:8},{ep:44,rating:8},{ep:45,rating:8},{ep:46,rating:8},{ep:47,rating:8},{ep:48,rating:8},{ep:49,rating:8},{ep:50,rating:8},{ep:51,rating:8},{ep:52,rating:8},{ep:53,rating:8},{ep:54,rating:8},{ep:55,rating:8},{ep:56,rating:8},{ep:57,rating:8}]},
+{id:104,title:'Smallville',coverUrl:null,titleJP:null,type:'series',status:'dropped',totalEps:216,watchedEps:21,genres:[],studio:'',year:'',streaming:['Netflix','Prime Video','HBO Max'],epRatings:[{ep:1,rating:8},{ep:2,rating:8},{ep:3,rating:8},{ep:4,rating:8},{ep:5,rating:8},{ep:6,rating:8},{ep:7,rating:8},{ep:8,rating:8},{ep:9,rating:8},{ep:10,rating:8},{ep:11,rating:8},{ep:12,rating:8},{ep:13,rating:8},{ep:14,rating:8},{ep:15,rating:8},{ep:16,rating:8},{ep:17,rating:8},{ep:18,rating:8},{ep:19,rating:8},{ep:20,rating:8},{ep:21,rating:8}]},
+{id:105,title:'Supernatural',coverUrl:null,titleJP:null,type:'series',status:'dropped',totalEps:327,watchedEps:149,genres:[],studio:'',year:'',streaming:['Prime Video','HBO Max'],epRatings:[{ep:1,rating:9},{ep:2,rating:9},{ep:3,rating:9},{ep:4,rating:9},{ep:5,rating:9},{ep:6,rating:9},{ep:7,rating:9},{ep:8,rating:9},{ep:9,rating:9},{ep:10,rating:9},{ep:11,rating:9},{ep:12,rating:9},{ep:13,rating:9},{ep:14,rating:9},{ep:15,rating:9},{ep:16,rating:9},{ep:17,rating:9},{ep:18,rating:9},{ep:19,rating:9},{ep:20,rating:9},{ep:21,rating:9},{ep:22,rating:9},{ep:23,rating:9},{ep:24,rating:9},{ep:25,rating:9},{ep:26,rating:9},{ep:27,rating:9},{ep:28,rating:9},{ep:29,rating:9},{ep:30,rating:9},{ep:31,rating:9},{ep:32,rating:9},{ep:33,rating:9},{ep:34,rating:9},{ep:35,rating:9},{ep:36,rating:9},{ep:37,rating:9},{ep:38,rating:9},{ep:39,rating:9},{ep:40,rating:9},{ep:41,rating:9},{ep:42,rating:9},{ep:43,rating:9},{ep:44,rating:9},{ep:45,rating:9},{ep:46,rating:9},{ep:47,rating:9},{ep:48,rating:9},{ep:49,rating:9},{ep:50,rating:9},{ep:51,rating:9},{ep:52,rating:9},{ep:53,rating:9},{ep:54,rating:9},{ep:55,rating:9},{ep:56,rating:9},{ep:57,rating:9},{ep:58,rating:9},{ep:59,rating:9},{ep:60,rating:9},{ep:61,rating:9},{ep:62,rating:9},{ep:63,rating:9},{ep:64,rating:9},{ep:65,rating:9},{ep:66,rating:9},{ep:67,rating:9},{ep:68,rating:9},{ep:69,rating:9},{ep:70,rating:9},{ep:71,rating:9},{ep:72,rating:9},{ep:73,rating:8},{ep:74,rating:8},{ep:75,rating:8},{ep:76,rating:8},{ep:77,rating:8},{ep:78,rating:8},{ep:79,rating:8},{ep:80,rating:8},{ep:81,rating:8},{ep:82,rating:8},{ep:83,rating:8},{ep:84,rating:8},{ep:85,rating:8},{ep:86,rating:8},{ep:87,rating:8},{ep:88,rating:8},{ep:89,rating:8},{ep:90,rating:8},{ep:91,rating:8},{ep:92,rating:8},{ep:93,rating:8},{ep:94,rating:8},{ep:95,rating:8},{ep:96,rating:8},{ep:97,rating:8},{ep:98,rating:8},{ep:99,rating:8},{ep:100,rating:8},{ep:101,rating:8},{ep:102,rating:8},{ep:103,rating:8},{ep:104,rating:8},{ep:105,rating:8},{ep:106,rating:8},{ep:107,rating:8},{ep:108,rating:8},{ep:109,rating:8},{ep:110,rating:8},{ep:111,rating:8},{ep:112,rating:8},{ep:113,rating:8},{ep:114,rating:8},{ep:115,rating:8},{ep:116,rating:8},{ep:117,rating:8},{ep:118,rating:8},{ep:119,rating:8},{ep:120,rating:8},{ep:121,rating:8},{ep:122,rating:8},{ep:123,rating:8},{ep:124,rating:8},{ep:125,rating:8},{ep:126,rating:8},{ep:127,rating:8},{ep:128,rating:8},{ep:129,rating:8},{ep:130,rating:8},{ep:131,rating:8},{ep:132,rating:8},{ep:133,rating:8},{ep:134,rating:8},{ep:135,rating:8},{ep:136,rating:8},{ep:137,rating:8},{ep:138,rating:8},{ep:139,rating:8},{ep:140,rating:8},{ep:141,rating:8},{ep:142,rating:8},{ep:143,rating:8},{ep:144,rating:8},{ep:145,rating:8},{ep:146,rating:8},{ep:147,rating:8},{ep:148,rating:8},{ep:149,rating:8}]},
+{id:106,title:'The Blacklist',coverUrl:null,titleJP:null,type:'series',status:'dropped',totalEps:218,watchedEps:9,genres:[],studio:'',year:'',streaming:['Netflix'],epRatings:[{ep:1,rating:8},{ep:2,rating:8},{ep:3,rating:8},{ep:4,rating:8},{ep:5,rating:8},{ep:6,rating:7},{ep:7,rating:7},{ep:8,rating:7},{ep:9,rating:7}]},
+{id:107,title:'The Following',coverUrl:null,titleJP:null,type:'series',status:'dropped',totalEps:45,watchedEps:15,genres:[],studio:'',year:'',streaming:[],epRatings:[{ep:1,rating:8},{ep:2,rating:8},{ep:3,rating:8},{ep:4,rating:8},{ep:5,rating:8},{ep:6,rating:8},{ep:7,rating:8},{ep:8,rating:8},{ep:9,rating:8},{ep:10,rating:8},{ep:11,rating:8},{ep:12,rating:8},{ep:13,rating:8},{ep:14,rating:8},{ep:15,rating:7}]},
+{id:108,title:'The Vampire Diaries',coverUrl:null,titleJP:null,type:'series',status:'dropped',totalEps:171,watchedEps:90,genres:[],studio:'',year:'',streaming:['Netflix','Prime Video','HBO Max'],epRatings:[{ep:1,rating:9},{ep:2,rating:9},{ep:3,rating:9},{ep:4,rating:9},{ep:5,rating:9},{ep:6,rating:9},{ep:7,rating:9},{ep:8,rating:9},{ep:9,rating:9},{ep:10,rating:9},{ep:11,rating:9},{ep:12,rating:9},{ep:13,rating:9},{ep:14,rating:8},{ep:15,rating:8},{ep:16,rating:8},{ep:17,rating:8},{ep:18,rating:8},{ep:19,rating:8},{ep:20,rating:8},{ep:21,rating:8},{ep:22,rating:8},{ep:23,rating:8},{ep:24,rating:8},{ep:25,rating:8},{ep:26,rating:8},{ep:27,rating:8},{ep:28,rating:8},{ep:29,rating:8},{ep:30,rating:8},{ep:31,rating:8},{ep:32,rating:8},{ep:33,rating:8},{ep:34,rating:8},{ep:35,rating:8},{ep:36,rating:8},{ep:37,rating:8},{ep:38,rating:8},{ep:39,rating:8},{ep:40,rating:8},{ep:41,rating:8},{ep:42,rating:8},{ep:43,rating:8},{ep:44,rating:8},{ep:45,rating:8},{ep:46,rating:8},{ep:47,rating:8},{ep:48,rating:8},{ep:49,rating:8},{ep:50,rating:8},{ep:51,rating:8},{ep:52,rating:8},{ep:53,rating:8},{ep:54,rating:8},{ep:55,rating:8},{ep:56,rating:8},{ep:57,rating:8},{ep:58,rating:8},{ep:59,rating:8},{ep:60,rating:8},{ep:61,rating:8},{ep:62,rating:8},{ep:63,rating:8},{ep:64,rating:8},{ep:65,rating:8},{ep:66,rating:8},{ep:67,rating:8},{ep:68,rating:8},{ep:69,rating:8},{ep:70,rating:8},{ep:71,rating:8},{ep:72,rating:8},{ep:73,rating:8},{ep:74,rating:8},{ep:75,rating:8},{ep:76,rating:8},{ep:77,rating:8},{ep:78,rating:8},{ep:79,rating:8},{ep:80,rating:8},{ep:81,rating:8},{ep:82,rating:8},{ep:83,rating:8},{ep:84,rating:8},{ep:85,rating:8},{ep:86,rating:8},{ep:87,rating:8},{ep:88,rating:8},{ep:89,rating:8},{ep:90,rating:8}]},
+{id:109,title:'The Walking Dead',coverUrl:null,titleJP:null,type:'series',status:'dropped',totalEps:177,watchedEps:104,genres:[],studio:'',year:'',streaming:['Netflix','Disney+'],epRatings:[{ep:1,rating:8},{ep:2,rating:8},{ep:3,rating:8},{ep:4,rating:8},{ep:5,rating:8},{ep:6,rating:8},{ep:7,rating:8},{ep:8,rating:8},{ep:9,rating:8},{ep:10,rating:8},{ep:11,rating:8},{ep:12,rating:8},{ep:13,rating:8},{ep:14,rating:8},{ep:15,rating:8},{ep:16,rating:8},{ep:17,rating:8},{ep:18,rating:8},{ep:19,rating:8},{ep:20,rating:8},{ep:21,rating:8},{ep:22,rating:8},{ep:23,rating:8},{ep:24,rating:8},{ep:25,rating:8},{ep:26,rating:8},{ep:27,rating:8},{ep:28,rating:8},{ep:29,rating:8},{ep:30,rating:8},{ep:31,rating:8},{ep:32,rating:8},{ep:33,rating:8},{ep:34,rating:8},{ep:35,rating:8},{ep:36,rating:8},{ep:37,rating:8},{ep:38,rating:8},{ep:39,rating:8},{ep:40,rating:8},{ep:41,rating:8},{ep:42,rating:8},{ep:43,rating:8},{ep:44,rating:8},{ep:45,rating:8},{ep:46,rating:8},{ep:47,rating:8},{ep:48,rating:8},{ep:49,rating:8},{ep:50,rating:8},{ep:51,rating:8},{ep:52,rating:8},{ep:53,rating:8},{ep:54,rating:8},{ep:55,rating:8},{ep:56,rating:8},{ep:57,rating:8},{ep:58,rating:8},{ep:59,rating:8},{ep:60,rating:8},{ep:61,rating:8},{ep:62,rating:8},{ep:63,rating:8},{ep:64,rating:8},{ep:65,rating:8},{ep:66,rating:8},{ep:67,rating:8},{ep:68,rating:8},{ep:69,rating:8},{ep:70,rating:8},{ep:71,rating:8},{ep:72,rating:8},{ep:73,rating:8},{ep:74,rating:8},{ep:75,rating:8},{ep:76,rating:8},{ep:77,rating:8},{ep:78,rating:8},{ep:79,rating:8},{ep:80,rating:8},{ep:81,rating:8},{ep:82,rating:8},{ep:83,rating:8},{ep:84,rating:8},{ep:85,rating:8},{ep:86,rating:8},{ep:87,rating:8},{ep:88,rating:8},{ep:89,rating:8},{ep:90,rating:8},{ep:91,rating:8},{ep:92,rating:8},{ep:93,rating:8},{ep:94,rating:8},{ep:95,rating:8},{ep:96,rating:8},{ep:97,rating:8},{ep:98,rating:8},{ep:99,rating:8},{ep:100,rating:7},{ep:101,rating:7},{ep:102,rating:7},{ep:103,rating:7},{ep:104,rating:7}]},
+{id:110,title:'True Detective',coverUrl:null,titleJP:null,type:'series',status:'dropped',totalEps:30,watchedEps:8,genres:[],studio:'',year:'',streaming:['HBO Max','Claro tv+'],epRatings:[{ep:1,rating:9},{ep:2,rating:9},{ep:3,rating:9},{ep:4,rating:9},{ep:5,rating:9},{ep:6,rating:9},{ep:7,rating:9},{ep:8,rating:9}]},
+{id:111,title:'Under The Dome',coverUrl:null,titleJP:null,type:'series',status:'dropped',totalEps:39,watchedEps:13,genres:[],studio:'',year:'',streaming:['Mercado Play'],epRatings:[{ep:1,rating:7},{ep:2,rating:7},{ep:3,rating:7},{ep:4,rating:7},{ep:5,rating:7},{ep:6,rating:7},{ep:7,rating:7},{ep:8,rating:7},{ep:9,rating:7},{ep:10,rating:7},{ep:11,rating:7},{ep:12,rating:7},{ep:13,rating:6}]},
+{id:112,title:'Altered Carbon',coverUrl:null,titleJP:null,type:'series',status:'dropped',totalEps:18,watchedEps:11,genres:[],studio:'',year:'',streaming:['Netflix'],epRatings:[{ep:1,rating:8},{ep:2,rating:8},{ep:3,rating:8},{ep:4,rating:8},{ep:5,rating:8},{ep:6,rating:8},{ep:7,rating:8},{ep:8,rating:8},{ep:9,rating:8},{ep:10,rating:8},{ep:11,rating:8}]},
+{id:113,title:'Arrow',coverUrl:null,titleJP:null,type:'series',status:'dropped',totalEps:170,watchedEps:6,genres:[],studio:'',year:'',streaming:['Prime Video','HBO Max'],epRatings:[{ep:1,rating:8},{ep:2,rating:8},{ep:3,rating:8},{ep:4,rating:7},{ep:5,rating:7},{ep:6,rating:7}]},
+{id:114,title:'Aruanas',coverUrl:null,titleJP:null,type:'series',status:'dropped',totalEps:20,watchedEps:10,genres:[],studio:'',year:'',streaming:['YouTube'],epRatings:[{ep:1,rating:9},{ep:2,rating:9},{ep:3,rating:9},{ep:4,rating:9},{ep:5,rating:8},{ep:6,rating:8},{ep:7,rating:8},{ep:8,rating:8},{ep:9,rating:8},{ep:10,rating:8}]},
+{id:115,title:'Bates Motel',coverUrl:null,titleJP:null,type:'series',status:'dropped',totalEps:50,watchedEps:15,genres:[],studio:'',year:'',streaming:['YouTube'],epRatings:[{ep:1,rating:9},{ep:2,rating:9},{ep:3,rating:9},{ep:4,rating:9},{ep:5,rating:9},{ep:6,rating:8},{ep:7,rating:8},{ep:8,rating:8},{ep:9,rating:8},{ep:10,rating:8},{ep:11,rating:8},{ep:12,rating:8},{ep:13,rating:8},{ep:14,rating:8},{ep:15,rating:8}]},
+{id:116,title:'Brooklyn Nine-Nine',coverUrl:null,titleJP:null,type:'series',status:'dropped',totalEps:153,watchedEps:4,genres:[],studio:'',year:'',streaming:['Netflix'],epRatings:[{ep:1,rating:7},{ep:2,rating:7},{ep:3,rating:7},{ep:4,rating:7}]},
+{id:117,title:'Cine Holliúdy',coverUrl:null,titleJP:null,type:'series',status:'dropped',totalEps:33,watchedEps:5,genres:[],studio:'',year:'',streaming:['YouTube'],epRatings:[{ep:1,rating:8},{ep:2,rating:8},{ep:3,rating:8},{ep:4,rating:8},{ep:5,rating:7}]},
+{id:118,title:'Cobra Kai',coverUrl:null,titleJP:null,type:'series',status:'dropped',totalEps:65,watchedEps:20,genres:[],studio:'',year:'',streaming:['Netflix'],epRatings:[{ep:1,rating:8},{ep:2,rating:8},{ep:3,rating:8},{ep:4,rating:8},{ep:5,rating:8},{ep:6,rating:8},{ep:7,rating:8},{ep:8,rating:8},{ep:9,rating:8},{ep:10,rating:8},{ep:11,rating:8},{ep:12,rating:8},{ep:13,rating:8},{ep:14,rating:8},{ep:15,rating:8},{ep:16,rating:8},{ep:17,rating:7},{ep:18,rating:7},{ep:19,rating:7},{ep:20,rating:7}]},
+{id:119,title:'Cold Case',coverUrl:null,titleJP:null,type:'series',status:'dropped',totalEps:156,watchedEps:46,genres:[],studio:'',year:'',streaming:['Prime Video','HBO Max'],epRatings:[{ep:1,rating:8},{ep:2,rating:8},{ep:3,rating:8},{ep:4,rating:8},{ep:5,rating:8},{ep:6,rating:8},{ep:7,rating:8},{ep:8,rating:8},{ep:9,rating:8},{ep:10,rating:8},{ep:11,rating:8},{ep:12,rating:8},{ep:13,rating:8},{ep:14,rating:8},{ep:15,rating:8},{ep:16,rating:8},{ep:17,rating:8},{ep:18,rating:8},{ep:19,rating:8},{ep:20,rating:8},{ep:21,rating:8},{ep:22,rating:8},{ep:23,rating:8},{ep:24,rating:8},{ep:25,rating:8},{ep:26,rating:8},{ep:27,rating:8},{ep:28,rating:8},{ep:29,rating:8},{ep:30,rating:8},{ep:31,rating:8},{ep:32,rating:8},{ep:33,rating:8},{ep:34,rating:8},{ep:35,rating:8},{ep:36,rating:8},{ep:37,rating:8},{ep:38,rating:8},{ep:39,rating:8},{ep:40,rating:8},{ep:41,rating:8},{ep:42,rating:8},{ep:43,rating:8},{ep:44,rating:8},{ep:45,rating:8},{ep:46,rating:8}]},
+{id:120,title:'Da Vinci\'s Demons',coverUrl:null,titleJP:null,type:'series',status:'dropped',totalEps:28,watchedEps:8,genres:[],studio:'',year:'',streaming:[],epRatings:[{ep:1,rating:8},{ep:2,rating:8},{ep:3,rating:8},{ep:4,rating:8},{ep:5,rating:8},{ep:6,rating:8},{ep:7,rating:7},{ep:8,rating:7}]},
+{id:121,title:'Doctor Who (2005)',coverUrl:null,titleJP:null,type:'series',status:'dropped',totalEps:180,watchedEps:4,genres:[],studio:'',year:'',streaming:[],epRatings:[{ep:1,rating:8},{ep:2,rating:8},{ep:3,rating:7},{ep:4,rating:7}]},
+{id:122,title:'Falling Skies',coverUrl:null,titleJP:null,type:'series',status:'dropped',totalEps:52,watchedEps:25,genres:[],studio:'',year:'',streaming:['Netflix'],epRatings:[{ep:1,rating:8},{ep:2,rating:8},{ep:3,rating:8},{ep:4,rating:8},{ep:5,rating:8},{ep:6,rating:8},{ep:7,rating:8},{ep:8,rating:8},{ep:9,rating:8},{ep:10,rating:8},{ep:11,rating:8},{ep:12,rating:8},{ep:13,rating:8},{ep:14,rating:8},{ep:15,rating:8},{ep:16,rating:8},{ep:17,rating:8},{ep:18,rating:8},{ep:19,rating:8},{ep:20,rating:8},{ep:21,rating:7},{ep:22,rating:7},{ep:23,rating:7},{ep:24,rating:7},{ep:25,rating:7}]},
+{id:123,title:'Fear The Walking Dead',coverUrl:null,titleJP:null,type:'series',status:'dropped',totalEps:113,watchedEps:6,genres:[],studio:'',year:'',streaming:[],epRatings:[{ep:1,rating:8},{ep:2,rating:8},{ep:3,rating:8},{ep:4,rating:8},{ep:5,rating:7},{ep:6,rating:7}]},
+{id:124,title:'Girls',coverUrl:null,titleJP:null,type:'series',status:'dropped',totalEps:62,watchedEps:20,genres:[],studio:'',year:'',streaming:['HBO Max','Claro tv+'],epRatings:[{ep:1,rating:8},{ep:2,rating:8},{ep:3,rating:8},{ep:4,rating:8},{ep:5,rating:8},{ep:6,rating:8},{ep:7,rating:8},{ep:8,rating:8},{ep:9,rating:8},{ep:10,rating:8},{ep:11,rating:8},{ep:12,rating:8},{ep:13,rating:8},{ep:14,rating:7},{ep:15,rating:7},{ep:16,rating:7},{ep:17,rating:7},{ep:18,rating:7},{ep:19,rating:7},{ep:20,rating:7}]},
+{id:125,title:'Grimm',coverUrl:null,titleJP:null,type:'series',status:'dropped',totalEps:123,watchedEps:18,genres:[],studio:'',year:'',streaming:['Prime Video'],epRatings:[{ep:1,rating:7},{ep:2,rating:7},{ep:3,rating:7},{ep:4,rating:7},{ep:5,rating:7},{ep:6,rating:7},{ep:7,rating:7},{ep:8,rating:7},{ep:9,rating:7},{ep:10,rating:7},{ep:11,rating:6},{ep:12,rating:6},{ep:13,rating:6},{ep:14,rating:6},{ep:15,rating:6},{ep:16,rating:6},{ep:17,rating:6},{ep:18,rating:6}]},
+{id:126,title:'Hemlock Grove',coverUrl:null,titleJP:null,type:'series',status:'dropped',totalEps:33,watchedEps:13,genres:[],studio:'',year:'',streaming:[],epRatings:[{ep:1,rating:9},{ep:2,rating:9},{ep:3,rating:9},{ep:4,rating:9},{ep:5,rating:8},{ep:6,rating:8},{ep:7,rating:8},{ep:8,rating:8},{ep:9,rating:8},{ep:10,rating:8},{ep:11,rating:8},{ep:12,rating:8},{ep:13,rating:8}]},
+{id:127,title:'Homeland',coverUrl:null,titleJP:null,type:'series',status:'dropped',totalEps:96,watchedEps:60,genres:[],studio:'',year:'',streaming:['Netflix','Disney+'],epRatings:[{ep:1,rating:9},{ep:2,rating:9},{ep:3,rating:9},{ep:4,rating:9},{ep:5,rating:9},{ep:6,rating:9},{ep:7,rating:9},{ep:8,rating:9},{ep:9,rating:9},{ep:10,rating:9},{ep:11,rating:9},{ep:12,rating:9},{ep:13,rating:9},{ep:14,rating:9},{ep:15,rating:9},{ep:16,rating:9},{ep:17,rating:9},{ep:18,rating:9},{ep:19,rating:9},{ep:20,rating:9},{ep:21,rating:9},{ep:22,rating:9},{ep:23,rating:9},{ep:24,rating:9},{ep:25,rating:9},{ep:26,rating:9},{ep:27,rating:9},{ep:28,rating:9},{ep:29,rating:9},{ep:30,rating:9},{ep:31,rating:9},{ep:32,rating:9},{ep:33,rating:9},{ep:34,rating:9},{ep:35,rating:9},{ep:36,rating:8},{ep:37,rating:8},{ep:38,rating:8},{ep:39,rating:8},{ep:40,rating:8},{ep:41,rating:8},{ep:42,rating:8},{ep:43,rating:8},{ep:44,rating:8},{ep:45,rating:8},{ep:46,rating:8},{ep:47,rating:8},{ep:48,rating:8},{ep:49,rating:8},{ep:50,rating:8},{ep:51,rating:8},{ep:52,rating:8},{ep:53,rating:8},{ep:54,rating:8},{ep:55,rating:8},{ep:56,rating:8},{ep:57,rating:8},{ep:58,rating:8},{ep:59,rating:8},{ep:60,rating:8}]},
+{id:128,title:'How to Get Away with Murder',coverUrl:null,titleJP:null,type:'series',status:'dropped',totalEps:90,watchedEps:45,genres:[],studio:'',year:'',streaming:['Disney+'],epRatings:[{ep:1,rating:9},{ep:2,rating:9},{ep:3,rating:9},{ep:4,rating:9},{ep:5,rating:9},{ep:6,rating:9},{ep:7,rating:8},{ep:8,rating:8},{ep:9,rating:8},{ep:10,rating:8},{ep:11,rating:8},{ep:12,rating:8},{ep:13,rating:8},{ep:14,rating:8},{ep:15,rating:8},{ep:16,rating:8},{ep:17,rating:8},{ep:18,rating:8},{ep:19,rating:8},{ep:20,rating:8},{ep:21,rating:8},{ep:22,rating:8},{ep:23,rating:8},{ep:24,rating:8},{ep:25,rating:8},{ep:26,rating:8},{ep:27,rating:8},{ep:28,rating:8},{ep:29,rating:8},{ep:30,rating:8},{ep:31,rating:8},{ep:32,rating:8},{ep:33,rating:8},{ep:34,rating:8},{ep:35,rating:8},{ep:36,rating:8},{ep:37,rating:8},{ep:38,rating:8},{ep:39,rating:8},{ep:40,rating:8},{ep:41,rating:8},{ep:42,rating:8},{ep:43,rating:8},{ep:44,rating:8},{ep:45,rating:8}]}
 ];
+
 
 const W0 = [
   {id:1,title:'Black Myth: Wukong',currentPrice:249.90,origPrice:299.90,discount:17,store:'Steam',targetPrice:150,platform:'PC'},
@@ -226,12 +350,26 @@ function Rank({value,size=11,color=T.gold}) {
   return <span style={{display:'inline-flex',alignItems:'center',gap:3}}><Icon name="rank" size={size} color={color} strokeWidth={1.8}/><span>{value}</span></span>;
 }
 
+function TickCorners({color=T.blue,inset=6,len=8,opacity=0.55}) {
+  const base={position:'absolute',background:color,opacity};
+  return <>
+    <span style={{...base,top:inset,left:inset,width:len,height:1.5}}/>
+    <span style={{...base,top:inset,left:inset,width:1.5,height:len}}/>
+    <span style={{...base,top:inset,right:inset,width:len,height:1.5}}/>
+    <span style={{...base,top:inset,right:inset,width:1.5,height:len}}/>
+    <span style={{...base,bottom:inset,left:inset,width:len,height:1.5}}/>
+    <span style={{...base,bottom:inset,left:inset,width:1.5,height:len}}/>
+    <span style={{...base,bottom:inset,right:inset,width:len,height:1.5}}/>
+    <span style={{...base,bottom:inset,right:inset,width:1.5,height:len}}/>
+  </>;
+}
+
 // ─── MICRO COMPONENTES ────────────────────────────────────────────────────────
 function Cover({title,w=100,h=140}) {
   const init = title.split(' ').filter(Boolean).slice(0,2).map(w=>w[0]?.toUpperCase()).join('')||'?';
   const accents=[T.blue,T.cyan,T.orange,T.pink,T.green,T.gold];
   const ac=accents[title.length%accents.length];
-  return <div style={{width:w,height:h,borderRadius:2,flexShrink:0,background:`linear-gradient(135deg,${T.card},${T.raised})`,border:`1px solid ${ac}44`,display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',color:ac,fontSize:w>80?24:16,fontWeight:700,fontFamily:"'Rajdhani',sans-serif",userSelect:'none',letterSpacing:'0.5px',position:'relative'}}>
+  return <div style={{width:w,height:h,borderRadius:4,flexShrink:0,background:`linear-gradient(135deg,${T.card},${T.raised})`,border:`1px solid ${ac}44`,display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',color:ac,fontSize:w>80?24:16,fontWeight:700,fontFamily:"'Rajdhani',sans-serif",userSelect:'none',letterSpacing:'0.5px',position:'relative'}}>
     <div style={{position:'absolute',top:6,left:6,right:6,bottom:6,border:`1px solid ${ac}22`,pointerEvents:'none'}}/>
     {init}
     <div style={{fontSize:w>80?8:6.5,color:`${ac}99`,marginTop:4,textAlign:'center',padding:'0 6px',fontWeight:500,maxWidth:'90%',overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap',textTransform:'uppercase',letterSpacing:'0.5px'}}>{title.substring(0,14)}{title.length>14?'…':''}</div>
@@ -241,19 +379,19 @@ function Cover({title,w=100,h=140}) {
 function CoverImg({url,title,w=100,h=140}) {
   const [err,setErr]=useState(false);
   if (!url||err) return <Cover title={title} w={w} h={h}/>;
-  return <img src={url} alt={title} style={{width:w,height:h,borderRadius:2,objectFit:'cover',flexShrink:0,display:'block'}} onError={()=>setErr(true)}/>;
+  return <img src={url} alt={title} style={{width:w,height:h,borderRadius:4,objectFit:'cover',flexShrink:0,display:'block'}} onError={()=>setErr(true)}/>;
 }
 
 function SearchDropdown({results,onSelect,loading,color=T.blue}) {
   if (!loading && !results.length) return null;
-  return <div style={{position:'absolute',top:'calc(100% + 4px)',left:0,right:0,background:T.surface,border:`1px solid ${T.border}`,borderRadius:2,zIndex:200,maxHeight:240,overflowY:'auto',boxShadow:'0 8px 24px rgba(0,0,0,0.6)'}}>
+  return <div style={{position:'absolute',top:'calc(100% + 4px)',left:0,right:0,background:T.surface,border:`1px solid ${T.border}`,borderRadius:4,zIndex:200,maxHeight:240,overflowY:'auto',boxShadow:'0 8px 24px rgba(0,0,0,0.6)'}}>
     {loading && <div style={{padding:'12px 14px',color:T.sub,fontSize:12,textAlign:'center',display:'flex',alignItems:'center',justifyContent:'center',gap:8}}><Spinner size={13} color={color}/> Buscando...</div>}
     {!loading && results.map((r,i)=>(
       <div key={r.id||i} onClick={()=>onSelect(r)}
         style={{padding:'8px 12px',cursor:'pointer',borderBottom:i<results.length-1?`1px solid ${T.border}`:'none',display:'flex',gap:10,alignItems:'center',transition:'background 0.1s'}}
         onMouseEnter={e=>e.currentTarget.style.background=T.raised}
         onMouseLeave={e=>e.currentTarget.style.background='transparent'}>
-        {(r.coverUrl||r.posterUrl)&&<img src={r.coverUrl||r.posterUrl} alt="" width={28} height={38} style={{borderRadius:2,objectFit:'cover',flexShrink:0}} onError={e=>e.target.style.display='none'}/>}
+        {(r.coverUrl||r.posterUrl)&&<img src={r.coverUrl||r.posterUrl} alt="" width={28} height={38} style={{borderRadius:4,objectFit:'cover',flexShrink:0}} onError={e=>e.target.style.display='none'}/>}
         <div style={{flex:1,minWidth:0}}>
           <div style={{fontSize:12,color:T.txt,fontWeight:600,overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap',fontFamily:"'Barlow',sans-serif"}}>{r.name}</div>
           <div style={{fontSize:11,color:T.sub,marginTop:1,fontFamily:"'Barlow',sans-serif"}}>{r.year}{r.genre?' · '+r.genre:''}{r.developer?' · '+r.developer:''}</div>
@@ -287,7 +425,7 @@ function Bar({v,t,color=T.blue,h=4}) {
 }
 
 function Badge({label,color}) {
-  return <span style={{padding:'2px 8px',borderRadius:2,fontSize:10,fontWeight:700,letterSpacing:'0.5px',textTransform:'uppercase',fontFamily:"'Rajdhani',sans-serif",color,background:`${color}16`,border:`1px solid ${color}40`,whiteSpace:'nowrap'}}>{label}</span>;
+  return <span style={{padding:'2px 8px',borderRadius:4,fontSize:10,fontWeight:700,letterSpacing:'0.5px',textTransform:'uppercase',fontFamily:"'Rajdhani',sans-serif",color,background:`${color}16`,border:`1px solid ${color}40`,whiteSpace:'nowrap'}}>{label}</span>;
 }
 
 function Btn({onClick,children,variant='primary',small=false,style:ext={}}) {
@@ -297,13 +435,14 @@ function Btn({onClick,children,variant='primary',small=false,style:ext={}}) {
     danger:{background:T.red,color:'#F5EFE2',border:'none'},
     outline:{background:'transparent',color:T.sub,border:`1px solid ${T.border}`},
   };
-  return <button onClick={onClick} style={{padding:small?'6px 13px':'10px 20px',borderRadius:2,fontSize:small?11:12,fontWeight:700,letterSpacing:'0.6px',textTransform:'uppercase',fontFamily:"'Rajdhani',sans-serif",cursor:'pointer',transition:'opacity 0.15s',outline:'none',...v[variant],...ext}}>{children}</button>;
+  return <button onClick={onClick} style={{padding:small?'6px 13px':'10px 20px',borderRadius:4,fontSize:small?11:12,fontWeight:700,letterSpacing:'0.6px',textTransform:'uppercase',fontFamily:"'Rajdhani',sans-serif",cursor:'pointer',transition:'opacity 0.15s',outline:'none',...v[variant],...ext}}>{children}</button>;
 }
 
 function Modal({open,onClose,title,children}) {
   if(!open) return null;
-  return <div style={{position:'fixed',inset:0,background:'rgba(5,4,3,0.82)',display:'flex',alignItems:'center',justifyContent:'center',zIndex:1000,padding:16,backdropFilter:'blur(3px)'}} onClick={e=>{if(e.target===e.currentTarget)onClose();}}>
-    <div style={{background:T.surface,border:`1px solid ${T.border}`,borderRadius:3,padding:24,width:'100%',maxWidth:440,maxHeight:'88vh',overflowY:'auto',position:'relative'}}>
+  return <div style={{position:'fixed',inset:0,background:'rgba(5,7,10,0.82)',display:'flex',alignItems:'center',justifyContent:'center',zIndex:1000,padding:16,backdropFilter:'blur(3px)'}} onClick={e=>{if(e.target===e.currentTarget)onClose();}}>
+    <div style={{background:T.surface,border:`1px solid ${T.border}`,borderRadius:5,padding:24,width:'100%',maxWidth:440,maxHeight:'88vh',overflowY:'auto',position:'relative'}}>
+      <TickCorners color={T.blue}/>
       <div style={{position:'absolute',top:0,left:0,right:0,height:2,background:`linear-gradient(90deg,${T.blue},transparent)`}}/>
       <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:20}}>
         <h3 style={{margin:0,fontSize:16,fontWeight:700,color:T.txt,fontFamily:"'Rajdhani',sans-serif",textTransform:'uppercase',letterSpacing:'0.5px'}}>{title}</h3>
@@ -315,10 +454,10 @@ function Modal({open,onClose,title,children}) {
 }
 
 function Inp(props) {
-  return <input {...props} style={{width:'100%',background:T.raised,border:`1px solid ${T.border}`,borderRadius:2,padding:'8px 12px',color:T.txt,fontSize:13,fontFamily:"'Barlow',sans-serif",outline:'none',boxSizing:'border-box',...(props.style||{})}}/>;
+  return <input {...props} style={{width:'100%',background:T.raised,border:`1px solid ${T.border}`,borderRadius:4,padding:'8px 12px',color:T.txt,fontSize:13,fontFamily:"'Barlow',sans-serif",outline:'none',boxSizing:'border-box',...(props.style||{})}}/>;
 }
 function Sel({children,...props}) {
-  return <select {...props} style={{width:'100%',background:T.raised,border:`1px solid ${T.border}`,borderRadius:2,padding:'8px 12px',color:T.txt,fontSize:13,fontFamily:"'Barlow',sans-serif",outline:'none',boxSizing:'border-box',...(props.style||{})}}>{children}</select>;
+  return <select {...props} style={{width:'100%',background:T.raised,border:`1px solid ${T.border}`,borderRadius:4,padding:'8px 12px',color:T.txt,fontSize:13,fontFamily:"'Barlow',sans-serif",outline:'none',boxSizing:'border-box',...(props.style||{})}}>{children}</select>;
 }
 function Field({label,children}) {
   return <div style={{marginBottom:14}}>
@@ -354,7 +493,7 @@ function FilterChips({options,active,onChange,color=T.blue}) {
   return <div style={{display:'flex',gap:6,overflowX:'auto',padding:'12px 16px'}}>
     {options.map(o=>{
       const isActive=active===o.id;
-      return <button key={o.id} onClick={()=>onChange(o.id)} style={{flexShrink:0,padding:'6px 12px',borderRadius:2,fontSize:10.5,fontWeight:700,fontFamily:"'Rajdhani',sans-serif",textTransform:'uppercase',letterSpacing:'0.5px',border:`1px solid ${isActive?color:T.border}`,background:isActive?`${color}1c`:'transparent',color:isActive?color:T.sub,cursor:'pointer',whiteSpace:'nowrap'}}>{o.label}</button>;
+      return <button key={o.id} onClick={()=>onChange(o.id)} style={{flexShrink:0,padding:'6px 12px',borderRadius:4,fontSize:10.5,fontWeight:700,fontFamily:"'Rajdhani',sans-serif",textTransform:'uppercase',letterSpacing:'0.5px',border:`1px solid ${isActive?color:T.border}`,background:isActive?`${color}1c`:'transparent',color:isActive?color:T.sub,cursor:'pointer',whiteSpace:'nowrap'}}>{o.label}</button>;
     })}
   </div>;
 }
@@ -446,7 +585,7 @@ function SeriesScreen({media,setMedia}) {
 
   const mainList=media.filter(m=>m.status!=='planned');
   const soonList=media.filter(m=>m.status==='planned');
-  const chipOpts=[{id:'all',label:'Todos'},{id:'watching',label:'Assistindo'},{id:'completed',label:'Concluído'},{id:'anime',label:'Anime'},{id:'series',label:'Série'}];
+  const chipOpts=[{id:'all',label:'Todos'},{id:'watching',label:'Assistindo'},{id:'completed',label:'Concluído'},{id:'dropped',label:'Abandonado'},{id:'anime',label:'Anime'},{id:'series',label:'Série'}];
   const listFiltered = filter==='all'?mainList:filter==='anime'?mainList.filter(m=>m.type==='anime'):filter==='series'?mainList.filter(m=>m.type==='series'):mainList.filter(m=>m.status===filter);
   const shown = seg==='list'?listFiltered:soonList;
 
@@ -456,7 +595,7 @@ function SeriesScreen({media,setMedia}) {
   const stLabel={watching:'Assistindo',completed:'Concluído',planned:'Planejado',dropped:'Abandonado'};
 
   return <div>
-    <TopBar right={<button onClick={()=>{setShowAdd(true);resetForm();}} style={{width:32,height:32,borderRadius:2,border:`1px solid ${T.border}`,background:T.card,color:T.pink,cursor:'pointer',display:'flex',alignItems:'center',justifyContent:'center'}}><Icon name="plus" size={15} color={T.pink}/></button>}/>
+    <TopBar right={<button onClick={()=>{setShowAdd(true);resetForm();}} style={{width:32,height:32,borderRadius:4,border:`1px solid ${T.border}`,background:T.card,color:T.pink,cursor:'pointer',display:'flex',alignItems:'center',justifyContent:'center'}}><Icon name="plus" size={15} color={T.pink}/></button>}/>
     <SegmentedTabs tabs={[{id:'list',label:'Minha Lista'},{id:'soon',label:'Em Breve'}]} active={seg} onChange={setSeg} color={T.pink}/>
     {seg==='list'&&<FilterChips options={chipOpts} active={filter} onChange={setFilter} color={T.pink}/>}
     <div style={{paddingBottom:24,paddingTop:seg==='soon'?4:0}}>
@@ -502,7 +641,7 @@ function SeriesScreen({media,setMedia}) {
           <div style={{display:'flex',gap:6,flexWrap:'wrap'}}>
             {['watching','completed','planned','dropped'].map(s=>(
               <button key={s} onClick={()=>{setMedia(p=>p.map(m=>m.id===sel.id?{...m,status:s}:m));setSel({...sel,status:s});}}
-                style={{padding:'5px 11px',borderRadius:2,fontSize:11,fontWeight:700,fontFamily:"'Rajdhani',sans-serif",textTransform:'uppercase',letterSpacing:'0.4px',border:'none',cursor:'pointer',background:sel.status===s?stColor[s]:T.raised,color:sel.status===s?'#0A0908':T.sub}}>{stLabel[s]}</button>
+                style={{padding:'5px 11px',borderRadius:4,fontSize:11,fontWeight:700,fontFamily:"'Rajdhani',sans-serif",textTransform:'uppercase',letterSpacing:'0.4px',border:'none',cursor:'pointer',background:sel.status===s?stColor[s]:T.raised,color:sel.status===s?'#0A0908':T.sub}}>{stLabel[s]}</button>
             ))}
           </div>
         </div>
@@ -554,7 +693,7 @@ function SeriesScreen({media,setMedia}) {
           <SearchDropdown results={srchRes} onSelect={selectMedia} loading={srchLoading} color={T.pink}/>
         </div>
       </Field>
-      {form.title&&<div style={{background:T.raised,border:`1px solid ${T.pink}44`,borderRadius:2,padding:'10px 12px',marginBottom:14,display:'flex',gap:10,alignItems:'center'}}>
+      {form.title&&<div style={{background:T.raised,border:`1px solid ${T.pink}44`,borderRadius:4,padding:'10px 12px',marginBottom:14,display:'flex',gap:10,alignItems:'center'}}>
         <CoverImg url={pendingCover} title={form.title} w={36} h={54}/>
         <div>
           <div style={{fontSize:13,fontWeight:700,color:T.txt,fontFamily:"'Barlow',sans-serif"}}>{form.title}</div>
@@ -632,8 +771,8 @@ function GamesScreen({games,setGames,wish,setWish,igdbToken}) {
   return <div>
     <TopBar right={
       seg==='list'
-      ?<button onClick={()=>{setShowAdd(true);resetForm();}} style={{width:32,height:32,borderRadius:2,border:`1px solid ${T.border}`,background:T.card,cursor:'pointer',display:'flex',alignItems:'center',justifyContent:'center'}}><Icon name="plus" size={15} color={T.blue}/></button>
-      :<button onClick={()=>setShowAddWish(true)} style={{width:32,height:32,borderRadius:2,border:`1px solid ${T.border}`,background:T.card,cursor:'pointer',display:'flex',alignItems:'center',justifyContent:'center'}}><Icon name="plus" size={15} color={T.blue}/></button>
+      ?<button onClick={()=>{setShowAdd(true);resetForm();}} style={{width:32,height:32,borderRadius:4,border:`1px solid ${T.border}`,background:T.card,cursor:'pointer',display:'flex',alignItems:'center',justifyContent:'center'}}><Icon name="plus" size={15} color={T.blue}/></button>
+      :<button onClick={()=>setShowAddWish(true)} style={{width:32,height:32,borderRadius:4,border:`1px solid ${T.border}`,background:T.card,cursor:'pointer',display:'flex',alignItems:'center',justifyContent:'center'}}><Icon name="plus" size={15} color={T.blue}/></button>
     }/>
     <SegmentedTabs tabs={[{id:'list',label:'Minha Lista'},{id:'soon',label:'Em Breve'}]} active={seg} onChange={setSeg} color={T.blue}/>
     {seg==='list'&&<FilterChips options={chipOpts} active={filter} onChange={setFilter} color={T.blue}/>}
@@ -659,14 +798,14 @@ function GamesScreen({games,setGames,wish,setWish,igdbToken}) {
           }
         </div>
       : <div style={{padding:'14px 16px 24px'}}>
-          {alerts>0&&<div style={{padding:'9px 14px',borderRadius:2,background:`${T.green}18`,border:`1px solid ${T.green}44`,fontSize:12,color:T.green,fontWeight:600,marginBottom:14,display:'flex',alignItems:'center',gap:8,fontFamily:"'Barlow',sans-serif"}}><Icon name="beacon" size={14} color={T.green}/>{alerts} meta{alerts>1?'s':''} de preço atingida{alerts>1?'s':''}!</div>}
+          {alerts>0&&<div style={{padding:'9px 14px',borderRadius:4,background:`${T.green}18`,border:`1px solid ${T.green}44`,fontSize:12,color:T.green,fontWeight:600,marginBottom:14,display:'flex',alignItems:'center',gap:8,fontFamily:"'Barlow',sans-serif"}}><Icon name="beacon" size={14} color={T.green}/>{alerts} meta{alerts>1?'s':''} de preço atingida{alerts>1?'s':''}!</div>}
           {wish.length===0
             ? <EmptyState icon="soon" color={T.blue} title="Nada por vir ainda" subtitle="Adicione jogos que você quer comprar e acompanhe o preço." ctaLabel="Adicionar à Lista" onCta={()=>setShowAddWish(true)}/>
             : <div style={{display:'flex',flexDirection:'column',gap:14}}>
                 {wish.map(item=>{
                   const hit=item.currentPrice<=item.targetPrice;
                   const storeColor=item.store==='Steam'?T.blue:T.orange;
-                  return <div key={item.id} style={{background:T.card,border:`1px solid ${hit?T.green:T.border}`,borderRadius:3,padding:16,boxShadow:hit?`0 0 18px ${T.green}22`:'none'}}>
+                  return <div key={item.id} style={{background:T.card,border:`1px solid ${hit?T.green:T.border}`,borderRadius:6,padding:16,boxShadow:hit?`0 0 18px ${T.green}22`:'none'}}>
                     <div style={{display:'flex',gap:12,marginBottom:14}}>
                       <Cover title={item.title} w={54} h={74}/>
                       <div style={{flex:1,minWidth:0}}>
@@ -714,7 +853,7 @@ function GamesScreen({games,setGames,wish,setWish,igdbToken}) {
               <div style={{display:'flex',gap:6,flexWrap:'wrap'}}>
                 {['owned','playing','completed'].map(s=>(
                   <button key={s} onClick={()=>{setGames(p=>p.map(g=>g.id===sel.id?{...g,status:s}:g));setSel({...sel,status:s});}}
-                    style={{padding:'4px 10px',borderRadius:2,fontSize:11,fontWeight:700,fontFamily:"'Rajdhani',sans-serif",textTransform:'uppercase',border:'none',cursor:'pointer',background:sel.status===s?stColor(s):T.raised,color:sel.status===s?'#0A0908':T.sub}}>{stLabel(s)}</button>
+                    style={{padding:'4px 10px',borderRadius:4,fontSize:11,fontWeight:700,fontFamily:"'Rajdhani',sans-serif",textTransform:'uppercase',border:'none',cursor:'pointer',background:sel.status===s?stColor(s):T.raised,color:sel.status===s?'#0A0908':T.sub}}>{stLabel(s)}</button>
                 ))}
               </div>
             </div>
@@ -725,7 +864,7 @@ function GamesScreen({games,setGames,wish,setWish,igdbToken}) {
           <div style={{fontSize:11,color:T.muted,textTransform:'uppercase',letterSpacing:'0.5px',marginBottom:8,fontFamily:"'Rajdhani',sans-serif"}}>Avaliação</div>
           <Stars value={sel.score} onChange={v=>{setGames(p=>p.map(g=>g.id===sel.id?{...g,score:v}:g));setSel({...sel,score:v});}} size={18}/>
         </div>
-        {sel.notes&&<div style={{background:T.raised,border:`1px solid ${T.border}`,borderRadius:2,padding:12,marginBottom:16}}>
+        {sel.notes&&<div style={{background:T.raised,border:`1px solid ${T.border}`,borderRadius:4,padding:12,marginBottom:16}}>
           <div style={{fontSize:10,color:T.muted,textTransform:'uppercase',marginBottom:4,fontFamily:"'Rajdhani',sans-serif",letterSpacing:'0.5px'}}>Notas</div>
           <div style={{fontSize:13,color:T.txt,fontFamily:"'Barlow',sans-serif"}}>{sel.notes}</div>
         </div>}
@@ -744,7 +883,7 @@ function GamesScreen({games,setGames,wish,setWish,igdbToken}) {
           {igdbToken&&<SearchDropdown results={srchRes} onSelect={selectGame} loading={srchLoading}/>}
         </div>
       </Field>
-      {igdbToken&&form.title&&<div style={{background:T.raised,border:`1px solid ${T.green}44`,borderRadius:2,padding:'10px 12px',marginBottom:14,display:'flex',gap:10,alignItems:'center'}}>
+      {igdbToken&&form.title&&<div style={{background:T.raised,border:`1px solid ${T.green}44`,borderRadius:4,padding:'10px 12px',marginBottom:14,display:'flex',gap:10,alignItems:'center'}}>
         <CoverImg url={pendingCover} title={form.title} w={36} h={48}/>
         <div>
           <div style={{fontSize:13,fontWeight:700,color:T.txt,fontFamily:"'Barlow',sans-serif"}}>{form.title}</div>
@@ -760,7 +899,7 @@ function GamesScreen({games,setGames,wish,setWish,igdbToken}) {
         <Field label="Gênero"><Inp value={form.genre} onChange={e=>setForm({...form,genre:e.target.value})} placeholder="RPG, Action..."/></Field>
         <Field label="Ano"><Inp type="number" value={form.year} onChange={e=>setForm({...form,year:+e.target.value})}/></Field>
       </div>
-      <Field label="Notas"><textarea value={form.notes} onChange={e=>setForm({...form,notes:e.target.value})} placeholder="Suas impressões..." style={{width:'100%',background:T.raised,border:`1px solid ${T.border}`,borderRadius:2,padding:'8px 12px',color:T.txt,fontSize:13,fontFamily:"'Barlow',sans-serif",outline:'none',boxSizing:'border-box',resize:'vertical',minHeight:70}}/></Field>
+      <Field label="Notas"><textarea value={form.notes} onChange={e=>setForm({...form,notes:e.target.value})} placeholder="Suas impressões..." style={{width:'100%',background:T.raised,border:`1px solid ${T.border}`,borderRadius:4,padding:'8px 12px',color:T.txt,fontSize:13,fontFamily:"'Barlow',sans-serif",outline:'none',boxSizing:'border-box',resize:'vertical',minHeight:70}}/></Field>
       <div style={{display:'flex',gap:10,justifyContent:'flex-end'}}>
         <Btn variant="outline" onClick={()=>setShowAdd(false)}>Cancelar</Btn>
         <Btn onClick={()=>{
@@ -822,11 +961,11 @@ function ExploreScreen({games,media}) {
   return <div>
     <TopBar/>
     <div style={{padding:'14px 16px 40px'}}>
-      <div style={{background:T.card,border:`1px solid ${T.border}`,borderRadius:3,padding:18,marginBottom:16}}>
+      <div style={{background:T.card,border:`1px solid ${T.border}`,borderRadius:6,padding:18,marginBottom:16}}>
         <SectionHead icon="series">Top 5 Streaming</SectionHead>
         <div style={{display:'flex',gap:5,flexWrap:'wrap',marginBottom:14}}>
           {Object.keys(STREAM).map(s=>(
-            <button key={s} onClick={()=>setSrv(s)} style={{padding:'4px 11px',borderRadius:2,fontSize:10.5,fontFamily:"'Rajdhani',sans-serif",textTransform:'uppercase',letterSpacing:'0.4px',border:`1px solid ${srv===s?T.cyan:T.border}`,background:srv===s?`${T.cyan}18`:'transparent',color:srv===s?T.cyan:T.sub,cursor:'pointer',fontWeight:srv===s?700:500}}>{s}</button>
+            <button key={s} onClick={()=>setSrv(s)} style={{padding:'4px 11px',borderRadius:4,fontSize:10.5,fontFamily:"'Rajdhani',sans-serif",textTransform:'uppercase',letterSpacing:'0.4px',border:`1px solid ${srv===s?T.cyan:T.border}`,background:srv===s?`${T.cyan}18`:'transparent',color:srv===s?T.cyan:T.sub,cursor:'pointer',fontWeight:srv===s?700:500}}>{s}</button>
           ))}
         </div>
         {(STREAM[srv]||[]).map((item,i)=>(
@@ -841,7 +980,7 @@ function ExploreScreen({games,media}) {
         ))}
       </div>
 
-      <div style={{background:T.card,border:`1px solid ${T.border}`,borderRadius:3,padding:18,marginBottom:16}}>
+      <div style={{background:T.card,border:`1px solid ${T.border}`,borderRadius:6,padding:18,marginBottom:16}}>
         <SectionHead icon="trend">Jogos em Alta</SectionHead>
         {TRENDING.map((g,i)=>(
           <div key={i} style={{display:'flex',alignItems:'center',gap:12,padding:'10px 0',borderBottom:i<TRENDING.length-1?`1px solid ${T.border}`:'none'}}>
@@ -855,7 +994,7 @@ function ExploreScreen({games,media}) {
         ))}
       </div>
 
-      <div style={{background:T.card,border:`1px solid ${T.border}`,borderRadius:3,padding:18,marginBottom:16}}>
+      <div style={{background:T.card,border:`1px solid ${T.border}`,borderRadius:6,padding:18,marginBottom:16}}>
         <SectionHead icon="tag">Melhores Promoções</SectionHead>
         <div style={{display:'flex',flexDirection:'column',gap:10}}>
           {DEALS.map((d,i)=>(
@@ -874,8 +1013,16 @@ function ExploreScreen({games,media}) {
         </div>
       </div>
 
-      <div style={{background:T.card,border:`1px solid ${T.blue}44`,borderRadius:3,padding:20,textAlign:'center'}}>
-        <div style={{display:'flex',justifyContent:'center',marginBottom:10}}>
+      <div style={{background:T.card,border:`1px solid ${T.blue}44`,borderRadius:5,padding:20,textAlign:'center',position:'relative',overflow:'hidden'}}>
+        <TickCorners color={T.blue}/>
+        <svg width="100%" height="70" viewBox="0 0 300 70" style={{position:'absolute',top:0,left:0,opacity:0.16,pointerEvents:'none'}}>
+          <line x1="20" y1="15" x2="90" y2="40" stroke={T.cyan} strokeWidth="1"/>
+          <line x1="90" y1="40" x2="160" y2="10" stroke={T.cyan} strokeWidth="1"/>
+          <line x1="160" y1="10" x2="230" y2="35" stroke={T.cyan} strokeWidth="1"/>
+          <line x1="230" y1="35" x2="285" y2="18" stroke={T.cyan} strokeWidth="1"/>
+          {[[20,15],[90,40],[160,10],[230,35],[285,18]].map(([x,y],i)=><circle key={i} cx={x} cy={y} r="2" fill={T.cyan}/>)}
+        </svg>
+        <div style={{display:'flex',justifyContent:'center',marginBottom:10,position:'relative'}}>
           <Icon name="scan" size={28} color={T.blue} strokeWidth={1.3} className={loading?'nx-pulse':''}/>
         </div>
         <div style={{fontSize:13,fontWeight:700,color:T.txt,marginBottom:6,fontFamily:"'Rajdhani',sans-serif",textTransform:'uppercase',letterSpacing:'1px'}}>Recomendações com IA</div>
@@ -889,6 +1036,54 @@ function ExploreScreen({games,media}) {
 }
 
 // ─── PERFIL ────────────────────────────────────────────────────────────────────
+function ExportTraktButton({media}) {
+  const [status,setStatus]=useState('idle'); // idle | working | done | error
+  const [progress,setProgress]=useState(0);
+  const [foundCount,setFoundCount]=useState(0);
+
+  const exportCSV=async()=>{
+    setStatus('working');setProgress(0);setFoundCount(0);
+    const rows=[['tmdb_id','type','watched_at','rating']];
+    let found=0;
+    for(let i=0;i<media.length;i++){
+      const m=media[i];
+      setProgress(i+1);
+      let tmdbId='';
+      try{
+        const results=await searchTMDB(m.title);
+        if(results&&results.length>0) tmdbId=results[0].id;
+      }catch(e){}
+      if(tmdbId){
+        found++;setFoundCount(found);
+        const avg=m.epRatings.length?Math.round(m.epRatings.reduce((a,r)=>a+r.rating,0)/m.epRatings.length):'';
+        rows.push([tmdbId,'show','unknown',avg]);
+      }
+      await new Promise(r=>setTimeout(r,120));
+    }
+    const csv=rows.map(r=>r.join(',')).join('\n');
+    const blob=new Blob([csv],{type:'text/csv'});
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement('a');
+    a.href=url;a.download='nextrack_trakt_tmdbid_import.csv';
+    document.body.appendChild(a);a.click();document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    setStatus('done');
+  };
+
+  return <div style={{background:T.card,border:`1px solid ${T.border}`,borderRadius:4,padding:16,marginTop:14}}>
+    <div style={{fontSize:12,fontWeight:700,color:T.txt,marginBottom:6,fontFamily:"'Rajdhani',sans-serif",textTransform:'uppercase',letterSpacing:'0.8px',display:'flex',alignItems:'center',gap:7}}><Icon name="scan" size={13} color={T.blue}/>Exportar para o Trakt</div>
+    <p style={{fontSize:11,color:T.sub,marginBottom:12,lineHeight:1.5,fontFamily:"'Barlow',sans-serif"}}>Busca o TMDB ID real de cada série na API (não é chute) e gera um CSV pronto pro formato oficial do Trakt.</p>
+    <Btn onClick={status==='working'?undefined:exportCSV} style={{width:'100%',opacity:status==='working'?0.6:1,pointerEvents:status==='working'?'none':'auto'}}>
+      {status==='working'
+        ?<span style={{display:'inline-flex',alignItems:'center',gap:7}}><Spinner size={12} color="#0A0908"/>Buscando... {progress}/{media.length}</span>
+        :status==='done'?'Baixar de novo':'Exportar CSV com TMDB IDs'}
+    </Btn>
+    {status==='done'&&<p style={{fontSize:11,color:T.sub,marginTop:10,lineHeight:1.5,fontFamily:"'Barlow',sans-serif"}}>
+      Arquivo baixado — {foundCount}/{media.length} séries encontradas no TMDB. <strong style={{color:T.orange}}>Atenção:</strong> todas entram como "assistido por completo" no Trakt. Pra concluídas isso é correto; pra "assistindo"/"abandonado" você vai precisar ajustar o progresso manualmente lá depois.
+    </p>}
+  </div>;
+}
+
 function ProfileScreen({games,media,wish,igdbToken,apiStatus}) {
   const c={
     done:games.filter(g=>g.status==='completed').length,
@@ -912,7 +1107,7 @@ function ProfileScreen({games,media,wish,igdbToken,apiStatus}) {
 
       <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:10,marginBottom:20}}>
         {[{l:'Jogos Zerados',v:c.done,icon:'award',co:T.green},{l:'Jogando Agora',v:c.play,icon:'games',co:T.orange},{l:'Horas Jogadas',v:`${c.hours}h`,icon:'clock',co:T.blue},{l:'Assistindo',v:c.watch,icon:'play',co:T.pink}].map(({l,v,icon,co})=>(
-          <div key={l} style={{background:T.card,border:`1px solid ${T.border}`,borderRadius:3,padding:'14px 14px',position:'relative',overflow:'hidden'}}>
+          <div key={l} style={{background:T.card,border:`1px solid ${T.border}`,borderRadius:6,padding:'14px 14px',position:'relative',overflow:'hidden'}}>
             <div style={{position:'absolute',top:0,left:0,right:0,height:2,background:co}}/>
             <Icon name={icon} size={17} color={co} strokeWidth={1.6} style={{marginBottom:8}}/>
             <div style={{fontSize:21,fontWeight:900,color:co,letterSpacing:'-1px',fontFamily:"'Rajdhani',sans-serif"}}>{v}</div>
@@ -921,7 +1116,7 @@ function ProfileScreen({games,media,wish,igdbToken,apiStatus}) {
         ))}
       </div>
 
-      <div style={{background:T.card,border:`1px solid ${T.border}`,borderRadius:3,padding:16,marginBottom:14}}>
+      <div style={{background:T.card,border:`1px solid ${T.border}`,borderRadius:6,padding:16,marginBottom:14}}>
         <div style={{fontSize:13,fontWeight:700,color:T.txt,marginBottom:12,fontFamily:"'Rajdhani',sans-serif",textTransform:'uppercase',letterSpacing:'0.8px',display:'flex',alignItems:'center',gap:7}}><Icon name="award" size={14} color={T.blue}/>Melhores Avaliados</div>
         {topGames.length===0&&<div style={{fontSize:12,color:T.muted,fontStyle:'italic',fontFamily:"'Barlow',sans-serif"}}>Nenhum jogo avaliado ainda</div>}
         {topGames.map(g=>(
@@ -936,7 +1131,7 @@ function ProfileScreen({games,media,wish,igdbToken,apiStatus}) {
         ))}
       </div>
 
-      <div style={{background:T.card,border:`1px solid ${T.border}`,borderRadius:3,padding:16,marginBottom:14}}>
+      <div style={{background:T.card,border:`1px solid ${T.border}`,borderRadius:6,padding:16,marginBottom:14}}>
         <div style={{fontSize:13,fontWeight:700,color:T.txt,marginBottom:12,fontFamily:"'Rajdhani',sans-serif",textTransform:'uppercase',letterSpacing:'0.8px',display:'flex',alignItems:'center',gap:7}}><Icon name="play" size={13} color={T.pink}/>Assistindo Agora</div>
         {watching.length===0&&<div style={{fontSize:12,color:T.muted,fontStyle:'italic',fontFamily:"'Barlow',sans-serif"}}>Nada em andamento</div>}
         {watching.map(m=>{
@@ -951,7 +1146,7 @@ function ProfileScreen({games,media,wish,igdbToken,apiStatus}) {
         })}
       </div>
 
-      <div style={{padding:'10px 14px',borderRadius:2,background:igdbToken?`${T.green}15`:`${T.orange}15`,border:`1px solid ${igdbToken?T.green:T.orange}33`,fontSize:11,color:igdbToken?T.green:T.orange,textAlign:'center',display:'flex',alignItems:'center',justifyContent:'center',gap:8,fontFamily:"'Barlow',sans-serif"}}>
+      <div style={{padding:'10px 14px',borderRadius:4,background:igdbToken?`${T.green}15`:`${T.orange}15`,border:`1px solid ${igdbToken?T.green:T.orange}33`,fontSize:11,color:igdbToken?T.green:T.orange,textAlign:'center',display:'flex',alignItems:'center',justifyContent:'center',gap:8,fontFamily:"'Barlow',sans-serif"}}>
         {apiStatus==='loading'
           ? <><Spinner size={12} color={T.orange}/>Conectando APIs...</>
           : igdbToken
@@ -959,6 +1154,8 @@ function ProfileScreen({games,media,wish,igdbToken,apiStatus}) {
             : <><Icon name="warning" size={13} color={T.orange}/>TMDB ativo · IGDB off</>
         }
       </div>
+
+      <ExportTraktButton media={media}/>
     </div>
   </div>;
 }
